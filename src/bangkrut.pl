@@ -4,32 +4,51 @@
     Hasil penjualan properti adalah 80% dari harga beli. */
     /* Note: Harus ada deteksi bangkrut dalam throwDice */
 
-cekbangkrut(Player, BiayaSewa) :-
+:- dynamic(uangBelumCukup/1).
+
+bangkrut(Player, BiayaTanggungan) :-
+    saldo(Player, Saldo),
+    aset(Player, Aset),
+    TotalAset is Saldo + Aset,
+    TotalAset < BiayaTanggungan,
+    asserta(uangBelumCukup(Player)).
+
+displayKekayaan :-
     uang(Player, Uang),
     aset(Player, Aset),
     TotalAset is Uang + Aset,
-    TotalAset < BiayaSewa,
     write('Uang yang dipegang: '),
     write(Uang), nl,
-    write('Total kekayaan properti: ')
+    write('Total kekayaan properti: '),
     write(Aset), nl,
-    write('Total kekayaan: ')
-    write(Uang), write(' + '), write(Aset), write(' = '), write(TotalAset), nl,
-    write('Biaya sewa: ')
-    write(BiayaSewa), nl,
-    write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'), nl, lanjut.
+    write('Total kekayaan: '),
+    write(Uang), write(' + '), write(Aset), write(' = '), write(TotalAset), nl.
 
-lanjut :-
+prosesUangTidakCukup(Player, BiayaTanggungan) :-
+    bangkrut(Player, BiayaTanggungan),
+    displayKekayaan,
+    write('Biaya Tanggungan: '),
+    write(BiayaTanggungan), nl,
+    uangHabis.
+
+uangHabis :-
+    write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'), nl,
     read(Answer),
-    (Answer == 'yes' -> lanjut(y);
+    (Answer == 'yes' -> uangHabis(y);
     Answer == 'no' -> (write('Sayang cepat sekali menyerah, selamat tinggal :)'), halt);
-    write('Input tidak valid >:( !, jawab hanya (yes/no)'), nl,
-    lanjut).
+    write('Input tidak valid >:( !, jawab hanya (yes/no)'), nl, lanjut).
 
-lanjut(y) :-
+uangHabis(y) :-
+    uangBelumCukup(Player),
     listProperti(Player, ListProperti),
     write('Properti mana yang ingin dijual?'), 
     read(Answer), 
     jualProperti(Player, ListProperti, Answer), 
     /* Update uang sekarang, cekbangkrut lagi*/
-    nl,
+    (
+        uangBelumCukup(Player, BiayaTanggungan) -> uangHabis(y) ;
+        (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
+        retract(uangBelumCukup(Player)))
+    ),
+    nl.
+

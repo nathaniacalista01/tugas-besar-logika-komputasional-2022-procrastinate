@@ -9,3 +9,4 @@
     4. Apabila pemain membayar uang sebesar X */
 
 :- dynamic(penjara/2)
+
