@@ -22,7 +22,7 @@ cekbangkrut(Player, BiayaSewa) :-
 lanjut :-
     read(Answer),
     (Answer == 'yes' -> lanjut(y);
-    Answer == 'no' -> halt;
+    Answer == 'no' -> (write('Sayang cepat sekali menyerah, selamat tinggal :)'), halt);
     write('Input tidak valid >:( !, jawab hanya (yes/no)'), nl,
     lanjut).
 

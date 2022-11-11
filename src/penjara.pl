@@ -7,3 +7,5 @@
     2. Apabila pemain sudah melempar dadu sebanyak tiga kali
     3. Apabila pemain memiliki kartu 'Get Out of Jail Free'
     4. Apabila pemain membayar uang sebesar X */
+
+:- dynamic(penjara/2)
