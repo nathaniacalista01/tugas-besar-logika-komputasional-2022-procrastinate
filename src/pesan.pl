@@ -72,3 +72,5 @@ write('                                                                         
 welcomeMsg :-
     printMonopoly,
     printWelcome.
+
+

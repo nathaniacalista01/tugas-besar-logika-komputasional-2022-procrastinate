@@ -2,6 +2,9 @@
 :- include('location.pl').
 :- include('pajak.pl').
 :- include('penjara.pl').
+:- include('pesan.pl').
+
+:- dynamic(win/1).
 
 start :-
     introduction,
