@@ -6,7 +6,7 @@
 
 :- dynamic(uangBelumCukup/1).
 
-bangkrut(Player, BiayaTanggungan) :-
+sanggupBayar(Player, BiayaTanggungan) :-
     saldo(Player, Saldo),
     aset(Player, Aset),
     TotalAset is Saldo + Aset,
@@ -26,7 +26,7 @@ displayKekayaan :-
     write(Uang), write(' + '), write(Aset), write(' = '), write(TotalAset), nl.
 
 prosesUangTidakCukup(Player, BiayaTanggungan) :-
-    bangkrut(Player, BiayaTanggungan),
+    sanggupBayar(Player, BiayaTanggungan),
     displayKekayaan,
     write('Biaya Tanggungan: '),
     write(BiayaTanggungan), nl,
