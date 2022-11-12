@@ -56,27 +56,32 @@ indexCard('Steal Property', 10).
 calculateRandomChance(Money, 0, 1234+Money).
 
 /* Rules */
-calculateRandomChance(Money, Round, Result) :- calculateRandomChance(Money, NewRound, NewResult), Round is NewRound + 1 , Result is (((NewResult*(Money+56)+Money+537) mod 1000)), !.
+calculateRandomChance(Money, Round, Result) :- NewRound is Round - 1 , calculateRandomChance(Money, NewRound, NewResult),  Result is (((NewResult*(Money+56)+Money+537) mod 1000)), !.
 
 
 /* Menentukan Kartu yang Didapat */
 /* Fakta */
 
 /* Rules */
-getChanceCard(Money, Round, Result) :- calculateRandomChance(Money, Round, RandInt), 
-                                        (RandInt = 777, Result is indexCard(Result, 1); 
-                                        RandInt >= 750, RandInt =< 799, Result is indexCard(Result, 2);
-                                        RandInt >= 700, RandInt =< 749, Result is indexCard(Result, 10);
-                                        RandInt >= 0, RandInt =< 199, Result is indexCard(Result, 3);
-                                        RandInt >= 200, RandInt =< 299, Result is indexCard(Result, 4);
-                                        RandInt >= 300, RandInt =< 374, Result is indexCard(Result, 5);
-                                        RandInt >= 375, RandInt =< 399, Result is indexCard(Result, 6);
-                                        RandInt >= 400, RandInt =< 549, Result is indexCard(Result, 7);
-                                        RandInt >= 550, RandInt =< 699, Result is indexCard(Result, 9);
-                                        RandInt >= 800, RandInt =< 999, Result is indexCard(Result, 8)).
+getCCIndex(Money, Round, Result) :- calculateRandomChance(Money, Round, RandInt), 
+                                        (RandInt = 777, Result is 1; 
+                                        RandInt >= 750, RandInt =< 799, Result is 2;
+                                        RandInt >= 700, RandInt =< 749, Result is 10;
+                                        RandInt >= 0, RandInt =< 199, Result is 3;
+                                        RandInt >= 200, RandInt =< 299, Result is 4;
+                                        RandInt >= 300, RandInt =< 374, Result is 5;
+                                        RandInt >= 375, RandInt =< 399, Result is 6;
+                                        RandInt >= 400, RandInt =< 549, Result is 7;
+                                        RandInt >= 550, RandInt =< 699, Result is 9;
+                                        RandInt >= 800, RandInt =< 999, Result is 8),!.
 
 
+/* Mengeluarkan kartu */
+/* Fakta */
 
+/* Rules */
+/* Val yang dimasukkan pada fungsi ini adalah Val yang didapat menggunakan fungsi getCCIndex */
+getChanceCard(Val, Result) :- indexCard(Result, Val),!.
 
 /* 
 Untuk menyimpan sementara
