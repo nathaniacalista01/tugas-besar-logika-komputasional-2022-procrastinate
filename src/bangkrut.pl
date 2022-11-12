@@ -10,8 +10,9 @@ bangkrut(Player, BiayaTanggungan) :-
     saldo(Player, Saldo),
     aset(Player, Aset),
     TotalAset is Saldo + Aset,
-    TotalAset < BiayaTanggungan,
-    asserta(uangBelumCukup(Player)).
+    (TotalAset < BiayaTanggungan ->
+    asserta(uangBelumCukup(Player) ; 
+    uangBelumCukup(Player), retract(uangBelumCukup(Player)))).
 
 displayKekayaan :-
     uang(Player, Uang),

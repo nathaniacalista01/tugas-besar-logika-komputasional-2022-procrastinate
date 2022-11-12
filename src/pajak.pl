@@ -4,7 +4,7 @@
    proses eksekusi jual properti untuk menambah saldo */
 
 pajak(Player, TotalAset) :-
-    TotalPajak is TotalAset * -0.1,
+    TotalPajak is TotalAset * (-1) * 0.1,
     bangkrut(Player, TotalPajak) -> uangHabis(y);
     (updateSaldo(Player, TotalPajak),
     write('Total pajak yang harus dibayar adalah '), 

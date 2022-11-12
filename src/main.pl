@@ -9,7 +9,7 @@ start :-
     initPlayer.
 
 introduction :-
-    write('Some Ascii Art Sh!t'), nl.
+    welcomeMsg.
 
 help :- 
     write('...'), nl.
