@@ -1,6 +1,9 @@
 /* board.pl */
 /* Menampilkan papan permainan beserta kepemilikan properti dan posisi pemain */
-% kepemilikan properti dan posisi pemain belum diimplementasikan
+/* kepemilikan properti dan posisi pemain belum diimplementasikan */
+:- include('pemain.pl').
+
+player(_,Loc,_,_,_,_) :- write(Loc).
 
 tile(1,2,'FP').
 tile(1,3,'D3').
@@ -37,9 +40,12 @@ tile(9,9,'H2').
 
 boardSize(9,9).
 
-board :- startGame(true), !,
-            drawBoard,
-            write('Posisi pemain:'), nl.
+startGame(true).
+
+board :-  drawBoard,
+            write('Posisi pemain:'), nl,
+            player1(_ID1,_Loc1,_,_,_,_), write(_ID1), write(': '), write(_Loc1), nl,
+            player2(_ID2,_Loc2,_,_,_,_), write(_ID2), write(': '), write(_Loc2),!.
 
 board :- write('Permainan belum dimulai'), nl.
 
@@ -85,6 +91,7 @@ drawTile(8,Y) :- Y > 3,
                     Y < 9, !,
                     write('    |'),
                     drawTile(9,Y).
+
 drawTile(X,Y) :- boardSize(W,H),
                     X > 0,
                     X < W + 1,
