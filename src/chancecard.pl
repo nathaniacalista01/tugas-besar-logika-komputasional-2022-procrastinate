@@ -50,7 +50,6 @@ indexCard('Steal Property', 10).
 */
 
 
-
 /* Menentukan Random Integer */
 /* Fakta */
 calculateRandomChance(Money, 0, 1234+Money).
@@ -63,7 +62,7 @@ calculateRandomChance(Money, Round, Result) :- NewRound is Round - 1 , calculate
 /* Fakta */
 
 /* Rules */
-getCCIndex(Money, Round, Result) :- calculateRandomChance(Money, Round, RandInt), 
+getCCIndex(Money1, Round, Result) :- calculateRandomChance(Money, Round, RandInt), 
                                         (RandInt = 777, Result is 1; 
                                         RandInt >= 750, RandInt =< 799, Result is 2;
                                         RandInt >= 700, RandInt =< 749, Result is 10;
@@ -77,11 +76,21 @@ getCCIndex(Money, Round, Result) :- calculateRandomChance(Money, Round, RandInt)
 
 
 /* Mengeluarkan kartu */
-/* Fakta */
+/* Fakta */ 
 
 /* Rules */
 /* Val yang dimasukkan pada fungsi ini adalah Val yang didapat menggunakan fungsi getCCIndex */
-getChanceCard(Val, Result) :- indexCard(Result, Val),!.
+getChanceCard(Money, Round, _Card) :- 
+            write('================================================================'), nl,
+            write('================================================================'), nl,
+            write('========                 GACHA TIME                     ========'), nl,
+            write('================================================================'), nl,
+            write('================================================================'), nl,
+
+            getCCIndex(Money, Round, _Index), indexCard(_Card, _Index),
+            write(''), nl, write('Anda mendapatkan : '), write(_Card), !.
+
+
 
 /* 
 Untuk menyimpan sementara
