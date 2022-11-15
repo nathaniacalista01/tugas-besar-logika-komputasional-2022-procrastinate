@@ -26,7 +26,7 @@ Completed:
 
 Ongoing Task:
 1. Aturan Dadu (0%)
-2. Penjara (0%)
+2. Penjara (50%)
 3. Lokasi (30%)
 4. Bonus: Mini Game Coin Flip (50%)
 5. Penulisan Lokasi Pemain di Papan (50%)
