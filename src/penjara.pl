@@ -21,12 +21,11 @@ penjara(PlayerID, Turn) :-
     write('2. Kamu ada kartu keluar penjara? Ketik "out" untuk keluar sekarang!'),  nl,
     write('3. Mau keluar tapi gak ada kartu? Ketik "bayar" untuk membayar'), nl,
     write('   bayaran seharga $'), hargaKeluarPenjara(X), write(X), write(' untuk keluar sekarang.'), nl,
-    write('4. Ketik "lempar" untuk melempar dadu lagi!'), nl,
+    write('4. Ketik "throwDice." untuk melempar dadu lagi!'), nl,
     write('================================================================================================'), nl,
     read(Pilihan),
     (Pilihan == 'out' -> askIfWantToUseCard(PlayerID);
     Pilihan == 'bayar' -> bayarKeluarPenjara(PlayerID);
-    Pilihan == 'lempar' -> lemparDadu(PlayerID);
     nl, nl,
     write('Hey! Ketik pilihan yang bener dong (out/bayar/lempar) :"('), 
     nl, nl, 
@@ -52,3 +51,7 @@ insertPenjara(Player) :-
 
 deletePenjara(Player) :-
     retract(penjara(Player, _)).
+
+inJail :-
+    player(PlayerID, Loc, _, _),
+    Loc == jl.

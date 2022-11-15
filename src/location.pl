@@ -75,4 +75,3 @@ checkLocationDetail(Loc) :-  locName(Loc, A),
                             write('Biaya Sewa Saat Ini: '), write(locPrice(loc,Price)), nl, 
                             write('Biaya Akuisisi     : '), write(locAcc(loc,Acquire)) nl, 
                             write('Tingkatan Properti : '), write(locLevel(loc,Level)), nl.*/ 
-                  
