@@ -1,0 +1,49 @@
+===== Detail Lengkap Fakta dan Rules =====
+
+- Program yang dibuat adalah program permainan game Monopoly dengan ukuran petak 9x9. 
+- Aturan dasar dari permainan yang dijalankan program telah disesuaikan dengan permainan monopoly pada umumnya.
+- Program ini di desain untuk dimainkan oleh 2 pemain yang berbeda. Pada awal permainan, setiap pemain diberikan uang sebesar $1500 sebagai bekal awal permainan.
+- Seluruh petak yang tidak termasuk ke dalam petak spesial (GO, Free Parking, World Tour, Tax, Jail, Chance Card, dan Coin Flip) dapat dibeli dan dimiliki oleh seorang pemain.
+- Petak yang dapat diakuisisi oleh pemain, memiliki informasi detail tersendiri dan unik untuk masing masing petak.
+- Ketika pemain sampai pada petak yang dimiliki oleh pemain lain, sang pemain tersebut harus membayar denda. Selanjutnya, sang pemain tersebut dapat mengakuisisi atau membeli petak tersebut selama gedung yang berada pada petak tersebut bukanlah Landmark.
+- Ketika pemain sampai pada petak GO atau melewati petak GO, pemain akan mendapatkan uang sebesar $200.
+- Pemain bergerak dengan cara melempar 2 buah dadu. Akumulasi dari nilai pada kedua buah dadu tersebut akan menjadi banyaknya langkah si pemain tersebut bergerak. Bila pemain mendapatkan nilai dadu yang sama (double), maka pemain dapat melempar dadu kembali. Pemain yang mendapatkan double 3 kali berturut-turut akan masuk ke dalam Jail.
+- Tujuan dari permainan ini adalah membuat uang dari pemain lawan habis atau dapat dikatakan membuat pemain lawan menjadi bankrupt.
+- Mekanisme bankrupt dijalankan ketika suatu pemain tidak sanggup membayar denda. Dalam hal ini berarti denda yang perlu dibayarkan bernilai lebih dari total uang dan aset yang dimilikinya.
+- Bonus coin flip akan mengambil petak A2 pada map default, dan A3 pada map default akan diganti dengan A2. 
+
+
+===== Pembagian Tugas =====
+
+______________________________________________________________________________________________________
+      Nama                  |         NIM           |       Tugas
+Tabitha Permalla            |       13521111        |     Papan, Properti
+Juan Christopher Santoso    |       13521116        |     Chance Card, World Tour, Coin Flip
+Nicholas Liem               |       13521135        |     Bankrupt, Buildable Go, Pajak, Penjara
+Nathania Calista Djunaedi   |       13521139        |     Pemain, Dadu
+Brigita Tri Carolina        |       13521156        |     Lokasi, Properti
+
+===== Progress =====
+
+Completed:
+1. Fakta Pemain
+2. Fakta Dadu
+3. Init Player
+4. Mekanisme Bangkrut
+5. Sistem Pajak
+6. Fakta dan Rules Sistem Chance Card
+7. Fakta dan Rules Papan
+8. Fakta Lokasi
+
+Ongoing Task:
+1. Aturan Dadu (0%)
+2. Penjara (50%)
+3. Lokasi (30%)
+4. Bonus: Mini Game Coin Flip (50%)
+5. Penulisan Lokasi Pemain di Papan (50%)
+6. Buildable Go (0%)
+
+Unstarted Task
+1. Properti
+2. Sistem World Tour
+3. Rules Penulisan Properti di Papan
