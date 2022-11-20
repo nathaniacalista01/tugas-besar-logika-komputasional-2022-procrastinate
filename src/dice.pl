@@ -1,4 +1,4 @@
-
+/* :- include ('pemain.pl'). */
 /* Deklarasi fakta nilai - nilai dice dengan range 1 - 6 */
 dice(0,6).
 dice(1,1).
@@ -7,17 +7,9 @@ dice(3,3).
 dice(4,4).
 dice(5,5). 
 
+:- dynamic(countDice/1).
+
 /* Deklarasi variabel dynamic */
-
-/* Round dynamic karena terus bertambah setiap ronde*/
-:- dynamic(round/1).
-
-/* Money dynamic karena uang dari pemain terus berubah ubah */
-:- dynamic(money/1).
-
-/* Temporary variable selama belum ada */
-round(2).
-money(570).
 
 /* Generate random number dengan algoritma yang ada */
 
@@ -25,9 +17,18 @@ money(570).
 /* Algoritma kedua (untuk dadu kedua) = (Money * 11 - Round + 5)mod6 */
 
 diceRandomizer(X,Y,Result1,Result2):- Temp1 is mod(13*Y-X+7,6), dice(Temp1,Angka1),
-                                    Result1 is Angka1,Temp2 is mod(11*Y - X + 5,6),
+                                    Result1 is Angka1,Temp2 is mod(13*Y - X+7,6),
                                     dice(Temp2,Angka2),Result2 is Angka2.
 
+initDaduCount :- asserta(countDice(0)).
+
+writeDouble(Dadu1,Dadu2) :- (Dadu1 == Dadu2,write('Dadu 1 : '),write(Dadu1),nl, write('Dadu 2 :'),write(Dadu2),nl,
+                            write('Double!'), nl,Sum is Dadu1 + Dadu2,write('Anda berhasil maju sebanyak '),
+                            write(Sum),write(' langkah') ).
+writeNormal(Dadu1,Dadu2) :-
+                            write('Dadu 1 : '),write(Dadu1),nl,write('Dadu 2 : '),write(Dadu2),nl,
+                            (Dadu1 =\= Dadu2, write('Anda berhasil maju sebanyak '),Sum is Dadu1 + Dadu2 ,write(Sum),write(' langkah')).
 /* Memanggil throwDice */
-throwDice :- round(X),money(Y),diceRandomizer(X,Y,Angka1,Angka2),write('Dadu 1 : '),write(Angka1),write('.'),nl,
-                write('Dadu 2: '),write(Angka2),write('.').
+diceOutput(Round,Money,Dice1,Dice2) :- 
+                                diceRandomizer(Round,Money,Angka1,Angka2),
+                                Dice1 is Angka1, Dice2 is Angka2.

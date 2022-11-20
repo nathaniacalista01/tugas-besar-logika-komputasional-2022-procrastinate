@@ -15,13 +15,18 @@ initPlayer :-
                 printInfo2,nl,!.
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
-updateLoc1(NewLoc) :-
-                retract(player1(Id,_,Money,Property,List1,List2)),
-                asserta(player1(Id,NewLoc,Money,Property,List1,List2)).
+updateLoc1(NewLoc) :- 
+                retract(player1(Id,Loc,Money,Property,List1,List2)),
+                tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
+                tile(_,_,X,NewLocNumber),
+                asserta(player1(Id,X,Money,Property,List1,List2)),!.
+
 
 updateLoc2(NewLoc) :-
-                retract(player2(Id,_,Money,Property,List1,List2)),
-                asserta(player2(Id,NewLoc,Money,Property,List1,List2)).
+                retract(player2(Id,Loc,Money,Property,List1,List2)),
+                tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
+                tile(_,_,X,NewLocNumber),
+                asserta(player2(Id,X,Money,Property,List1,List2)),!.
 
 /* Fungsi untuk update jumlah uang dari player pertama dan kedua */
 updateMoney1(NewMoney) :-
@@ -70,6 +75,6 @@ printInfo2 :-
             write(List2),!.
             
 checkPlayerDetail(Player):-
-                        (Player = 'A',printInfo1);
-                        (Player = 'B',printInfo2).
+                        (Player = 'A',printInfo1),!;
+                        (Player = 'B',printInfo2),!.
 

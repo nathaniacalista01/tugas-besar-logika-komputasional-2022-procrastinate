@@ -1,4 +1,7 @@
 :- dynamic(checkLocationDetail/1).
+:- dynamic(a1/1).
+:- dynamic(a2/1).
+
 
 /* Nama Lokasi-Lokasi */
 locName(a1, 'Beijing').
