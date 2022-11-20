@@ -1,5 +1,5 @@
-include :- ('location.pl').
-include :- ('pemain.pl').
+:- include('location.pl').
+:- include('pemain.pl').
 
 /* propertyPrice(Loc, Price, PropertyLevel). */
 /* 0 == land

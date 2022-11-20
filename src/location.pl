@@ -1,4 +1,4 @@
-:- include ('pemain.pl').
+:- include('pemain.pl').
 
 /* Nama Lokasi-Lokasi */
 locName(a1, 'Beijing').
@@ -28,8 +28,8 @@ locName(g3, 'Paris').
 locName(h1, 'Washington DC').
 locName(h2, 'Jakarta').
 locName(go, 'GO').
-locName(gc, 'Game Center')
-locName(wt, 'World Tour')
+locName(gc, 'Game Center').
+locName(wt, 'World Tour').
 
 locDesc(a1, 'Ibu Kota China').
 locDesc(a3, 'Ibu Kota Avenue').
@@ -62,7 +62,7 @@ checkLocationDetail(Loc) :-  Loc \= cc,
                              Loc \= fp,
                              Loc \= go,
                              Loc \= gc,
-                             Loc \= wt
+                             Loc \= wt,
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -77,35 +77,35 @@ checkLocationDetail(Loc) :- Loc == cc,
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write("Apakah kamu sedang beruntung? ")
+                            write('Deskripsi Lokasi    : '), write("Apakah kamu sedang beruntung? ").
 
 checkLocationDetail(Loc) :- Loc == jl,
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write("")
+                            write('Deskripsi Lokasi    : '), write("").
                             
 checkLocationDetail(Loc) :- Loc == tx,
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write("")
+                            write('Deskripsi Lokasi    : '), write("").
                             
 checkLocationDetail(Loc) :- Loc == fp,
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write("")
+                            write('Deskripsi Lokasi    : '), write("").
 
 checkLocationDetail(Loc) :- Loc == go,
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write("")
+                            write('Deskripsi Lokasi    : '), write("").
 
 checkLocationDetail(Loc) :- Loc == wt,
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write("")
+                            write('Deskripsi Lokasi    : '), write("").
 
