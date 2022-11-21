@@ -2,21 +2,35 @@
 
 # Tugas Besar IF2121 - Logika Komputasional
 
-## | ?- procrastinate. 
+## **Table Of Contents**
+* [Program Description](#program-description)
+* [How To Run Program](#how-to-run-program)
+* [Team Members](#team-members)
+* [Workload Distribution](#workload-distribution)
+* [Folders and Files Description](#folders-and-files-description)
 
-Anggota Kelompok
+
+## **Program Description**
+
+## **How To Run Program**
+
+## **Team Members**
+**| ?- procrastinate.**
 * Tabitha Permalla - 13521111
 * Juan Christopher Santoso - 1352116
 * Nicholas Liem - 13521135
 * Nathania Calista Djunaedi - 13521139
 * Brigita Tri Carolina - 13521156
 
-## Pembagian Tugas
-* Papan : Tabitha
-* Lokasi, Properti : Brigita
-* Pemain, Dadu : Nathania
-* Pajak, Penjara, Mekanisme Bangkrut : Nicholas
-* Chance Card, World Tour : Juan
+## **Workload Distribution**
+
+| Name | NIM | Workload    |
+|------|-----|--------- |
+| Tabitha Permalla | 13521111 | Board |
+| Juan Christopher Santoso | 13521116 | Chance Card, World Tour, Bonus: Additional Chance Card, Bonus: Coin Flip Mini Game|
+| Nicholas Liem | 13521135 | Tax, Jail, Bankrupt Mechanism, Bonus: Buildable Go
+| Nathania Calista Djunaedi | 13521139 | Player, Dice|
+| Brigita Tri Carolina | 13521156 | Location, Property |
 
 ### Bonus
 * Color set
@@ -26,6 +40,9 @@ Anggota Kelompok
 * Minigame Coin Flip
 * Tambahan lain
 
-### Keterangan Files
+## **Folders and Files Description**
 Tulisin aja lah disini isinya apa keterangna apa
 
+
+## **Extra**
+![image](https://pics.me.me/thumb_0-prolog-you-guys-always-act-like-youre-better-than-43089102.png)

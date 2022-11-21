@@ -62,7 +62,7 @@ calculateRandomChance(Money, Round, Result) :- NewRound is Round - 1 , calculate
 /* Fakta */
 
 /* Rules */
-getCCIndex(Money1, Round, Result) :- calculateRandomChance(Money, Round, RandInt), 
+getCCIndex(Money, Round, Result) :- calculateRandomChance(Money, Round, RandInt), 
                                         (RandInt = 777, Result is 1; 
                                         RandInt >= 750, RandInt =< 799, Result is 2;
                                         RandInt >= 700, RandInt =< 749, Result is 10;
@@ -75,18 +75,40 @@ getCCIndex(Money1, Round, Result) :- calculateRandomChance(Money, Round, RandInt
                                         RandInt >= 800, RandInt =< 999, Result is 8),!.
 
 
+/* Ascii Art untuk kartu */
+/* Fakta */
+
+/* Rules */
+asciiCard :-    write('         ______________________________'), nl,
+                write('       _|____________________________  |'), nl,
+                write('      |                              | |'), nl,
+                write('      |         ____________         | |'), nl,
+                write('      |       _|  ________  |_       | |'), nl,
+                write('      |      |  _|        |_  |      | |'), nl,
+                write('      |      | |            | |      | |'), nl,
+                write('      |      |_|           _| |      | |'), nl,
+                write('      |                  _|  _|      | |'), nl,
+                write('      |                _|  _|        | |'), nl,
+                write('      |              _|  _|          | |'), nl,
+                write('      |             |  _|            | |'), nl,
+                write('      |             | |              | |'), nl,
+                write('      |             | |              | |'), nl,
+                write('      |             |_|              | |'), nl,
+                write('      |              _               | |'), nl,
+                write('      |             |_|              | |'), nl,
+                write('      |                              |_|'), nl,
+                write('      |______________________________|  '), nl.
+
 /* Mengeluarkan kartu */
 /* Fakta */ 
 
 /* Rules */
 /* Val yang dimasukkan pada fungsi ini adalah Val yang didapat menggunakan fungsi getCCIndex */
 getChanceCard(Money, Round, _Card) :- 
-            write('================================================================'), nl,
-            write('================================================================'), nl,
-            write('========                 GACHA TIME                     ========'), nl,
-            write('================================================================'), nl,
-            write('================================================================'), nl,
-
+            write('===================================================='), nl,
+            write('========            CHANCE CARD             ========'), nl,
+            write('===================================================='), nl,
+            asciiCard,
             getCCIndex(Money, Round, _Index), indexCard(_Card, _Index),
             write(''), nl, write('Anda mendapatkan : '), write(_Card), !.
 
