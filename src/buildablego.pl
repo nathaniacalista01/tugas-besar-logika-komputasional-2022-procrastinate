@@ -27,10 +27,15 @@ askIfWantToBuild() :-
     /* Tampilkan list properti yang bisa dibangun */
     (Answer == 'yes' -> (
         write('List properti yang bisa dibangun : '),nl,
+        printListPropertiPlayer,
+        commandUpgradeProperti,
         afterBuild()
     );
 
-    ((Answer == 'no' -> (); 
+    ((Answer == 'no' -> (
+        write('Baiklah jika anda tidak ingin membangun properti :)'),nl,
+        retract(buildAccess(1)),!
+    ); 
         write('Input tidak valid >:( !, jawab hanya (yes/no)',nl)))),!.
 
 afterBuild() :-
