@@ -43,8 +43,8 @@ boardSize(9,9).
 
 startGame(true).
 
-board :-  drawBoard,
-            write('Posisi pemain:'), nl,
+board :-  startGame(true), !, drawBoard,
+            write('    Posisi pemain:'), nl,
             player1(_ID1,_Loc1,_,_,_,_), write(_ID1), write(': '), write(_Loc1), nl,
             player2(_ID2,_Loc2,_,_,_,_), write(_ID2), write(': '), write(_Loc2),!.
 
@@ -113,4 +113,4 @@ drawTile(0,Y) :- boardSize(_,H),
                     write('     '),
                     drawTile(1,Y).
 
-drawBoard :- drawTile(0,0).
+drawBoard :- drawTile(0,0), !.
