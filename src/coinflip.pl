@@ -17,7 +17,7 @@ Round 3             | $ 1000
 :- dynamic(programCoinFlip/1).
 :- dynamic(prizeVal/1).
 
-programCoinFlip(0).
+programCoinFlip(1).
 
 /* Fakta Hadiah Coin Flip */
 prizeCoinFlip(0, 0).
@@ -127,19 +127,33 @@ asciiTail   :-  write('             ____________________'), nl,
 /* Rules */
 coinFlipRound(Money, Round, Count, Continue) :-  programCoinFlip(1), displayRoundTitle(Count, _Choice), 
                                         calculateRandomFlip(Money, Round, Count, _Result), displayAsciiCoinFlip(_Result), nl,
-                                        (_Choice = _Result, write('Selamat kamu memenangkan round ini!'),nl, Continue is 1 ;
-                                         _Choice \= _Result, write('Maaf, kamu tidak menebak dengan benar.'),nl, Continue is 0),!.
+                                        (( _Choice = _Result, write('Selamat kamu memenangkan round ini!'), nl, askUserContinue(_Answer),
+                                        ( (_Answer = 1, Continue is 1); (_Answer = 0, Continue is 2)) ) ;
+                                         _Choice \= _Result, write('Maaf, kamu tidak menebak dengan benar.'), nl, write('Permainan Coin Flip telah selesai. Kamu tidak mendapatkan apa apa.'),nl, Continue is 0),!.
 /* Menampilkan Ascii */
 /* Fakta */
 /* Rules */
 displayAsciiCoinFlip(Result)    :-  (Result = 1, asciiHead; Result = 0, asciiTail),!.
 
-/* Mengatur permainan coinflip sebagai suatu kesatuan */
+/* Mengatur permainan coinflip sebagai suatu round */
 /* Fakta */
 /* Rules */
-getCoinFlip(Money, GameRound, FlipRound, Prize) :- programCoinFlip(1), coinFlipRound(Money, GameRound, FlipRound, _Continue),
-                                                    (_Continue = 0, write('Permainan Coin Flip telah selesai. Kamu tidak mendapatkan apa apa.'), Prize is 0;
-                                                    askUserContinue(_Choice), ( _Choice = 0 , write('Permainan telah selesai, Kamu mendapatkan $ '), write(_P), prizeCoinFlip(_P, 1), Prize is 1;
-                                                            )).
+getCoinFlip(Money, GameRound, FlipRound, Prize, Stop) :- programCoinFlip(1), coinFlipRound(Money, GameRound, FlipRound, _Continue),
+                                                    (_Continue = 0, Prize is 0, Stop is 1; 
+                                                    _Continue = 2, write('Permainan Coin Flip telah selesai. Kamu mendapatkan $'), prizeCoinFlip(_cPrize, FlipRound), write(_cPrize), Prize is _cPrize, Stop is 1;
+                                                    _Continue = 1, write('Anda melanjutkan permainan Coin Flip.'), prizeCoinFlip(_cPrize, FlipRound), Prize is _cPrize, Stop is 0), nl,!.
 
 
+
+/* Mengatur permainan Coinflip secara keseluruhan */
+/* Fakta */
+/* Rules */
+playCoinFlip(Money, GameRound, FinalPrize) :- programCoinFlip(1), getCoinFlip(Money, GameRound, 1, _TempPrize, _Stop),
+                                            (_TempPrize = 0, FinalPrize is 0, exitCoinFlip; 
+                                            _TempPrize \= 0,(_Stop = 1, FinalPrize is _TempPrize, exitCoinFlip ; 
+                                                            _Stop = 0 , getCoinFlip(Money, GameRound, 2, _TempPrize2, _Stop), 
+                                                            (_TempPrize2 = 0, FinalPrize is 0, exitCoinFlip ; 
+                                                             _TempPrize2 \= 0, (_Stop = 1, FinalPrize is _TempPrize2, exitCoinFlip ;
+                                                                               _Stop = 0, getCoinFlip(Money, GameRound, 3, _TempPrize3, _Stop),
+                                                                                (_TempPrize3 = 0, FinalPrize is 0, exitCoinFlip;
+                                                                                (_TempPrize3 \= 0, FinalPrize is _TempPrize3, exitCoinFlip)))))).
