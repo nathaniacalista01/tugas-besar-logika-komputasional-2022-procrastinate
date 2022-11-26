@@ -1,5 +1,4 @@
 :- include('location.pl').
-:- include('pemain.pl').
 
 /* propertyPrice(Loc, Price, PropertyLevel). */
 /* 0 == land
@@ -7,7 +6,6 @@
    2 == bangungan tingkat 2
    3 == bangunan tingkat 3
    4 == landmark */
-
 propertyColor(a1, "light green").
 propertyColor(a3, "light green").
 propertyColor(b1, "green").
@@ -30,7 +28,6 @@ propertyColor(g2, "orange").
 propertyColor(g3, "orange").
 propertyColor(h1, "red").
 propertyColor(h2, "red").
-
 propertyPrice(a1, 200, 0).
 propertyPrice(a3, 210, 0).
 propertyPrice(b1, 220, 0).
@@ -53,7 +50,6 @@ propertyPrice(g2, 380, 0).
 propertyPrice(g3, 390, 0).
 propertyPrice(h1, 400, 0).
 propertyPrice(h2, 410, 0).
-
 propertyPrice(a1, 1000, 1).
 propertyPrice(a3, 1010, 1).
 propertyPrice(b1, 1020, 1).
@@ -198,4 +194,6 @@ checkPropertyDetail(Loc) :- locName(Loc, A),
                             write('Biaya Sewa Landmark   : '), write(RentPrice4), nl, 
                             write('================================================').
 
-increaseProperty :- 
+/* increaseProperty :-  */
+
+checkIsProperty(X,Result) :- (X == tx, Result is 0).

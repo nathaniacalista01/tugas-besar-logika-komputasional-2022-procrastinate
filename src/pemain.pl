@@ -48,7 +48,7 @@ updateProperty2(NewProperty) :-
     
 printInfo1 :-
             write('================================================'), nl,
-            player1(Id,Loc,Money,Property,List1,List2),
+            player1(Id,Loc,Money,Property,List1,List2,List3),
             write('              Informasi Player A '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
@@ -62,7 +62,7 @@ printInfo1 :-
 
 printInfo2 :-
             write('================================================'), nl,
-            player2(Id,Loc,Money,Property,List1,List2),
+            player2(Id,Loc,Money,Property,List1,List2,List3),
             write('              Informasi Player V '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,

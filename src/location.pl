@@ -34,7 +34,6 @@ locName(h2, 'Jakarta').
 locName(go, 'GO').
 locName(gc, 'Game Center').
 locName(wt, 'World Tour').
-
 locDesc(a1, 'Ibu Kota China').
 locDesc(a3, 'Ibu Kota Avenue').
 locDesc(b1, 'Ibu Kota Taiwan').
@@ -58,7 +57,6 @@ locDesc(g3, 'Ibu Kota Prancis').
 locDesc(h1, 'Ibu Kota Amerika Serikat').
 locDesc(h2, 'Ibu Kota Indonesia').
 locDesc(go, 'Start').
-
 /* Inisialisasi locOwnerDetail */
 locOwnerDetail(a1, '-', '-').
 locOwnerDetail(a3, '-', '-').
@@ -82,15 +80,14 @@ locOwnerDetail(g2, '-', '-').
 locOwnerDetail(g3, '-', '-').
 locOwnerDetail(h1, '-', '-').
 locOwnerDetail(h2, '-', '-').
-
 /* updating loc owner */
 updateLocOwner('-',[],[]).
 updateLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
                                     List1 =:= [Loc|Tail], 
                                     retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
+                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)).
 updateLoc :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
-             player2(ID2,_,_,_,[Loc2|Tail2],[NewPropertyLevel2|TailP2],_),
+             player2(ID2,_,_,_,[Loc2|Tail2],[NewPropertyLevel2|TailP2],_).
             
 /*updateLocOwner(ID,L,L)
 /*player1(ID,_,_,_,[],[],_).
@@ -98,7 +95,7 @@ player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetai
                                                            asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
                                                            
 player2(ID,_,_,_,[],[],_).
-player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :-*/ 
+player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) */
 /*getLocOwner(Loc, '-', '-', []).
 getLocOwner(Loc, Player, PropertyLevel) :'-' player1(_,_,_,_,[Loc|R],_),
                                                   
