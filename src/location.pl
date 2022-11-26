@@ -134,7 +134,6 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
                             Loc == 'WT', write('Deskripsi Tambahan    : '), write('Pintu kemana saja has been spawned.')), nl.
 
 
-<<<<<<< HEAD
 checkLocationDetail(Loc) :- Loc == 'GO',
                             locName('WT',oc, A),
                             !,
@@ -146,13 +145,11 @@ checkLocationDetail(Loc) :- Loc == wt,
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
                             write('Deskripsi Lokasi    : '), write("").
-=======
->>>>>>> f57d663147e56aa263080c51f724eb2986df83b6
 
 /* Condition Vacant Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C == ('-'),
-                             D = '-',
+                             D = ('-'),
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -164,7 +161,7 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Kepemilikan        : '), write('-'), nl,
                              write('Biaya Sewa Saat Ini: '), write('-'), nl, 
                              write('Biaya Akuisisi     : '), write('-'), nl, 
-                             write('Tingkatan Properti : '), write('-'), nl
+                             write('Tingkatan Properti : '), write('-'), nl,
 
                              write('================================================').
 
@@ -185,7 +182,6 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Kepemilikan        : '), write(C), nl,
                              write('Biaya Sewa Saat Ini: '), write(RentPrice), nl, 
                              write('Biaya Akuisisi     : '), write(Price), nl, 
-<<<<<<< HEAD
                              write('Tingkatan Properti : '), write('Tanah'), nl,
                              write('================================================').
 
@@ -263,12 +259,3 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Biaya Akuisisi     : '), write('-'), nl, 
                              write('Tingkatan Properti : '), write('Landmark'), nl,
                              write('================================================').
-=======
-                             write('Tingkatan Properti : '), 
-                                    (D = 0, write('Tanah');
-                                    D = 1, write('Bangunan 1');
-                                    D = 2, write('Bangunan 2');
-                                    D = 3, write('Bangunan 3');
-                                    D = 4, write('Bangunan 4')), nl,
-                             write('================================================').
->>>>>>> f57d663147e56aa263080c51f724eb2986df83b6
