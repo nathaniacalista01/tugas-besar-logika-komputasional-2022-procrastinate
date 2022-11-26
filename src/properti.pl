@@ -1,4 +1,3 @@
-:- include('location.pl').
 /* propertyPrice(Loc, Price, PropertyLevel). */
 /* 0 == land
    1 == bangunan tingkat 1 

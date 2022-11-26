@@ -1,5 +1,3 @@
-:- include('pemain.pl').
-# :- include('properti.pl').
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
