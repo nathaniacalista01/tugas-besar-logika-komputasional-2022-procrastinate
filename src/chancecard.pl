@@ -110,8 +110,20 @@ getChanceCard(Money, Round, _Card) :-
             write('===================================================='), nl,
             asciiCard,
             getCCIndex(Money, Round, _Index), indexCard(_Card, _Index),
-            write(''), nl, write('Anda mendapatkan : '), write(_Card), !.
+            write(''), nl, write('Anda mendapatkan : '), write(_Card), addChanceCard(_Card,1),!.
 
+initPlayerTemp :- asserta(player1('A','CC',_,_,[])).
+
+appendList( [], X, X).                                  
+appendList( [X | Y], Z, [X | W]) :- append( Y, Z, W).  
+
+addChanceCardPlayer1(Card) :- 
+                        retract(player1(_,_,_,_,List1)),appendList(List1,[Card],List2),
+                        asserta(player1(_,_,_,_,List2)).
+addChanceCard(Card,X) :-
+                retract(playerTurn(X)),
+                (X == 1, addChanceCardPlayer1(Card);
+                X == 2, addChanceCardPlayer2(Card)).
 
 
 /* 

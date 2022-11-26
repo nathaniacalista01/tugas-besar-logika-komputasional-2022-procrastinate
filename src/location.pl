@@ -1,3 +1,4 @@
+:- include('chancecard.pl').
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
@@ -168,3 +169,10 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 3, write('Bangunan 3');
                                     D = 4, write('Bangunan 4')), nl,
                              write('================================================').
+/* initPlayerTemp :- 
+                     player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
+checkPlayer1Location :- player1(ID1,Loc1,Money1,_,_,_,_),retract(round(X)),
+                            (Loc1 == 'CC', getChanceCard(Money1,X,_Card);
+                            Loc1 == '').
+
+checkPlayerLocation(X) :- (X == 1, checkPlayerLocation1).
