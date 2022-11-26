@@ -1,3 +1,4 @@
+:- include('location.pl').
 /* propertyPrice(Loc, Price, PropertyLevel). */
 /* 0 == land
    1 == bangunan tingkat 1 
@@ -198,6 +199,12 @@ checkPropertyDetail(Loc) :- locName(Loc, A),
                             write('Biaya Sewa Landmark   : '), write(RentPrice4), nl, 
                             write('================================================').
 
+/* increasePropertyPlayer1 :-  */
+/* increasePropertyPlayer2 :-  */
+checkIsProperty(X,Result) :- 
+                     (X == 'GO', Result is 0;X == 'CF',Result is 0; X=='CC',Result is 0;X=='JL',Result is 0;X=='TX', Result is 0;X=='FP', Result is 0;
+                     X=='WT',Result is 0 ),!;
+                     (Result is 1). 
 writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 0,
                                                     StringTingkat is 'tanah'.
 writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 1,

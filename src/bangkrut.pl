@@ -52,4 +52,3 @@ uangHabis(y) :-
         retract(uangBelumCukup(Player)))
     ),
     nl.
-
