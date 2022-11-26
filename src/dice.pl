@@ -16,8 +16,8 @@ dice(5,5).
 /* Algoritma pertama (untuk dadu pertam) = (Money * 13 - Round + 7)mod 6 */
 /* Algoritma kedua (untuk dadu kedua) = (Money * 11 - Round + 5)mod6 */
 
-diceRandomizer(X,Y,Result1,Result2):- Temp1 is mod(13*Y-X+7,6), dice(Temp1,Angka1),
-                                    Result1 is Angka1,Temp2 is mod(13*Y - X+7,6),
+diceRandomizer(X,Y,Result1,Result2):- Temp1 is mod(13*Y-X+3,6), dice(Temp1,Angka1),
+                                    Result1 is Angka1,Temp2 is mod(9*Y - X+4,6),
                                     dice(Temp2,Angka2),Result2 is Angka2.
 
 initDaduCount :- asserta(countDice(0)).
