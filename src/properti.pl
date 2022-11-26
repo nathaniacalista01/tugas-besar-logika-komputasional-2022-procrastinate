@@ -5,141 +5,144 @@
    2 == bangungan tingkat 2
    3 == bangunan tingkat 3
    4 == landmark */
-propertyColor(a1, "light green").
-propertyColor(a3, "light green").
-propertyColor(b1, "green").
-propertyColor(b2, "green").
-propertyColor(b3, "green").
-propertyColor(c1, "light blue").
-propertyColor(c2, "light blue").
-propertyColor(c3, "light blue").
-propertyColor(d1, "blue").
-propertyColor(d2, "blue").
-propertyColor(d3, "blue").
-propertyColor(e1, "magenta").
-propertyColor(e2, "magenta").
-propertyColor(e3, "magenta").
-propertyColor(f1, "purple").
-propertyColor(f2, "purple").
-propertyColor(f3, "purple").
-propertyColor(g1, "orange").
-propertyColor(g2, "orange").
-propertyColor(g3, "orange").
-propertyColor(h1, "red").
-propertyColor(h2, "red").
-propertyPrice(a1, 200, 0).
-propertyPrice(a3, 210, 0).
-propertyPrice(b1, 220, 0).
-propertyPrice(b2, 230, 0).
-propertyPrice(b3, 240, 0).
-propertyPrice(c1, 250, 0).
-propertyPrice(c2, 260, 0).
-propertyPrice(c3, 270, 0).
-propertyPrice(d1, 280, 0).
-propertyPrice(d2, 290, 0).
-propertyPrice(d3, 300, 0).
-propertyPrice(e1, 310, 0).
-propertyPrice(e2, 320, 0).
-propertyPrice(e3, 330, 0).
-propertyPrice(f1, 340, 0).
-propertyPrice(f2, 350, 0).
-propertyPrice(f3, 360, 0).
-propertyPrice(g1, 370, 0).
-propertyPrice(g2, 380, 0).
-propertyPrice(g3, 390, 0).
-propertyPrice(h1, 400, 0).
-propertyPrice(h2, 410, 0).
-propertyPrice(a1, 1000, 1).
-propertyPrice(a3, 1010, 1).
-propertyPrice(b1, 1020, 1).
-propertyPrice(b2, 1030, 1).
-propertyPrice(b3, 1040, 1).
-propertyPrice(c1, 1050, 1).
-propertyPrice(c2, 1060, 1).
-propertyPrice(c3, 1070, 1).
-propertyPrice(d1, 1080, 1).
-propertyPrice(d2, 1090, 1).
-propertyPrice(d3, 1100, 1).
-propertyPrice(e1, 1110, 1).
-propertyPrice(e2, 1120, 1).
-propertyPrice(e3, 1130, 1).
-propertyPrice(f1, 1140, 1).
-propertyPrice(f2, 1150, 1).
-propertyPrice(f3, 1160, 1).
-propertyPrice(g1, 1170, 1).
-propertyPrice(g2, 1180, 1).
-propertyPrice(g3, 1190, 1).
-propertyPrice(h1, 1200, 1).
-propertyPrice(h2, 1210, 1).
 
-propertyPrice(a1, 2000, 2).
-propertyPrice(a3, 2010, 2).
-propertyPrice(b1, 2020, 2).
-propertyPrice(b2, 2030, 2).
-propertyPrice(b3, 2040, 2).
-propertyPrice(c1, 2050, 2).
-propertyPrice(c2, 2060, 2).
-propertyPrice(c3, 2070, 2).
-propertyPrice(d1, 2080, 2).
-propertyPrice(d2, 2090, 2).
-propertyPrice(d3, 2100, 2).
-propertyPrice(e1, 2110, 2).
-propertyPrice(e2, 2120, 2).
-propertyPrice(e3, 2130, 2).
-propertyPrice(f1, 2140, 2).
-propertyPrice(f2, 2150, 2).
-propertyPrice(f3, 2160, 2).
-propertyPrice(g1, 2170, 2).
-propertyPrice(g2, 2180, 2).
-propertyPrice(g3, 2190, 2).
-propertyPrice(h1, 2200, 2).
-propertyPrice(h2, 2210, 2).
+propertyColor('A1', "light green").
+propertyColor('A2', "light green").
+propertyColor('B1', "green").
+propertyColor('B2', "green").
+propertyColor('B3', "green").
+propertyColor('C1', "light blue").
+propertyColor('C2', "light blue").
+propertyColor('C3', "light blue").
+propertyColor('D1', "blue").
+propertyColor('D2', "blue").
+propertyColor('D3', "blue").
+propertyColor('E1', "magenta").
+propertyColor('E2', "magenta").
+propertyColor('E3', "magenta").
+propertyColor('F1', "purple").
+propertyColor('F2', "purple").
+propertyColor('F3', "purple").
+propertyColor('G1', "orange").
+propertyColor('G2', "orange").
+propertyColor('G3', "orange").
+propertyColor('H1', "red").
+propertyColor('H2', "red").
 
-propertyPrice(a1, 3000, 3).
-propertyPrice(a3, 3010, 3).
-propertyPrice(b1, 3020, 3).
-propertyPrice(b2, 3030, 3).
-propertyPrice(b3, 3040, 3).
-propertyPrice(c1, 3050, 3).
-propertyPrice(c2, 3060, 3).
-propertyPrice(c3, 3070, 3).
-propertyPrice(d1, 3080, 3).
-propertyPrice(d2, 3090, 3).
-propertyPrice(d3, 3100, 3).
-propertyPrice(e1, 3110, 3).
-propertyPrice(e2, 3120, 3).
-propertyPrice(e3, 3130, 3).
-propertyPrice(f1, 3140, 3).
-propertyPrice(f2, 3150, 3).
-propertyPrice(f3, 3160, 3).
-propertyPrice(g1, 3170, 3).
-propertyPrice(g2, 3180, 3).
-propertyPrice(g3, 3190, 3).
-propertyPrice(h1, 3200, 3).
-propertyPrice(h2, 3210, 3).
+propertyPrice('A1', 200, 0).
+propertyPrice('A2', 210, 0).
+propertyPrice('B1', 220, 0).
+propertyPrice('B2', 230, 0).
+propertyPrice('B3', 240, 0).
+propertyPrice('C1', 250, 0).
+propertyPrice('C2', 260, 0).
+propertyPrice('C3', 270, 0).
+propertyPrice('D1', 280, 0).
+propertyPrice('D2', 290, 0).
+propertyPrice('D3', 300, 0).
+propertyPrice('E1', 310, 0).
+propertyPrice('E2', 320, 0).
+propertyPrice('E3', 330, 0).
+propertyPrice('F1', 340, 0).
+propertyPrice('F2', 350, 0).
+propertyPrice('F3', 360, 0).
+propertyPrice('G1', 370, 0).
+propertyPrice('G2', 380, 0).
+propertyPrice('G3', 390, 0).
+propertyPrice('H1', 400, 0).
+propertyPrice('H2', 410, 0).
 
-propertyPrice(a1, 4000, 4).
-propertyPrice(a3, 4010, 4).
-propertyPrice(b1, 4020, 4).
-propertyPrice(b2, 4030, 4).
-propertyPrice(b3, 4040, 4).
-propertyPrice(c1, 4050, 4).
-propertyPrice(c2, 4060, 4).
-propertyPrice(c3, 4070, 4).
-propertyPrice(d1, 4080, 4).
-propertyPrice(d2, 4090, 4).
-propertyPrice(d3, 4100, 4).
-propertyPrice(e1, 4110, 4).
-propertyPrice(e2, 4120, 4).
-propertyPrice(e3, 4130, 4).
-propertyPrice(f1, 4140, 4).
-propertyPrice(f2, 4150, 4).
-propertyPrice(f3, 4160, 4).
-propertyPrice(g1, 4170, 4).
-propertyPrice(g2, 4180, 4).
-propertyPrice(g3, 4190, 4).
-propertyPrice(h1, 4200, 4).
-propertyPrice(h2, 4210, 4).
+propertyPrice('A1', 1000, 1).
+propertyPrice('A2', 1010, 1).
+propertyPrice('B1', 1020, 1).
+propertyPrice('B2', 1030, 1).
+propertyPrice('B3', 1040, 1).
+propertyPrice('C1', 1050, 1).
+propertyPrice('C2', 1060, 1).
+propertyPrice('C3', 1070, 1).
+propertyPrice('D1', 1080, 1).
+propertyPrice('D2', 1090, 1).
+propertyPrice('D3', 1100, 1).
+propertyPrice('E1', 1110, 1).
+propertyPrice('E2', 1120, 1).
+propertyPrice('E3', 1130, 1).
+propertyPrice('F1', 1140, 1).
+propertyPrice('F2', 1150, 1).
+propertyPrice('F3', 1160, 1).
+propertyPrice('G1', 1170, 1).
+propertyPrice('G2', 1180, 1).
+propertyPrice('G3', 1190, 1).
+propertyPrice('H1', 1200, 1).
+propertyPrice('H2', 1210, 1).
+
+propertyPrice('A1', 2000, 2).
+propertyPrice('A2', 2010, 2).
+propertyPrice('B1', 2020, 2).
+propertyPrice('B2', 2030, 2).
+propertyPrice('B3', 2040, 2).
+propertyPrice('C1', 2050, 2).
+propertyPrice('C2', 2060, 2).
+propertyPrice('C3', 2070, 2).
+propertyPrice('D1', 2080, 2).
+propertyPrice('D2', 2090, 2).
+propertyPrice('D3', 2100, 2).
+propertyPrice('E1', 2110, 2).
+propertyPrice('E2', 2120, 2).
+propertyPrice('E3', 2130, 2).
+propertyPrice('F1', 2140, 2).
+propertyPrice('F2', 2150, 2).
+propertyPrice('F3', 2160, 2).
+propertyPrice('G1', 2170, 2).
+propertyPrice('G2', 2180, 2).
+propertyPrice('G3', 2190, 2).
+propertyPrice('H1', 2200, 2).
+propertyPrice('H2', 2210, 2).
+
+propertyPrice('A1', 3000, 3).
+propertyPrice('A2', 3010, 3).
+propertyPrice('B1', 3020, 3).
+propertyPrice('B2', 3030, 3).
+propertyPrice('B3', 3040, 3).
+propertyPrice('C1', 3050, 3).
+propertyPrice('C2', 3060, 3).
+propertyPrice('C3', 3070, 3).
+propertyPrice('D1', 3080, 3).
+propertyPrice('D2', 3090, 3).
+propertyPrice('D3', 3100, 3).
+propertyPrice('E1', 3110, 3).
+propertyPrice('E2', 3120, 3).
+propertyPrice('E3', 3130, 3).
+propertyPrice('F1', 3140, 3).
+propertyPrice('F2', 3150, 3).
+propertyPrice('F3', 3160, 3).
+propertyPrice('G1', 3170, 3).
+propertyPrice('G2', 3180, 3).
+propertyPrice('G3', 3190, 3).
+propertyPrice('H1', 3200, 3).
+propertyPrice('H2', 3210, 3).
+
+propertyPrice('A1', 4000, 4).
+propertyPrice('A2', 4010, 4).
+propertyPrice('B1', 4020, 4).
+propertyPrice('B2', 4030, 4).
+propertyPrice('B3', 4040, 4).
+propertyPrice('C1', 4050, 4).
+propertyPrice('C2', 4060, 4).
+propertyPrice('C3', 4070, 4).
+propertyPrice('D1', 4080, 4).
+propertyPrice('D2', 4090, 4).
+propertyPrice('D3', 4100, 4).
+propertyPrice('E1', 4110, 4).
+propertyPrice('E2', 4120, 4).
+propertyPrice('E3', 4130, 4).
+propertyPrice('F1', 4140, 4).
+propertyPrice('F2', 4150, 4).
+propertyPrice('F3', 4160, 4).
+propertyPrice('G1', 4170, 4).
+propertyPrice('G2', 4180, 4).
+propertyPrice('G3', 4190, 4).
+propertyPrice('H1', 4200, 4).
+propertyPrice('H2', 4210, 4).
 
 biayaSewa(Loc, PropertyLevel, Price) :- PropertyLevel == 0,
                                         !,
@@ -255,3 +258,81 @@ checkIsProperty(X,Result) :-
                      (X == 'GO', Result is 0;X == 'CF',Result is 0; X=='CC',Result is 0;X=='JL',Result is 0;X=='TX', Result is 0;X=='FP', Result is 0;
                      X=='WT',Result is 0 ),!;
                      (Result is 1). 
+increasePropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
+                           locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           IDPlayer == ID,
+                           PropertyLevel == 3,
+                           write('Apakah kamu ingin meningkatkan properti menjadi Landmark?'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti'), nl,
+                           write('Ketik 0 jika iya'), nl,
+                           read(Answer),
+                           (Answer == 1 -> checkMoney(Money, 4, Loc, Bool),
+                            Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, ID, 4));
+                            Answer == 0 -> halt),
+                           write('Input tidak valid').
+
+increasePropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
+                           locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           IDPlayer == ID,
+                           PropertyLevel == 3,
+                           write('Apakah kamu ingin meningkatkan properti menjadi Landmark?'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti'), nl,
+                           write('Ketik 0 jika tidak'), nl,
+                           read(Answer),
+                           (Answer == 1 -> checkMoney(Money, 4, Loc, Bool),
+                            Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, ID, 4));
+                            Answer == 0 -> halt),
+                           write('Input tidak valid').
+
+increasePropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
+                           locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           IDPlayer == ID,
+                           (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
+                           write('Ketik 0 jika tidak'), read(Answer), Answer == 1 -> checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
+                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, IDPlayer, 3)), 
+                           Answer == 0 -> halt);
+                           (PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
+                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
+                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1)));
+                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)), 
+                           Answer == 0 -> halt);
+                           (PropertyLevel == 0 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 3 jika ingin meningkatkan properti tiga level'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
+                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
+                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1));
+                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)); Answer == 3 -> asserta(locOwnerDetail(Loc, IDPlayer, 3));  
+                           Answer == 0 -> halt)),
+                           write('Input tidak valid').
+
+increasePropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
+                           locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           IDPlayer == ID,
+                           (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
+                           write('Ketik 0 jika tidak'), read(Answer), Answer == 1 -> checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
+                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, IDPlayer, 3)); 
+                           Answer == 0 -> halt),
+                           (PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
+                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
+                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1));
+                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)); 
+                           Answer == 0 -> halt)),
+                           (PropertyLevel == 0 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 3 jika ingin meningkatkan properti tiga level'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
+                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
+                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1));
+                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)); Answer == 3 -> asserta(locOwnerDetail(Loc, IDPlayer, 3));  
+                           Answer == 0 -> halt)),
+                           write('Input tidak valid').
+
+/*accProperty :- player1
+               write('Yah kamu terkena biaya sewa:('), nl*/
