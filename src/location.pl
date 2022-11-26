@@ -2,6 +2,7 @@
 # :- include('properti.pl').
 :- dynamic(locOwnerDetail/3).
 
+/* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
 /* Inisial Lokasi '-' Nama Lokasi */
 locName('A1', 'Beijing').
 locName('A2', 'Oriental Avenue').
@@ -25,7 +26,6 @@ locName('G2', 'London').
 locName('G3', 'Paris').
 locName('H1', 'Washington DC').
 locName('H2', 'Jakarta').
-
 /* Special location */
 locName('GO', 'Start').
 locName('CF', 'Coin Flip').
@@ -34,7 +34,6 @@ locName('JL', 'Jail').
 locName('TX', 'Tax').
 locName('FP', 'Free Parking').
 locName('WT', 'World Tour').
-
 /* Inisial Lokasi, Keterangan Lokasi */
 locDesc('A1', 'Ibu Kota China').
 locDesc('A2', 'Ibu Kota Avenue').
@@ -114,7 +113,7 @@ player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetai
                                                            asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
                                                            
 player2(ID,_,_,_,[],[],_).
-player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :-*/ 
+player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) */
 /*getLocOwner(Loc, '-', '-', []).
 getLocOwner(Loc, Player, PropertyLevel) :'-' player1(_,_,_,_,[Loc|R],_),
                                                   

@@ -1,7 +1,6 @@
 /* board.pl */
 /* Menampilkan papan permainan beserta kepemilikan properti dan posisi pemain */
 /* kepemilikan properti dan posisi pemain belum diimplementasikan */
-:- include('pemain.pl').
 
 tes :- 
     tile(_,__,Posisi,8),write(Posisi).
@@ -45,8 +44,8 @@ startGame(true).
 
 board :-  startGame(true), !, drawBoard,
             write('    Posisi pemain:'), nl,
-            player1(_ID1,_Loc1,_,_,_,_), write(_ID1), write(': '), write(_Loc1), nl,
-            player2(_ID2,_Loc2,_,_,_,_), write(_ID2), write(': '), write(_Loc2),!.
+            player1(_ID1,_Loc1,_,_,_,_,_), write(_ID1), write(': '), write(_Loc1), nl,
+            player2(_ID2,_Loc2,_,_,_,_,_), write(_ID2), write(': '), write(_Loc2),!.
 
 board :- write('Permainan belum dimulai'), nl.
 
