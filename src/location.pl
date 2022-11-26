@@ -1,5 +1,3 @@
-:- include('pemain.pl').
-# :- include('properti.pl').
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
@@ -67,6 +65,8 @@ locDesc('TX', 'Special Block : Pay Tax').
 locDesc('FP', 'Special Block : Do Nothing').
 locDesc('WT', 'Special Block : Travel Anywhere').
 
+
+/* locOwnerDetail(Loc, Player(Owner), PropertyLevel) */
 /* Inisialisasi locOwnerDetail */
 locOwnerDetail('A1', '-', '-').
 locOwnerDetail('A2', '-', '-').
@@ -91,27 +91,19 @@ locOwnerDetail('G3', '-', '-').
 locOwnerDetail('H1', 'V', 4).
 locOwnerDetail('H2', 'A', 1).
 
-/* updating loc owner */
-updateLocOwner(_,[],[]).
-updateLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
+/* Updating loc owner */
+/* Fakta*/
+/* updateAllLocOwner(_,[],[]).*/
+
+/* Rules */
+/* updateAllLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
                                     List1 is [Loc|Tail], 
                                     retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)).
-updateLoc :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
-             player2(ID2,_,_,_,[Loc|Tail2],[NewPropertyLevel2|TailP2],_).
-/*updateLocOwner(ID,L,L)
-/*player1(ID,_,_,_,[],[],_).
-player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                                           asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
-                                                           
-player2(ID,_,_,_,[],[],_).
-player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) */
-/*getLocOwner(Loc, '-', '-', []).
-getLocOwner(Loc, Player, PropertyLevel) :'-' player1(_,_,_,_,[Loc|R],_),
-                                                  
-updateLocOwner(Loc, Player, PropertyLevel) :'-' getLocOwner(Loc, Player, PropertyLevel, List1)
-                                              retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                              asserta(locOwnerDetail(Loc, Player, PropertyLevel)), !.*/
+                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)). */
+
+
+/* Mengubah kepemilikan sebuah loc */
+changeLocOwner(LocID, PlayerID, PropertyLevel) :- retract(locOwnerDetail(LocID,_,_)), asserta(locOwnerDetail(LocID, PlayerID, PropertyLevel)).
 
 biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLevel),
                                            PropertyLevel \= 4,
@@ -138,7 +130,7 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
 /* Condition Vacant Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C == ('-'),
-                             D == ('-'),
+                             D = ('-'),
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -151,12 +143,10 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Biaya Sewa Saat Ini: '), write('-'), nl, 
                              write('Biaya Akuisisi     : '), write('-'), nl, 
                              write('Tingkatan Properti : '), write('-'), nl,
-
                              write('================================================').
 
 /* Kondisi Owned Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
-                             D == 0,
                              C \= ('-'),
                              biayaSewa(Loc, RentPrice, D),
                              biayaAkuisisi(Loc, Price, D),
