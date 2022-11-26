@@ -2,93 +2,103 @@
 # :- include('properti.pl').
 :- dynamic(locOwnerDetail/3).
 
-/* locOwnerDetail(Loc, Player(Owner), PropertyLevel) */
+/* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
+/* Inisial Lokasi '-' Nama Lokasi */
+locName('A1', 'Beijing').
+locName('A2', 'Oriental Avenue').
+locName('B1', 'Taipei').
+locName('B2', 'New Delhi').
+locName('B3', 'Seoul').
+locName('C1', 'Kairo').
+locName('C2', 'Tokyo').
+locName('C3', 'Sydney').
+locName('D1', 'Singapore').
+locName('D2', 'Hong Kong').
+locName('D3', 'Sao Paulo').
+locName('E1', 'Prague').
+locName('E2', 'Bucharest').
+locName('E3', 'Berlin').
+locName('F1', 'Moscow').
+locName('F2', 'Geneva').
+locName('F3', 'Rome').
+locName('G1', 'Amsterdam').
+locName('G2', 'London').
+locName('G3', 'Paris').
+locName('H1', 'Washington DC').
+locName('H2', 'Jakarta').
+/* Special location */
+locName('GO', 'Start').
+locName('CF', 'Coin Flip').
+locName('CC', 'Chance Card').
+locName('JL', 'Jail').
+locName('TX', 'Tax').
+locName('FP', 'Free Parking').
+locName('WT', 'World Tour').
+/* Inisial Lokasi, Keterangan Lokasi */
+locDesc('A1', 'Ibu Kota China').
+locDesc('A2', 'Ibu Kota Avenue').
+locDesc('B1', 'Ibu Kota Taiwan').
+locDesc('B2', 'Ibu Kota India').
+locDesc('B3', 'Ibu Kota Korea').
+locDesc('C1', 'Ibu Kota Mesir').
+locDesc('C2', 'Ibu Kota Jepang').
+locDesc('C3', 'Ibu Kota Australia').
+locDesc('D1', 'Ibu Kota Singapura').
+locDesc('D2', 'Ibu Kota Hong Kong').
+locDesc('D3', 'Ibu Kota Brazil').
+locDesc('E1', 'Ibu Kota Czech Republic').
+locDesc('E2', 'Ibu Kota Rumania').
+locDesc('E3', 'Ibu Kota Jerman').
+locDesc('F1', 'Ibu Kota Rusia').
+locDesc('F2', 'Ibu Kota Swiss').
+locDesc('F3', 'Ibu Kota Italia').
+locDesc('G1', 'Ibu Kota Belanda').
+locDesc('G2', 'Ibu Kota Inggris').
+locDesc('G3', 'Ibu Kota Prancis').
+locDesc('H1', 'Ibu Kota Amerika Serikat').
+locDesc('H2', 'Ibu Kota Indonesia').
 
-/* Nama Lokasi'-'Lokasi */
-locName(a1, 'Beijing').
-locName(a3, 'Oriental Avenue').
-locName(cc, 'Chance Card').
-locName(b1, 'Taipei').
-locName(b2, 'New Delhi').
-locName(b3, 'Seoul').
-locName(jl, 'Jail').
-locName(c1, 'Kairo').
-locName(c2, 'Tokyo').
-locName(c3, 'Sydney').
-locName(tx, 'Tax').
-locName(d1, 'Singapore').
-locName(d2, 'Hong Kong').
-locName(d3, 'Sao Paulo').
-locName(fp, 'Freeport').
-locName(e1, 'Prague').
-locName(e2, 'Bucharest').
-locName(e3, 'Berlin').
-locName(f1, 'Moscow').
-locName(f2, 'Geneva').
-locName(f3, 'Rome').
-locName(g1, 'Amsterdam').
-locName(g2, 'London').
-locName(g3, 'Paris').
-locName(h1, 'Washington DC').
-locName(h2, 'Jakarta').
-locName(go, 'GO').
-locName(gc, 'Game Center').
-locName(wt, 'World Tour').
-locDesc(a1, 'Ibu Kota China').
-locDesc(a3, 'Ibu Kota Avenue').
-locDesc(b1, 'Ibu Kota Taiwan').
-locDesc(b2, 'Ibu Kota India').
-locDesc(b3, 'Ibu Kota Korea').
-locDesc(c1, 'Ibu Kota Mesir').
-locDesc(c2, 'Ibu Kota Jepang').
-locDesc(c3, 'Ibu Kota Australia').
-locDesc(d1, 'Ibu Kota Singapura').
-locDesc(d2, 'Ibu Kota Hong Kong').
-locDesc(d3, 'Ibu Kota Brazil').
-locDesc(e1, 'Ibu Kota Czech Republic').
-locDesc(e2, 'Ibu Kota Rumania').
-locDesc(e3, 'Ibu Kota Jerman').
-locDesc(f1, 'Ibu Kota Rusia').
-locDesc(f2, 'Ibu Kota Swiss').
-locDesc(f3, 'Ibu Kota Italia').
-locDesc(g1, 'Ibu Kota Belanda').
-locDesc(g2, 'Ibu Kota Inggris').
-locDesc(g3, 'Ibu Kota Prancis').
-locDesc(h1, 'Ibu Kota Amerika Serikat').
-locDesc(h2, 'Ibu Kota Indonesia').
-locDesc(go, 'Start').
+/* Special location */
+locDesc('GO', 'Special Block : Start').
+locDesc('CF', 'Special Block : Coin Flip Mini Game').
+locDesc('CC', 'Special Block : Draw Chance Card').
+locDesc('JL', 'Special Block : Confinement').
+locDesc('TX', 'Special Block : Pay Tax').
+locDesc('FP', 'Special Block : Do Nothing').
+locDesc('WT', 'Special Block : Travel Anywhere').
+
 /* Inisialisasi locOwnerDetail */
-locOwnerDetail(a1, '-', '-').
-locOwnerDetail(a3, '-', '-').
-locOwnerDetail(b1, '-', '-').
-locOwnerDetail(b2, '-', '-').
-locOwnerDetail(b3, '-', '-').
-locOwnerDetail(c1, '-', '-').
-locOwnerDetail(c2, '-', '-').
-locOwnerDetail(c3, '-', '-').
-locOwnerDetail(d1, '-', '-').
-locOwnerDetail(d2, '-', '-').
-locOwnerDetail(d3, '-', '-').
-locOwnerDetail(e1, '-', '-').
-locOwnerDetail(e2, '-', '-').
-locOwnerDetail(e3, '-', '-').
-locOwnerDetail(f1, '-', '-').
-locOwnerDetail(f2, '-', '-').
-locOwnerDetail(f3, '-', '-').
-locOwnerDetail(g1, '-', '-').
-locOwnerDetail(g2, '-', '-').
-locOwnerDetail(g3, '-', '-').
-locOwnerDetail(h1, '-', '-').
-locOwnerDetail(h2, '-', '-').
+locOwnerDetail('A1', '-', '-').
+locOwnerDetail('A2', '-', '-').
+locOwnerDetail('B1', '-', '-').
+locOwnerDetail('B2', '-', '-').
+locOwnerDetail('B3', '-', '-').
+locOwnerDetail('C1', '-', '-').
+locOwnerDetail('C2', '-', '-').
+locOwnerDetail('C3', '-', '-').
+locOwnerDetail('D1', '-', '-').
+locOwnerDetail('D2', '-', '-').
+locOwnerDetail('D3', '-', '-').
+locOwnerDetail('E1', '-', '-').
+locOwnerDetail('E2', '-', '-').
+locOwnerDetail('E3', '-', '-').
+locOwnerDetail('F1', '-', '-').
+locOwnerDetail('F2', '-', '-').
+locOwnerDetail('F3', '-', '-').
+locOwnerDetail('G1', '-', '-').
+locOwnerDetail('G2', '-', '-').
+locOwnerDetail('G3', '-', '-').
+locOwnerDetail('H1', '-', '-').
+locOwnerDetail('H2', '-', '-').
+
 /* updating loc owner */
-updateLocOwner('-',[],[]).
+updateLocOwner(_,[],[]).
 updateLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
-                                    List1 =:= [Loc|Tail], 
+                                    List1 is [Loc|Tail], 
                                     retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
                                     asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)).
 updateLoc :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
-             player2(ID2,_,_,_,[Loc2|Tail2],[NewPropertyLevel2|TailP2],_).
-            
+             player2(ID2,_,_,_,[Loc|Tail2],[NewPropertyLevel2|TailP2],_).
 /*updateLocOwner(ID,L,L)
 /*player1(ID,_,_,_,[],[],_).
 player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
@@ -113,7 +123,7 @@ checkLocationDetail(Loc) :- Loc == cc,
                             write('Nama Lokasi         : '), write(A), nl,
                             write('Deskripsi Lokasi    : '), write("Apakah kamu sedang beruntung? ").
 
-checkLocationDetail(Loc) :- Loc == jl,
+checkLocationDetail(Loc) :- Loc == 'JL',
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
@@ -125,14 +135,14 @@ checkLocationDetail(Loc) :- Loc == tx,
                             write('Nama Lokasi         : '), write(A), nl,
                             write('Deskripsi Lokasi    : '), write("").
                             
-checkLocationDetail(Loc) :- Loc == fp,
+checkLocationDetail(Loc) :- Loc == 'FP',
                             locName(Loc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
                             write('Deskripsi Lokasi    : '), write("").
 
-checkLocationDetail(Loc) :- Loc == go,
-                            locName(Loc, A),
+checkLocationDetail(Loc) :- Loc == 'GO',
+                            locName('WT',oc, A),
                             !,
                             write('Nama Lokasi         : '), write(A), nl,
                             write('Deskripsi Lokasi    : '), write("").

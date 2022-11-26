@@ -196,4 +196,4 @@ checkPropertyDetail(Loc) :- locName(Loc, A),
 
 /* increaseProperty :-  */
 
-checkIsProperty(X,Result) :- (X == tx, Result is 0).
+checkIsProperty(X,Result) :- write(X),(X == 'TX', Result is 0),!.

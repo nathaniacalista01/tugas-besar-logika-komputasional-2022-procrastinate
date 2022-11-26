@@ -7,14 +7,12 @@
 :- include('pesan.pl').
 :- include('board.pl').
 :- include('dice.pl').
-
 :- dynamic(round/1).
 :- dynamic(win/1).
 :- dynamic(start/1).
 :- dynamic(playerTurn/1).
 :- dynamic(repeat/1).
 :- dynamic(diceCount/1).
-
 start :-
     /* introduction */
     /* Ini belum ada fungsinya */
@@ -34,7 +32,6 @@ help :-
 
 quit :-
     halt.
-
 map:-
     start(1),board,!.
 
@@ -57,8 +54,8 @@ throwDice :-
                 (writeNormal(Dice3,Dice4)),asserta(playerTurn(1)),asserta(diceCount(1)),retract(round(PrevRound)),NewRound is PrevRound +1, asserta(round(NewRound),
                 NewLoc is Dice3+Dice4,updateLoc2(NewLoc)),!),!.
 
-buyProperty :- cekPlayerTurn(X),
-                    (X == 1, player1(_,Loc,_,_,_,_,_), checkIsProperty(Loc,Result),write(Result)),
+buyProperty :-cekPlayerTurn(X),
+                    (X == 1,player1(_,Loc,_,_,_,_,_), checkIsProperty(Loc,Result),());
                     (X == 2, player2(_,Loc,_,_,_,_,_),write(Loc)).
 
 infoRound(Y) :-
