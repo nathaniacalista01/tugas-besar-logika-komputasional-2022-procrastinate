@@ -83,8 +83,24 @@ locOwnerDetail(g3, '-', '-').
 locOwnerDetail(h1, '-', '-').
 locOwnerDetail(h2, '-', '-').
 
+/* updating loc owner */
+updateLocOwner('-',[],[]).
+updateLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
+                                    List1 =:= [Loc|Tail], 
+                                    retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
+                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
+updateLoc :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
+             player2(ID2,_,_,_,[Loc2|Tail2],[NewPropertyLevel2|TailP2],_),
+            
+/*updateLocOwner(ID,L,L)
+/*player1(ID,_,_,_,[],[],_).
+player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
+                                                           asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
+                                                           
+player2(ID,_,_,_,[],[],_).
+player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :-*/ 
 /*getLocOwner(Loc, '-', '-', []).
-getLocOwner(Loc, Player, PropertyLevel, List1) :'-' player(_,_,_,_,List1,_),
+getLocOwner(Loc, Player, PropertyLevel) :'-' player1(_,_,_,_,[Loc|R],_),
                                                   
 updateLocOwner(Loc, Player, PropertyLevel) :'-' getLocOwner(Loc, Player, PropertyLevel, List1)
                                               retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),

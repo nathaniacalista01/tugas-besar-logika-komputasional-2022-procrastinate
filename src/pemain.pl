@@ -1,14 +1,14 @@
 /* Player Status */
-/* player(PlayerID, Loc, Money, Property, List of Property, List of Card) */
+/* player(PlayerID, Loc, Money, Property, List of Property, List of Property Level, List of Card) */
 
-:- dynamic(player1/6).
-:- dynamic(player2/6).
+:- dynamic(player1/7).
+:- dynamic(player2/7).
 
 blank :- write(' ').
 
 initPlayer :- 
-                asserta(player1('A','GO',1500,0,[],[])),!,
-                asserta(player2('V','GO',1500,0,[],[])),!,
+                asserta(player1('A','GO',1500,0,[],[],[])),!,
+                asserta(player2('V','GO',1500,0,[],[],[])),!,
                 write('Selamat bermain, pemain A!'),nl,
                 printInfo1,nl,!,
                 write('Selamat bermain, pemain B!'),nl,
@@ -16,35 +16,35 @@ initPlayer :-
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 updateLoc1(NewLoc) :- 
-                retract(player1(Id,Loc,Money,Property,List1,List2)),
+                retract(player1(Id,Loc,Money,Property,List1,List2,List3)),
                 tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
                 tile(_,_,X,NewLocNumber),
-                asserta(player1(Id,X,Money,Property,List1,List2)),!.
+                asserta(player1(Id,X,Money,Property,List1,List2,List3)),!.
 
 
 updateLoc2(NewLoc) :-
-                retract(player2(Id,Loc,Money,Property,List1,List2)),
+                retract(player2(Id,Loc,Money,Property,List1,List2,List3)),
                 tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
                 tile(_,_,X,NewLocNumber),
-                asserta(player2(Id,X,Money,Property,List1,List2)),!.
+                asserta(player2(Id,X,Money,Property,List1,List2,List3)),!.
 
 /* Fungsi untuk update jumlah uang dari player pertama dan kedua */
 updateMoney1(NewMoney) :-
-                retract(player1(Id,Loc,_,Property,List1,List2)),
-                asserta(player1(Id,Loc,NewMoney,Property,List1,List2)).
+                retract(player1(Id,Loc,_,Property,List1,List2,List3)),
+                asserta(player1(Id,Loc,NewMoney,Property,List1,List2,List3)).
 
 updateMoney2(NewMoney) :-
-                retract(player2(Id,Loc,_,Property,List1,List2)),
-                asserta(player2(Id,Loc,NewMoney,Property,List1,List2)).
+                retract(player2(Id,Loc,_,Property,List1,List2,List3)),
+                asserta(player2(Id,Loc,NewMoney,Property,List1,List2,List3)).
 
 /* Fungsi untuk update jumlah property dari player pertama dan kedua */
 updateProperty1(NewProperty) :-
-                retract(player1(Id,Loc,Money,_,List1,List2)),
-                asserta(player1(Id,Loc,Money,Property,List1,List2)).
+                retract(player1(Id,Loc,Money,_,List1,List2,List3)),
+                asserta(player1(Id,Loc,Money,Property,List1,List2,List3)).
 
 updateProperty2(NewProperty) :-
-                retract(player2(Id,Loc,Money,_,List1,List2)),
-                asserta(player2(Id,Loc,Money,Property,List1,List2)).
+                retract(player2(Id,Loc,Money,_,List1,List2,List3)),
+                asserta(player2(Id,Loc,Money,Property,List1,List2,List3)).
     
 printInfo1 :-
             write('================================================'), nl,

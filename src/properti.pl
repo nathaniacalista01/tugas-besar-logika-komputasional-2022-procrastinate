@@ -197,3 +197,5 @@ checkPropertyDetail(Loc) :- locName(Loc, A),
                             write('Biaya Sewa Bangunan 3 : '), write(RentPrice3), nl,
                             write('Biaya Sewa Landmark   : '), write(RentPrice4), nl, 
                             write('================================================').
+
+increaseProperty :- 
