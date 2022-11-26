@@ -1,6 +1,5 @@
 /* Player Status */
 /* player(PlayerID, Loc, Money, Property, List of Property, List of Property Level, List of Card) */
-
 :- dynamic(player1/7).
 :- dynamic(player2/7).
 
@@ -53,10 +52,10 @@ printInfo1 :-
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
-            write('3. Total Nilai Properti     : '),write(Property),nl,
+            write('3. Total Nilai Properti     : '), countProperty('A',P), write(P),nl,
             write('4. Total Aset               : '),TotalAsset is Money + Property,write(TotalAsset),nl,
             write('Daftar kepemilikian properti : '),nl,
-            write(List1),nl,
+            writeLoc('A'),
             write('================ List Cards ================ '),nl,
             write(List2),!.
 
@@ -67,10 +66,10 @@ printInfo2 :-
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
-            write('3. Total Nilai Properti     : '),write(Property),nl,
+            write('3. Total Nilai Properti     : '), countProperty('V',P), write(P),nl,
             write('4. Total Aset               : '),TotalAsset is Money + Property,write(TotalAsset),nl,
             write('Daftar kepemilikan Properti : '),nl,
-            write(List1),nl,
+            writeLoc('V'),
             write('================ List Cards ================ '),nl,
             write(List2),!.
             
@@ -78,3 +77,20 @@ checkPlayerDetail(Player):-
                         (Player = 'A',printInfo1),!;
                         (Player = 'B',printInfo2),!.
 
+writeB(0) :- write(' - Tanah'), !.
+writeB(1) :- write(' - Bangunan 1'), !.
+writeB(2) :- write(' - Bangunan 2'), !.
+writeB(3) :- write(' - Bangunan 3'), !.
+writeB(4) :- write(' - Landmark'), !.
+
+writeX(31,ID,_) :- locOwnerDetail('H2',ID1,_), ID \= ID1, nl, !.
+writeX(31,ID,NO) :- locOwnerDetail('H2',ID,B), write(NO), write('. '), write('H2'), writeB(B), nl.
+writeX(IDX,ID,NO) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), write(NO), write('. '), write(Loc), writeB(B), nl, IDX1 is IDX + 1, NO1 is NO + 1, writeX(IDX1,ID,NO1).
+writeX(IDX,ID,NO) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, writeX(IDX1,ID,NO).
+writeLoc(ID) :- writeX(1,ID,1),!.
+
+countP(31,ID,0) :- locOwnerDetail('H2',ID1,_), ID \= ID1, !.
+countP(31,ID,N) :- locOwnerDetail('H2',ID,B), propertyPrice('H2',N,B), !.
+countP(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), propertyPrice(Loc,N1,B), IDX1 is IDX + 1, countP(IDX1,ID,N2), N is N1 + N2, !.
+countP(IDX,ID,N) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, countP(IDX1,ID,N).
+countProperty(ID,N) :- countP(1,ID,N),!.
