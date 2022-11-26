@@ -1,8 +1,7 @@
-:- include('pemain.pl').
-# :- include('properti.pl').
 :- dynamic(locOwnerDetail/3).
 
-/* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
+/* locOwnerDetail(Loc, Player(Owner), PropertyLevel) */
+
 /* Inisial Lokasi '-' Nama Lokasi */
 locName('A1', 'Beijing').
 locName('A2', 'Oriental Avenue').
@@ -26,6 +25,7 @@ locName('G2', 'London').
 locName('G3', 'Paris').
 locName('H1', 'Washington DC').
 locName('H2', 'Jakarta').
+
 /* Special location */
 locName('GO', 'Start').
 locName('CF', 'Coin Flip').
@@ -34,6 +34,7 @@ locName('JL', 'Jail').
 locName('TX', 'Tax').
 locName('FP', 'Free Parking').
 locName('WT', 'World Tour').
+
 /* Inisial Lokasi, Keterangan Lokasi */
 locDesc('A1', 'Ibu Kota China').
 locDesc('A2', 'Ibu Kota Avenue').
@@ -67,8 +68,6 @@ locDesc('TX', 'Special Block : Pay Tax').
 locDesc('FP', 'Special Block : Do Nothing').
 locDesc('WT', 'Special Block : Travel Anywhere').
 
-
-/* locOwnerDetail(Loc, Player(Owner), PropertyLevel) */
 /* Inisialisasi locOwnerDetail */
 locOwnerDetail('A1', '-', '-').
 locOwnerDetail('A2', '-', '-').
@@ -93,60 +92,48 @@ locOwnerDetail('G3', '-', '-').
 locOwnerDetail('H1', '-', '-').
 locOwnerDetail('H2', '-', '-').
 
-/* Updating loc owner */
-/* Fakta*/
-updateAllLocOwner(_,[],[]).
-
-/* Rules */
-updateAllLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
-                                    List1 is [Loc|Tail], 
-                                    retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)).
-
-
-/* Mengubah kepemilikan sebuah loc */
-changeLocOwner(LocID, PlayerID, PropertyLevel) :- retract(locOwnerDetail(LocID,_,_)), asserta(locOwnerDetail(LocID, PlayerID, PropertyLevel)).
-
-/*updateLocOwner(ID,L,L)
-/*player1(ID,_,_,_,[],[],_).
-player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                                           asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
-                                                           
-player2(ID,_,_,_,[],[],_).
-player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) */
-/*getLocOwner(Loc, '-', '-', []).
-getLocOwner(Loc, Player, PropertyLevel) :'-' player1(_,_,_,_,[Loc|R],_),
-                                                  
-updateLocOwner(Loc, Player, PropertyLevel) :'-' getLocOwner(Loc, Player, PropertyLevel, List1)
-                                              retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                              asserta(locOwnerDetail(Loc, Player, PropertyLevel)), !.*/
-
 biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLevel),
                                            PropertyLevel \= 4,
                                            Price is 0.7 * RentPrice.
 
-/* Condition Special Block */
-checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
+checkLocationDetail(Loc) :- Loc == cc,
+                            locName(Loc, A),
                             !,
-                            write('================================================'), nl,
-                            write('          Informasi Lokasi Spesial '), nl, 
-                            write('================================================'), nl,
                             write('Nama Lokasi         : '), write(A), nl,
-                            write('Deskripsi Lokasi    : '), write(B), nl,
-                            (Loc == 'CC', write('Deskripsi Tambahan    : '), write('Feeling Lucky this time?');
-                            Loc == 'CF', write('Deskripsi Tambahan    : '), write('WOOOHOO! GAME TIME BUDDYY!');
-                            Loc == 'JL', write('Deskripsi Tambahan    : '), write('FBI! OPEN UP! *Sirens sound*');
-                            Loc == 'TX', write('Deskripsi Tambahan    : '), write('Pay. Your. Debt. *Gun Click Sounds*');
-                            Loc == 'FP', write('Deskripsi Tambahan    : '), write('Nothing happened... Now what?');
-                            Loc == 'GO', write('Deskripsi Tambahan    : '), write('You get the money right? riightt...?');
-                            Loc == 'WT', write('Deskripsi Tambahan    : '), write('Pintu kemana saja has been spawned.')), nl.
+                            write('Deskripsi Lokasi    : '), write("Apakah kamu sedang beruntung? ").
 
+checkLocationDetail(Loc) :- Loc == 'JL',
+                            locName(Loc, A),
+                            !,
+                            write('Nama Lokasi         : '), write(A), nl,
+                            write('Deskripsi Lokasi    : '), write("").
+                            
+checkLocationDetail(Loc) :- Loc == tx,
+                            locName(Loc, A),
+                            !,
+                            write('Nama Lokasi         : '), write(A), nl,
+                            write('Deskripsi Lokasi    : '), write("").
+                            
+checkLocationDetail(Loc) :- Loc == 'FP',
+                            locName(Loc, A),
+                            !,
+                            write('Nama Lokasi         : '), write(A), nl,
+                            write('Deskripsi Lokasi    : '), write("").
 
+checkLocationDetail(Loc) :- Loc == 'GO',
+                            locName('WT',oc, A),
+                            !,
+                            write('Nama Lokasi         : '), write(A), nl,
+                            write('Deskripsi Lokasi    : '), write("").
 
-/* Condition Vacant Land */
+checkLocationDetail(Loc) :- Loc == wt,
+                            locName(Loc, A),
+                            !,
+                            write('Nama Lokasi         : '), write(A), nl,
+                            write('Deskripsi Lokasi    : '), write("").
+
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C == ('-'),
-                             D = ('-'),
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -161,8 +148,8 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Tingkatan Properti : '), write('-'), nl,
                              write('================================================').
 
-/* Kondisi Owned Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+                             D == 0,
                              C \= ('-'),
                              biayaSewa(Loc, RentPrice, D),
                              biayaAkuisisi(Loc, Price, D),
@@ -177,10 +164,80 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Kepemilikan        : '), write(C), nl,
                              write('Biaya Sewa Saat Ini: '), write(RentPrice), nl, 
                              write('Biaya Akuisisi     : '), write(Price), nl, 
-                             write('Tingkatan Properti : '), 
-                                    (D = 0, write('Tanah');
-                                    D = 1, write('Bangunan 1');
-                                    D = 2, write('Bangunan 2');
-                                    D = 3, write('Bangunan 3');
-                                    D = 4, write('Bangunan 4')), nl,
+                             write('Tingkatan Properti : '), write('Tanah'), nl,
+                             write('================================================').
+
+checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+                             D == 1,
+                             C \= ('-'),
+                             biayaSewa(Loc, RentPrice, D),
+                             biayaAkuisisi(Loc, Price, D),
+                             locName(Loc, A),  
+                             locDesc(Loc, B),
+                             !,
+                             write('================================================'), nl,
+                             write('              Informasi Lokasi '), nl, 
+                             write('================================================'), nl,
+                             write('Nama Lokasi        : '), write(A), nl,   
+                             write('Deskripsi Lokasi   : '), write(B), nl, nl,
+                             write('Kepemilikan        : '), write(C), nl,
+                             write('Biaya Sewa Saat Ini: '), write(RentPrice), nl, 
+                             write('Biaya Akuisisi     : '), write(Price), nl, 
+                             write('Tingkatan Properti : '), write('Bangunan 1'), nl,
+                             write('================================================').
+
+checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+                             D == 2,
+                             C \= ('-'),
+                             biayaSewa(Loc, RentPrice, D),
+                             biayaAkuisisi(Loc, Price, D),
+                             locName(Loc, A),  
+                             locDesc(Loc, B),
+                             !,
+                             write('================================================'), nl,
+                             write('              Informasi Lokasi '), nl, 
+                             write('================================================'), nl,
+                             write('Nama Lokasi        : '), write(A), nl,   
+                             write('Deskripsi Lokasi   : '), write(B), nl, nl,
+                             write('Kepemilikan        : '), write(C), nl,
+                             write('Biaya Sewa Saat Ini: '), write(RentPrice), nl, 
+                             write('Biaya Akuisisi     : '), write(Price), nl, 
+                             write('Tingkatan Properti : '), write('Bangunan 2'), nl,
+                             write('================================================').
+
+checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+                             biayaSewa(Loc, RentPrice, D),
+                             biayaAkuisisi(Loc, Price, D),
+                             C \= ('-'),
+                             D == 3,
+                             locName(Loc, A),  
+                             locDesc(Loc, B),
+                             !,
+                             write('================================================'), nl,
+                             write('              Informasi Lokasi '), nl, 
+                             write('================================================'), nl,
+                             write('Nama Lokasi        : '), write(A), nl,   
+                             write('Deskripsi Lokasi   : '), write(B), nl, nl,
+                             write('Kepemilikan        : '), write(C), nl,
+                             write('Biaya Sewa Saat Ini: '), write(RentPrice), nl, 
+                             write('Biaya Akuisisi     : '), write(Price), nl, 
+                             write('Tingkatan Properti : '), write('Bangunan 3'), nl,
+                             write('================================================').
+
+checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+                             biayaSewa(Loc, RentPrice, D),
+                             C \= ('-'),
+                             D == 4,
+                             locName(Loc, A),  
+                             locDesc(Loc, B),
+                             !,
+                             write('================================================'), nl,
+                             write('              Informasi Lokasi '), nl, 
+                             write('================================================'), nl,
+                             write('Nama Lokasi        : '), write(A), nl,   
+                             write('Deskripsi Lokasi   : '), write(B), nl, nl,
+                             write('Kepemilikan        : '), write(C), nl,
+                             write('Biaya Sewa Saat Ini: '), write(RentPrice), nl, 
+                             write('Biaya Akuisisi     : '), write('-'), nl, 
+                             write('Tingkatan Properti : '), write('Landmark'), nl,
                              write('================================================').

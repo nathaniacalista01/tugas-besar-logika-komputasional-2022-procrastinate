@@ -11,8 +11,8 @@ sanggupBayar(Player, BiayaTanggungan) :-
     aset(Player, Aset),
     TotalAset is Saldo + Aset,
     (TotalAset < BiayaTanggungan ->
-    asserta(uangBelumCukup(Player) ; 
-    uangBelumCukup(Player), retract(uangBelumCukup(Player)))).
+    asserta(uangBelumCukup(Player)); 
+    uangBelumCukup(Player), retract(uangBelumCukup(Player))).
 
 displayKekayaan :-
     uang(Player, Uang),
