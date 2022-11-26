@@ -56,3 +56,91 @@ throwDice2 :-
                 player2(_,_,Money2,_,_,_,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput(Y,Money2,Dice3,Dice4),
                 (Dice3 == Dice4, diceEqual2(Dice3,Dice4);
                 writeNormal(Dice3,Dice4),retract(playerTurn(_)),asserta(playerTurn(1)),NewLoc is Dice3 + Dice4,updateLoc2(NewLoc),updateRound(Y),!),!.
+                                asciiDice(Angka1), nl, asciiDice(Angka2), nl,
+                                Dice1 is Angka1, Dice2 is Angka2.
+
+/* Menampilkan ascii art dadu */
+asciiDice(Num) :- Num = 1,
+                write('   __________________________ '), nl,
+                write(' _| ________________________ |_ '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |           __           |  | '), nl,
+                write('|  |          |__|          |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|_ |________________________| _| '), nl,
+                write('  |__________________________| '), !,nl.
+
+asciiDice(Num) :- Num = 2,
+                write('   __________________________  '), nl,
+                write(' _| ________________________ |_ '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |     __                 |  | '), nl,
+                write('|  |    |__|                |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                 __     |  | '), nl,
+                write('|  |                |__|    |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|_ |________________________| _| '), nl,
+                write('  |__________________________|   '),!, nl.
+
+asciiDice(Num) :- Num = 3,
+                write('   __________________________  '), nl,
+                write(' _| ________________________ |_ '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |     __                 |  | '), nl,
+                write('|  |    |__|                |  | '), nl,
+                write('|  |           __           |  | '), nl,
+                write('|  |          |__|          |  | '), nl,
+                write('|  |                 __     |  | '), nl,
+                write('|  |                |__|    |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|_ |________________________| _| '), nl,
+                write('  |__________________________| '),!, nl.
+
+asciiDice(Num) :- Num = 4,
+                write('   __________________________   '), nl,
+                write(' _| ________________________ |_ '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|_ |________________________| _| '), nl,
+                write('  |__________________________| '),!, nl.
+
+asciiDice(Num) :- Num = 5,
+                write('   __________________________ '), nl,
+                write(' _| ________________________ |_ '), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |           __           |  | '), nl,
+                write('|  |          |__|          |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|_ |________________________| _| '), nl,
+                write('  |__________________________| '),!, nl.
+
+asciiDice(Num) :- Num = 6,
+                write('   __________________________ '), nl,
+                write(' _| ________________________ |_'), nl,
+                write('|  |                        |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |     __          __     |  | '), nl,
+                write('|  |    |__|        |__|    |  | '), nl,
+                write('|  |                        |  | '), nl,
+                write('|_ |________________________| _| '), nl,
+                write('  |__________________________| '),!, nl.
+                
