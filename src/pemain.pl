@@ -86,11 +86,9 @@ countP(IDX,ID,N) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, countP(IDX1,ID,N).
 countProperty(ID,N) :- countP(1,ID,N),!.
 
 uangPlayer(ID, Uang) :-
-    (ID == 'A' -> player1(_, _, Uang, _, _) ; player2(_, _, Uang, _, _)).
+    (ID == 'A' -> player1(_, _, Uang, _) ; player2(_, _, Uang, _)).
 asetPlayer(ID, Aset) :-
-    (ID == 'A' -> player1(_, _, Uang, _, _), countProperty('A', P), Aset is Uang + P ; player2(_, _, Uang, _, _), countProperty('V', P), Aset is Uang + P).
-
-/* biar lebih enak dipake */
+    (ID == 'A' -> player1(_, _, Uang, _), countProperty('A', P), Aset is Uang + P ; player2(_, _, Uang, _), countProperty('V', P), Aset is Uang + P).
 updateMoney(ID, NewMoney) :-
     (ID == 'A' -> updateMoney1(NewMoney) ; updateMoney2(NewMoney)).
 
