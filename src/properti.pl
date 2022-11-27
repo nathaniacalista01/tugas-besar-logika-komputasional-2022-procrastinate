@@ -254,7 +254,7 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_),write(Loc),
                        Answer == -1 -> halt;
                      write('Input tidak valid!'));
                      OldID \= ('-'),write('Udah punya orang'));
-                     Result == 0, write('Tidak bisa membeli property '),write(Loc)).
+                     Result == 0, write('Tidak bisa membeli property '),write(Loc).
 
 increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
@@ -389,3 +389,16 @@ accProperty2 :- player2(ID,Loc,Money,_),
 buyProperty(X) :- 
                   (X == 1, buyPropertyPlayer1;
                   X == 2, buyPropertyPlayer2).
+
+jualProperty(ID, Money) :- countProperty(ID,N), Money is N, resetProperty(ID,1), !.
+
+resetProperty(ID, 31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), ID \= IDPlayer, !.
+
+resetProperty(ID, 31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), !,
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
+
+resetProperty(ID, IDX) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))),
+                           IDX1 is IDX + 1, resetProperty(ID, IDX1).
+
+resetProperty(ID, IDX) :- IDX1 is IDX + 1, resetProperty(ID, IDX1).
