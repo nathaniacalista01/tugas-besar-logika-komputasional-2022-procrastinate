@@ -109,10 +109,9 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
                                            PropertyLevel \= 4,
                                            Price is 0.7 * RentPrice.
 
-/*(Loc == ('CC'); Loc == ('CF'); Loc == ('JL'); Loc == ('TX'); Loc == ('FP'); Loc == ('GO'), Loc == ('WT')), 
-!,*/
 /* Condition Special Block */
 checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
+                            (Loc == ('CC'); Loc == ('CF'); Loc == ('JL'); Loc == ('TX'); Loc == ('FP'); Loc == ('GO'), Loc == ('WT')), 
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
                             write('================================================'), nl,
