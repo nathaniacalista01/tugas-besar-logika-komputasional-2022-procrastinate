@@ -5,12 +5,12 @@
 blank :- write(' ').
 
 initPlayer :-
-            asserta(player1('A','H2',1500,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','H1',1500,['Get Out From Jail', 'Angel Card'])),!,
             asserta(player2('V','GO',1500,[])),!,
             write('Selamat bermain, pemain A!'),nl,
             printInfo1,nl,!,
             write('Selamat bermain, pemain B!'),nl,
-            printInfo2,nl,!.
+            printInfo2,nl,!.    
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 updateLoc1(NewLoc) :- 
