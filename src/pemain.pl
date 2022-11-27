@@ -5,8 +5,8 @@
 blank :- write(' ').
 
 initPlayer :-
-            asserta(player1('A','JL',1500,['Get Out From Jail', 'Angel Card'])),!,
-            asserta(player2('V','JL',1500,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','WT',10000,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','WT',10000,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
@@ -43,7 +43,7 @@ printInfo1 :-
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
-            write('3. Total Nilai Properti     : '), countProperty('A',P), write(P),nl,
+            write('3. Total Nilai Properti     : '), countProperty(ID,P), write(P),nl,
             write('4. Total Aset               : '),TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikian properti : '),nl,
             writeLoc('A'),
@@ -57,7 +57,7 @@ printInfo2 :-
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '), write(Money),nl,
-            write('3. Total Nilai Properti     : '), countProperty('V',P), write(P),nl,
+            write('3. Total Nilai Properti     : '), countProperty(ID,P), write(P),nl,
             write('4. Total Aset               : '), TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikan Properti : '),nl,
             writeLoc('V'),

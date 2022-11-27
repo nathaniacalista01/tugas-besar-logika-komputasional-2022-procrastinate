@@ -201,8 +201,11 @@ checkPropertyDetail(Loc) :- locName(Loc, A),
 /* increasePropertyPlayer1 :-  */
 /* increasePropertyPlayer2 :-  */
 checkIsProperty(X,Result) :- 
-                     (X == 'GO', Result is 0;X == 'CF',Result is 0; X=='CC',Result is 0;X=='JL',Result is 0;X=='TX', Result is 0;X=='FP', Result is 0;
-                     X=='WT',Result is 0 ,!;
+                     (X == 'GO', Result is 0; X == 'CF', Result is 0; 
+                     X=='1C',Result is 0 ; X=='2C',Result is 0 ; 
+                     X=='3C',Result is 0 ; X=='JL',Result is 0 ; 
+                     X=='1X', Result is 0; X=='2X',Result is 0 ;
+                     X=='FP', Result is 0; X=='WT',Result is 0 ,!;
                      Result is 1). 
 writePropertyLevel(PropertyLevel) :- PropertyLevel == 0, write('tanah');
                                     PropertyLevel == 1, write('bangunan tingkat 1');
@@ -244,7 +247,7 @@ buyPropertyPlayer1 :- player1(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                        Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
                        Answer == 2, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
                        Answer == 3, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
-                       Answer == -1, write('Tidak membeli properti');
+                       Answer == -1, write('Tidak membeli properti'), nl;
                        write('Input tidak valid!'), nl, buyPropertyPlayer1);
                        OldID == ('V'), bayarProperty1;
                        OldID == ID, increasePropertyPlayer1);

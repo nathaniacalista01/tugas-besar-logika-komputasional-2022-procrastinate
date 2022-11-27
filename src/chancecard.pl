@@ -2,9 +2,9 @@
     Jenis Kartu                     | Probabilitas  | Deskripsi
     - Kartu Tax                     |       20%     | Pemain akan ditempatkan ke tempat tax terdekat 
     - Kartu Hadiah                  |               | Pemain mendapatkan uang dengan nominal tertentu
-            S 50                    |       10%     |
-            S 100                   |       7,5%    |
-            S 200                   |       2,5%    |
+            S 100                   |       10%     |
+            S 200                   |       7,5%    |
+            S 500                   |       2,5%    |
     - Kartu Get out from Jail       |       15%     | Pemain mendapatkan kesempatan untuk tidak masuk penjara
     - Kartu Go to Jail              |       20%     | Pemain langsung dimasukkan ke penjara
     - Kartu Go to World Tour        |       15%     | Pemain langsung ditempatkan kepada petak World Tour
@@ -18,9 +18,9 @@
 
 /* Fakta Kartu */
 card('Go To Tax').
-card('Free $50').
 card('Free $100').
 card('Free $200').
+card('Free $500').
 card('Get Out From Jail').
 card('Go To Jail').
 card('Go To World Tour').
@@ -31,9 +31,9 @@ card('Instant Win').
 indexCard('Instant Win', 1).
 indexCard('Angel Card', 2).
 indexCard('Go To Tax', 3).
-indexCard('Free $50', 4).
-indexCard('Free $100', 5).
-indexCard('Free $200', 6).
+indexCard('Free $100', 4).
+indexCard('Free $200', 5).
+indexCard('Free $500', 6).
 indexCard('Get Out From Jail', 7).
 indexCard('Go To Jail', 8).
 indexCard('Go To World Tour', 9).
@@ -110,7 +110,7 @@ getChanceCard(Money, Round, _Card) :-
             write('===================================================='), nl,
             asciiCard,
             getCCIndex(Money, Round, _Index), indexCard(_Card, _Index),
-            write(''), nl, write('Anda mendapatkan : '), write(_Card), addChanceCard(_Card,1),!.
+            write(''), nl, write('Anda mendapatkan : '), write(_Card),nl, !.
 
 /* Melakukan inisiasi Chance Card yang dimiliki player */
 initPlayerTemp :- asserta(player1('A','CC',_,_)).
