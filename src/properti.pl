@@ -204,22 +204,17 @@ checkIsProperty(X,Result) :-
                      (X == 'GO', Result is 0;X == 'CF',Result is 0; X=='CC',Result is 0;X=='JL',Result is 0;X=='TX', Result is 0;X=='FP', Result is 0;
                      X=='WT',Result is 0 ,!;
                      Result is 1). 
-writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 0,
-                                                    StringTingkat is 'tanah'.
-writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 1,
-                                                    StringTingkat is 'bangunan tingkat 1'.
-writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 2,
-                                                    StringTingkat is 'bangunan tingkat 2'.
-writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 3,
-                                                    StringTingkat is 'bangunan tingkat 3'.
-writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 4,
-                                                    StringTingkat is 'landmark'.
+writePropertyLevel(PropertyLevel) :- PropertyLevel == 0, write('tanah');
+                                    PropertyLevel == 1, write('bangunan tingkat 1');
+                                    PropertyLevel == 2, write('bangunan tingkat 2');
+                                    PropertyLevel == 3, write('bangunan tingkat 3');
+                                    PropertyLevel == 4, write('landmark').
 
-checkMoney1(Money, PropertyLevel, Loc, Bool) :- write('Check Property 1'),propertyPrice(Loc, Price, PropertyLevel),
+checkMoney1(Money, PropertyLevel, Loc, Bool) :- propertyPrice(Loc, Price, PropertyLevel),
                                                (Money < Price,write('masuk'), write('Wah uangmu kurang! Tidak bisa membeli properti!'), Bool is 0;
-                                               Money >= Price, NewMoney is Money - Price,updateMoney1(NewMoney),Bool is 1,
-                                               writePropertyLevel(PropertyLevel,StringTingkat),
-                                               write('Berhasil membeli'),write(StringTingkat),nl). 
+                                               Money >= Price,NewMoney is Money - Price,updateMoney1(NewMoney),Bool is 1,
+                                               write('Berhasil membeli'),writePropertyLevel(PropertyLevel),
+                                               nl). 
 
 checkMoney2(Money, PropertyLevel, Loc, Bool) :- propertyPrice(Loc, Price, PropertyLevel),
                                                (Money < Price,Bool is 0, write('Wah uangmu kurang! Tidak bisa membeli properti!');
@@ -228,9 +223,9 @@ checkMoney2(Money, PropertyLevel, Loc, Bool) :- propertyPrice(Loc, Price, Proper
                                                write('Berhasil membeli'),write(StringTingkat),nl). 
 
 /* Untuk boolean, 1 = True, 0 = False */
-buyPropertyPlayer1 :- player1(ID,Loc,Money,_,_),checkIsProperty(Loc,Result),write(Result), 
+buyPropertyPlayer1 :- player1(ID,Loc,Money,_),checkIsProperty(Loc,Result),write(Result), 
                      (Result == 1,
-                      locOwnerDetail(Loc, OldID, OldProperty),
+                      locOwnerDetail(Loc, OldID, OldPropertyLevel),
                       OldID == ('-'),write('masuk'),
                       write('Apakah kamu ingin membeli properti?'), nl,
                       write('Tanah (ketik 0)'), nl,
@@ -239,16 +234,13 @@ buyPropertyPlayer1 :- player1(ID,Loc,Money,_,_),checkIsProperty(Loc,Result),writ
                       write('Bangunan Tingkat 3 (ketik 3)'), nl,
                       write('Ketik -1 jika tidak membeli'), nl,
                       read(Answer),
-                      (Answer == 0,checkMoney(Money, Answer, Loc, Bool); Answer == 1,checkMoney(Money, Answer, Loc, Bool); Answer == 2,checkMoney1(Money, Answer, Loc, Bool); 
-                        Answer == 3,checkMoney(Money, Answer, Loc, Bool),
-                       Bool == 1 -> retract(locOwnerDetail(Loc, OldID, OldProperty)), asserta(locOwnerDetail(Loc, ID, Answer));
-                       Answer == -1 -> halt;
-                      write('Input tidak valid!'));
-                     Result == 0, write('Tidak bisa membeli property '),write(Loc)).
+                      retract(locOwnerDetail(Loc, _, _)),
+                      asserta(locOwnerDetail(Loc, 'A', 0))),
+                     Result == 0, write('Tidak bisa membeli property '),write(Loc).
 
-buyPropertyPlayer2 :- player2(ID,Loc,Money,_,_),write(Loc),
+buyPropertyPlayer2 :- player2(ID,Loc,Money,_),write(Loc),
                       locOwnerDetail(Loc, OldID, OldPropertyLevel),
-                      OldID == ('-'),
+                      (OldID == ('-'),
                       write('Apakah kamu ingin membeli properti?'), nl,
                       write('Tanah (ketik 0)'), nl,
                       write('Bangunan Tingkat 1 (ketik 1)'), nl,
@@ -256,13 +248,15 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_,_),write(Loc),
                       write('Bangunan Tingkat 3 (ketik 3)'), nl,
                       write('Ketik -1 jika tidak membeli'), nl,
                       read(Answer),
-                      (Answer == 0; Answer == 1,checkMoney2(Money, Answer, Loc, Bool); Answer == 2,checkMoney2(Money, Answer, Loc, Bool); 
+                      (Answer == 0,checkMoney2(Money, Answer, Loc, Bool); Answer == 1,checkMoney2(Money, Answer, Loc, Bool); Answer == 2,checkMoney2(Money, Answer, Loc, Bool); 
                       Answer == 3,checkMoney2(Money, Answer, Loc, Bool),
                        Bool == 1 -> retract(locOwnerDetail(Loc, OldID, OldPropertyLevel)), asserta(locOwnerDetail(Loc, ID, Answer));
-                       Answer == -1 -> halt);
-                      write('Input tidak valid!').
+                       Answer == -1 -> halt;
+                     write('Input tidak valid!'));
+                     OldID \= ('-'),write('Udah punya orang'));
+                     Result == 0, write('Tidak bisa membeli property '),write(Loc)).
 
-increasePropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
+increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
                            PropertyLevel == 3,
@@ -275,7 +269,7 @@ increasePropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
                             Answer == 0 -> halt);
                            write('Input tidak valid').
 
-increasePropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
+increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
                            PropertyLevel == 3,
@@ -288,7 +282,7 @@ increasePropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
                             Answer == 0 -> halt);
                            write('Input tidak valid').
 
-increasePropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
+increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
                            (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
@@ -313,7 +307,7 @@ increasePropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
                            Answer == 0 -> halt));
                            write('Input tidak valid').
 
-increasePropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
+increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
                            (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
@@ -338,7 +332,7 @@ increasePropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
                            Answer == 0 -> halt));
                            write('Input tidak valid').
 
-accProperty1 :- player1(ID,Loc,Money,_,_,_),
+accProperty1 :- player1(ID,Loc,Money,_),
                 locOwnerDetail(Loc,IDPlayer,PropertyLevel),
                 IDPlayer \= ID,
                 IDPlayer \= ('-'),
@@ -347,7 +341,7 @@ accProperty1 :- player1(ID,Loc,Money,_,_,_),
                 Money < Price,
                 prosesUangTidakCukup.
 
-accProperty2 :- player2(ID,Loc,Money,_,_,_),
+accProperty2 :- player2(ID,Loc,Money,_),
                 locOwnerDetail(Loc,IDPlayer,PropertyLevel),
                 IDPlayer \= ID,
                 IDPlayer \= ('-'),
@@ -356,7 +350,7 @@ accProperty2 :- player2(ID,Loc,Money,_,_,_),
                 Money < Price,
                 prosesUangTidakCukup.
 
-accProperty1 :- player1(ID,Loc,Money,_,_,_),
+accProperty1 :- player1(ID,Loc,Money,_),
                 locOwnerDetail(Loc,IDPlayer,PropertyLevel),
                 IDPlayer \= ID,
                 IDPlayer \= ('-'),
@@ -364,17 +358,17 @@ accProperty1 :- player1(ID,Loc,Money,_,_,_),
                 biayaSewa(Loc, PropertyLevel, Price),
                 Money >= Price,
                 Money1 is Money - Price,
-                retract(player1(ID,Loc,Money,_,_,_)),
-                asserta(player1(ID,Loc,Money1,_,_,_)),
+                retract(player1(ID,Loc,Money,_)),
+                asserta(player1(ID,Loc,Money1,_)),
                 biayaAkuisisi(Loc, PropertyLevel, AccPrice),
                 (Money1 < AccPrice -> write('Uangmu tidak cukup untuk akuisisi properti');
                  Money1 >= AccPrice -> write('Apakah kamu ingin mengakuisisi properti?'), nl,
                  read(Answer), (Answer == 'yes' -> write('Berhasil mengakuisisi properti'), retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)),
-                 asserta(locOwnerDetail(Loc, ID, PropertyLevel)), Money2 is Money1 - AccPrice, retract(player1(ID,Loc,Money1,_,_)), asserta(player1(ID,Loc,Money2,_,_));
+                 asserta(locOwnerDetail(Loc, ID, PropertyLevel)), Money2 is Money1 - AccPrice, retract(player1(ID,Loc,Money1,_)), asserta(player1(ID,Loc,Money2,_));
                  Answer == 'no' -> write('Tidak mengakuisisi properti'), halt);
                  write('Input tidak valid, masukan hanya yes/no')).
 
-accProperty2 :- player2(ID,Loc,Money,_,_,_),
+accProperty2 :- player2(ID,Loc,Money,_),
                 locOwnerDetail(Loc,IDPlayer,PropertyLevel),
                 IDPlayer \= ID,
                 IDPlayer \= ('-'),
@@ -382,13 +376,13 @@ accProperty2 :- player2(ID,Loc,Money,_,_,_),
                 biayaSewa(Loc, PropertyLevel, Price),
                 Money >= Price,
                 Money1 is Money - Price,
-                retract(player1(ID,Loc,Money,_,_,_)),
-                asserta(player1(ID,Loc,Money1,_,_,_)),
+                retract(player1(ID,Loc,Money,_)),
+                asserta(player1(ID,Loc,Money1,_)),
                 biayaAkuisisi(Loc, PropertyLevel, AccPrice),
                 (Money1 < AccPrice -> write('Uangmu tidak cukup untuk akuisisi properti');
                  Money1 >= AccPrice -> write('Apakah kamu ingin mengakuisisi properti?'), nl,
                  read(Answer), (Answer == 'yes' -> write('Berhasil mengakuisisi properti'), retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)),
-                 asserta(locOwnerDetail(Loc, ID, PropertyLevel)), Money2 is Money1 - AccPrice, retract(player1(ID,Loc,Money1,_,_)), asserta(player1(ID,Loc,Money2,_,_));
+                 asserta(locOwnerDetail(Loc, ID, PropertyLevel)), Money2 is Money1 - AccPrice, retract(player1(ID,Loc,Money1,_)), asserta(player1(ID,Loc,Money2,_));
                  Answer == 'no' -> write('Tidak mengakuisisi properti'), halt);
                  write('Input tidak valid, masukan hanya yes/no')).
    
