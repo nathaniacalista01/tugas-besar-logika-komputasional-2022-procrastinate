@@ -109,22 +109,22 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
                                            PropertyLevel \= 4,
                                            Price is 0.7 * RentPrice.
 
+/*(Loc == ('CC'); Loc == ('CF'); Loc == ('JL'); Loc == ('TX'); Loc == ('FP'); Loc == ('GO'), Loc == ('WT')), 
+!,*/
 /* Condition Special Block */
 checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
-                            (Loc == ('CC'); Loc == ('CF'); Loc == ('JL'); Loc == ('TX'); Loc == ('FP'); Loc == ('GO'), Loc == ('WT')), 
-                            !,
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
                             write('================================================'), nl,
                             write('Nama Lokasi         : '), write(A), nl,
                             write('Deskripsi Lokasi    : '), write(B), nl,
-                            (Loc == 'CC', write('Deskripsi Tambahan    : '), write('Feeling Lucky this time?');
-                            Loc == 'CF', write('Deskripsi Tambahan    : '), write('WOOOHOO! GAME TIME BUDDYY!');
-                            Loc == 'JL', write('Deskripsi Tambahan    : '), write('FBI! OPEN UP! *Sirens sound*');
-                            Loc == 'TX', write('Deskripsi Tambahan    : '), write('Pay. Your. Debt. *Gun Click Sounds*');
-                            Loc == 'FP', write('Deskripsi Tambahan    : '), write('Nothing happened... Now what?');
-                            Loc == 'GO', write('Deskripsi Tambahan    : '), write('You get the money right? riightt...?');
-                            Loc == 'WT', write('Deskripsi Tambahan    : '), write('Pintu kemana saja has been spawned.')), nl.
+                            (Loc == 'CC',!, write('Deskripsi Tambahan  : '), write('Feeling Lucky this time?');
+                            Loc == 'CF',!, write('Deskripsi Tambahan  : '), write('WOOOHOO! GAME TIME BUDDYY!');
+                            Loc == 'JL',!, write('Deskripsi Tambahan  : '), write('FBI! OPEN UP! *Sirens sound*');
+                            Loc == 'TX',!, write('Deskripsi Tambahan  : '), write('Pay. Your. Debt. *Gun Click Sounds*');
+                            Loc == 'FP',!, write('Deskripsi Tambahan  : '), write('Nothing happened... Now what?');
+                            Loc == 'GO',!, write('Deskripsi Tambahan  : '), write('You get the money right? riightt...?');
+                            Loc == 'WT',!, write('Deskripsi Tambahan  : '), write('Pintu kemana saja has been spawned.')), nl.
 
 
 
