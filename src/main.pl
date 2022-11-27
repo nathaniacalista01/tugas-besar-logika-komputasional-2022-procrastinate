@@ -44,6 +44,8 @@ throwDice :-
 
 afterMove:- cekPlayerTurn(X), checkPlayerLocation(X).
 
+beforeMove :- cekPlayerTurn(X), checkPlayerLocationBefore(X), 
+
 buyProperty :-cekPlayerTurn(X),
                    (X == 1, buyPropertyPlayer1;
                    X == 2, buyPropertyPlayer2).

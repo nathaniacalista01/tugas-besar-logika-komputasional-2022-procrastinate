@@ -205,3 +205,10 @@ wentInTX(PlayerID) :-
        checkPlayerLocationByID(PlayerID, Loc),
        Loc == 'TX',
        bayarPajak(PlayerID).
+
+checkPlayerLocationBefore(X) :- (X = 1, checkPlayer1LocationBefore ; X = 2, checkPlayer2LocationBefore).
+
+checkPlayer1LocationBefore :- player1(_,P1Loc, P1Money,_), infoRound(CRound),
+                            (P1Loc = 'JL', remainTurnP1(JailTurn), 
+                            ( JailTurn = 0, startPlayerInJail(1);
+                            JailTurn \= 0, decrementTurnInJail(1) )).
