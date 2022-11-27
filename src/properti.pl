@@ -254,7 +254,7 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_),write(Loc),
                        Answer == -1 -> halt;
                      write('Input tidak valid!'));
                      OldID \= ('-'),write('Udah punya orang'));
-                     Result == 0, write('Tidak bisa membeli property '),write(Loc)).
+                     Result == 0, write('Tidak bisa membeli property '),write(Loc).
 
 increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),

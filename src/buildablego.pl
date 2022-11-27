@@ -27,8 +27,8 @@ askIfWantToBuild() :-
     /* Tampilkan list properti yang bisa dibangun */
     (Answer == 'yes' -> (
         write('List properti yang bisa dibangun : '),nl,
-        printListPropertiPlayer,
-        commandUpgradeProperti,
+        /* printListPropertiPlayer yg bukan landmark */,
+        /* commandUpgradeProperti */,
         afterBuild()
     );
 
