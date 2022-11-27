@@ -1,6 +1,5 @@
 /* board.pl */
 /* Menampilkan papan permainan beserta kepemilikan properti dan posisi pemain */
-/* kepemilikan properti dan posisi pemain belum diimplementasikan */
 
 tes :- 
     tile(_,__,Posisi,8),write(Posisi).
@@ -50,6 +49,7 @@ board :-  startGame(true), !, drawBoard,
 board :- write('Permainan belum dimulai'), nl.
 
 /* DRAW BOARD */
+/* Board Borders and Title */
 drawTile(1,1) :- write('----------------------------------------------'), nl,
                     drawTile(0,2).
 drawTile(2,3) :- write('----------------------------------|'), 
@@ -62,6 +62,7 @@ drawTile(1,11) :- write('----------------------------------------------'), nl,
                     drawTile(0,12).
 drawTile(9,12) :- nl.
 
+/* Board Tiles */
 drawTile(1,Y) :- boardSize(_,H),
                     Y > 1,
                     Y < H + 2, !,
@@ -91,12 +92,13 @@ drawTile(X,10) :- boardSize(W,_),
                     write(' '), write(Obj), write(' |'),
                     X1 is X + 1,
                     drawTile(X1,10).
-
+/* Board Border */
 drawTile(8,Y) :- Y > 3, 
                     Y < 9, !,
                     write('    |'),
                     drawTile(9,Y).
 
+/* Property Ownership */
 drawTile(X,0) :- boardSize(_,H),
                     X > 1,
                     X < H , tile(X,2,Loc,_), locOwnerDetail(Loc,ID,B), ID \= ('-'), !,
@@ -125,6 +127,7 @@ drawTile(10,Y) :- boardSize(_,H),
                     Y1 is Y + 1,
                     drawTile(0,Y1).
 
+/* Draw Empty Tiles */
 drawTile(X,Y) :- boardSize(W,H),
                     X > 0,
                     X < W + 1,
