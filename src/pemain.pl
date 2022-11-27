@@ -37,8 +37,8 @@ updateMoney2(NewMoney) :-
     
 printInfo1 :-
             write('================================================'), nl,
-            player1(_,Loc,Money,List1),
-            write('              Informasi Player A '), nl,
+            player1(ID,Loc,Money,List1),
+            write('              Informasi Player '),write(ID), write(' '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
@@ -51,8 +51,8 @@ printInfo1 :-
 
 printInfo2 :-
             write('================================================'), nl,
-            player2(_,Loc,Money,List1),
-            write('              Informasi Player V '), nl,
+            player2(ID,Loc,Money,List1),
+            write('              Informasi Player '),write(ID), write(' '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '), write(Money),nl,
@@ -63,9 +63,9 @@ printInfo2 :-
             write('================ List Cards ================ '),nl,
             writeCard(1,List1),!.
             
-checkPlayerDetail(Player):-
-                        (Player = 'A',printInfo1),!;
-                        (Player = 'V',printInfo2),!.
+checkPlayerDetail(Player):- player1(ID1,_,_,_), player2(ID2,_,_,_),
+                        (Player = ID1,printInfo1),!;
+                        (Player = ID2,printInfo2),!.
 
 writeB(0) :- write(' - Tanah'), !.
 writeB(1) :- write(' - Bangunan 1'), !.
