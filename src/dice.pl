@@ -37,7 +37,7 @@ diceEqual1(Dice1,Dice2) :-
                 writeDouble(Dice1,Dice2), Sum is X + 1, asserta(diceCount(Sum)), NewLoc is Dice1 + Dice2, updateLoc1(NewLoc),afterMove).
 
 throwDice1 :- 
-                player1(_,_,Money1,_,_),write('Sekarang adalah giliran player 1!'),nl,infoRound(Y),diceOutput(Y,Money1,Dice1,Dice2),
+                player1(_,_,Money1,_),write('Sekarang adalah giliran player 1!'),nl,infoRound(Y),diceOutput(Y,Money1,Dice1,Dice2),
                 (Dice1 == Dice2, diceEqual1(Dice1,Dice2);
                 writeNormal(Dice1,Dice2),NewLoc is Dice1 + Dice2,updateLoc1(NewLoc),afterMove,retract(playerTurn(_)),asserta(playerTurn(2)),!),!.
 
@@ -51,10 +51,10 @@ diceEqual2(Dice1,Dice2) :-
 
 
 throwDice2 :-
-                player2(_,_,Money2,_,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput(Y,Money2,Dice3,Dice4),
+                player2(_,_,Money2,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput(Y,Money2,Dice3,Dice4),
                 (Dice3 == Dice4, diceEqual2(Dice3,Dice4);
-                writeNormal(Dice3,Dice4),retract(playerTurn(_)),asserta(playerTurn(1)),NewLoc is Dice3 + Dice4,updateLoc2(NewLoc),updateRound(Y),!),
-                                asciiDice(Angka1), nl, asciiDice(Angka2), nl,afterMove.
+                writeNormal(Dice3,Dice4),NewLoc is Dice3 + Dice4,updateLoc2(NewLoc),afterMove,updateRound(Y),
+                    nl,retract(playerTurn(_)),asserta(playerTurn(1)),!),!.
 
 /* Menampilkan ascii art dadu */
 asciiDice(Num) :- Num = 1,
