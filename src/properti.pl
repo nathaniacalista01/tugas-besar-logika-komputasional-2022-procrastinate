@@ -437,3 +437,53 @@ checkAngelCard([H|T], Result) :- (H == ('Angel Card'), Result is 1);
 remover(_, [], []).
 remover(R, [R|T], T).
 remover(R, [H|T], [H|T2]) :- H \= R, remover(R, T, T2).
+
+/* ---Steal Property Procedure--- */
+/* Write Oponent's Properties Without Landmark */
+writeY(31,ID,_) :- locOwnerDetail('H2',ID1,_), ID \= ID1, nl, !.
+writeY(31,ID,NO) :- locOwnerDetail('H2',ID,B), write(NO), write('. '), write('H2'), writeB(B), nl.
+writeY(IDX,ID,NO) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), B \= 4, write(NO), write('. '), write(Loc), writeB(B), nl, IDX1 is IDX + 1, NO1 is NO + 1, writeY(IDX1,ID,NO1).
+writeY(IDX,ID,NO) :- tile(_,_,_,IDX), IDX1 is IDX + 1, writeY(IDX1,ID,NO).
+writeLocWithoutLandmark(ID) :- writeY(1,ID,1),!.
+
+/* Procedure Count Jumlah Properti */
+countY(31,ID,0) :- locOwnerDetail('H2',ID1,_), ID \= ID1, !.
+countY(31,ID,1) :- locOwnerDetail('H2',ID,B),!.
+countY(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), IDX1 is IDX + 1, countY(IDX1,ID,N2), N is 1 + N2, !.
+countY(IDX,ID,N) :- tile(_,_,_,IDX), IDX1 is IDX + 1, countY(IDX1,ID,N).
+countBanyakProperty(ID,N) :- countY(1,ID,N),!.
+
+checkLocOwner1(Loc, Result, Level1) :- locOwnerDetail(Loc, IDPlayer, Level),
+                                       (IDPlayer \= ('V'), Result is 0, Level1 is -1;
+                                       IDPlayer == ('V'), Level\= 4, Result is 1, Level1 is Level), !.
+
+checkLocOwner2(Loc, Result, Level1) :- locOwnerDetail(Loc, IDPlayer, Level),
+                                       (IDPlayer \= ('A'), Result is 0, Level1 is -1;
+                                       IDPlayer == ('A'), Level\= 4, Result is 1, Level1 is Level), !.
+stealProperty1 :- player1(ID,_,_,_),
+                  countBanyakProperty('V', Count),
+                  Count == 0,
+                  write('Sayang sekali player V tidak memiliki properti untuk diakuisisi:('), nl.
+                  
+stealProperty1 :- player1(ID,_,_,_),
+                  write('Yes! Kamu dapat mengakuisisi properti player V!'), nl, 
+                  write('Properti mana yang ingin kamu akuisisi? (ketik lokasi, contoh: \'A1\')'), nl,
+                  writeLocWithoutLandmark('V'),
+                  read(Answer),
+                  checkLocOwner1(Answer, Result, Level),
+                  (Result == 0 -> write('Masukan lokasi tidak valid!'), nl, stealProperty1;
+                  Result == 1, updatePropertyOwner(Answer, 'A', Level), !).
+
+stealProperty2 :- player2(ID,_,_,_),
+                  countBanyakProperty('A', Count),
+                  Count == 0,
+                  write('Sayang sekali player A tidak memiliki properti untuk diakuisisi:('), nl.
+                  
+stealProperty2 :- player1(ID,_,_,_),
+                  write('Yes! Kamu dapat mengakuisisi properti player A!'), nl, 
+                  write('Properti mana yang ingin kamu akuisisi? (ketik lokasi, contoh: \'A1\')'), nl,
+                  writeLocWithoutLandmark('A'),
+                  read(Answer),
+                  checkLocOwner2(Answer, Result, Level),
+                  (Result == 0 -> write('Masukan lokasi tidak valid!'), nl, stealProperty2;
+                  Result == 1, updatePropertyOwner(Answer, 'V', Level), !).
