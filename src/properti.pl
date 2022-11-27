@@ -390,8 +390,6 @@ buyProperty(X) :-
                   (X == 1, buyPropertyPlayer1;
                   X == 2, buyPropertyPlayer2).
 
-
-
 player1inplayer2 :- player1(_,Loc1,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
                      displayKekayaan('A'),locOwnerDetail(Loc1,'A',Level),Temp is Level,write(Level).
 
