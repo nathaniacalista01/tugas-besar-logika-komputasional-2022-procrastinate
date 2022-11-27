@@ -1,4 +1,6 @@
 :- include('chancecard.pl').
+:- include('pemain.pl').
+:- include('pajak.pl')
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
@@ -178,8 +180,28 @@ checkPlayer1Location :- player1(ID1,Loc1,Money1,_),infoRound(X),
                             ;
                             write('================= Selamat datang di ================= '), nl,
                             write('=================       '),write(Loc1),write('         ================='),nl,
-                            write('====================================================='), cekPlayerTurn(Y),buyProperty(Y)
+                            write('====================================================='), nl,
+                            cekPlayerTurn(Y),buyProperty(Y)
                             ;
                             Loc1 == 'JL', write('Selamat datang di JaiL!'),nl).
+checkPlayer2Location :- player2(ID2,Loc2,Money2,_), infoRound(X),
+                            (Loc1 == 'CC', getChanceCard(Money2,X,_Card)
+                            ;
+                            Loc1 == 'JL', write('Selamat datang di JaiL!'),nl
+                            ;
+                            write('================= Selamat datang di ================= '), nl,
+                            write('=================       '),write(Loc2),write('         ================='),nl,
+                            write('====================================================='), nl,
+                            cekPlayerTurn(Y),buyProperty(Y)).
+checkPlayerLocation(X) :- (X == 1, checkPlayer1Location;
+                            X == 2, checkPlayer2Location).
 
-checkPlayerLocation(X) :- (X == 1, checkPlayer1Location).
+wentInJL(PlayerID) :-
+       checkPlayerLocationByID(PlayerID, Loc),
+       Loc == 'JL',
+       insertPenjara(PlayerID).
+
+wentInTX(PlayerID) :-
+       checkPlayerLocationByID(PlayerID, Loc),
+       Loc == 'TX',
+       bayarPajak(PlayerID).

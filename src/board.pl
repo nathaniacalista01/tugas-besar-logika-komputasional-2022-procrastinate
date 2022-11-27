@@ -1,6 +1,5 @@
 /* board.pl */
 /* Menampilkan papan permainan beserta kepemilikan properti dan posisi pemain */
-/* kepemilikan properti dan posisi pemain belum diimplementasikan */
 
 tes :- 
     tile(_,__,Posisi,8),write(Posisi).
@@ -50,6 +49,7 @@ board :-  startGame(true), !, drawBoard,
 board :- write('Permainan belum dimulai'), nl.
 
 /* DRAW BOARD */
+/* Board Borders and Title */
 drawTile(1,1) :- write('----------------------------------------------'), nl,
                     drawTile(0,2).
 drawTile(2,3) :- write('----------------------------------|'), 
@@ -61,18 +61,22 @@ drawTile(2,9) :- write('----------------------------------|'),
 drawTile(1,11) :- write('----------------------------------------------'), nl, 
                     drawTile(0,12).
 drawTile(9,12) :- nl.
+
+/* Board Tiles */
 drawTile(1,Y) :- boardSize(_,H),
                     Y > 1,
                     Y < H + 2, !,
                     tile(1,Y,Obj,_), !,
                     write('| '), write(Obj), write(' |'),
                     drawTile(2,Y).
+
 drawTile(9,Y) :- boardSize(_,H),
                     Y > 2,
                     Y < H + 1, !,
                     tile(9,Y,Obj,_), !,
                     write(' '), write(Obj), write(' |'),
                     drawTile(10,Y).
+
 drawTile(X,2) :- boardSize(W,_),
                     X > 1,
                     X < W + 1,
@@ -80,6 +84,7 @@ drawTile(X,2) :- boardSize(W,_),
                     write(' '), write(Obj), write(' |'),
                     X1 is X + 1,
                     drawTile(X1,2).
+
 drawTile(X,10) :- boardSize(W,_),
                     X > 1,
                     X < W + 1,
@@ -87,11 +92,42 @@ drawTile(X,10) :- boardSize(W,_),
                     write(' '), write(Obj), write(' |'),
                     X1 is X + 1,
                     drawTile(X1,10).
+/* Board Border */
 drawTile(8,Y) :- Y > 3, 
                     Y < 9, !,
                     write('    |'),
                     drawTile(9,Y).
 
+/* Property Ownership */
+drawTile(X,0) :- boardSize(_,H),
+                    X > 1,
+                    X < H , tile(X,2,Loc,_), locOwnerDetail(Loc,ID,B), ID \= ('-'), !,
+                    write('  '), write(ID), write(B), write(' '),
+                    X1 is X + 1,
+                    drawTile(X1,0).
+
+drawTile(X,12) :- boardSize(_,H),
+                    X > 1,
+                    X < H , tile(X,10,Loc,_), locOwnerDetail(Loc,ID,B), ID \= ('-'), !,
+                    write('  '), write(ID), write(B), write(' '),
+                    X1 is X + 1,
+                    drawTile(X1,12).
+
+drawTile(0,Y) :- boardSize(_,H),
+                    Y > 1,
+                    Y =< H , tile(1,Y,Loc,_), locOwnerDetail(Loc,ID,B), ID \= ('-'), !,
+                    write('  '), write(ID), write(B), write(' '),
+                    drawTile(1,Y).
+
+
+drawTile(10,Y) :- boardSize(_,H),
+                    Y > 1,
+                    Y =< H , tile(9,Y,Loc,_), locOwnerDetail(Loc,ID,B), ID \= ('-'), !,
+                    write('  '), write(ID), write(B), nl,
+                    Y1 is Y + 1,
+                    drawTile(0,Y1).
+
+/* Draw Empty Tiles */
 drawTile(X,Y) :- boardSize(W,H),
                     X > 0,
                     X < W + 1,
@@ -100,12 +136,14 @@ drawTile(X,Y) :- boardSize(W,H),
                     write('     '),
                     X1 is X + 1,
                     drawTile(X1,Y).
+
 drawTile(10,Y) :- boardSize(_,H),
                     Y >= 0,
                     Y < H + 2, !,
-                    write('     '), nl,
+                    nl,
                     Y1 is Y + 1,
                     drawTile(0,Y1).
+
 drawTile(0,Y) :- boardSize(_,H),
                     Y >= 0,
                     Y < H + 4, !,

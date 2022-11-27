@@ -55,9 +55,9 @@ printInfo2 :-
             write('              Informasi Player V '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
-            write('2. Total Uang               : '),write(Money),nl,
+            write('2. Total Uang               : '), write(Money),nl,
             write('3. Total Nilai Properti     : '), countProperty('V',P), write(P),nl,
-            write('4. Total Aset               : '),TotalAsset is Money + P,write(TotalAsset),nl,
+            write('4. Total Aset               : '), TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikan Properti : '),nl,
             writeLoc('V'),
             write('================ List Cards ================ '),nl,
@@ -84,6 +84,15 @@ countP(31,ID,N) :- locOwnerDetail('H2',ID,B), propertyPrice('H2',N,B), !.
 countP(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), propertyPrice(Loc,N1,B), IDX1 is IDX + 1, countP(IDX1,ID,N2), N is N1 + N2, !.
 countP(IDX,ID,N) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, countP(IDX1,ID,N).
 countProperty(ID,N) :- countP(1,ID,N),!.
+
+uangPlayer(ID, Uang) :-
+    (ID == 'A' -> player1(_, _, Uang, _) ; player2(_, _, Uang, _)).
+asetPlayer(ID, Aset) :-
+    (ID == 'A' -> player1(_, _, Uang, _), countProperty('A', P), Aset is Uang + P ; player2(_, _, Uang, _), countProperty('V', P), Aset is Uang + P).
+updateMoney(ID, NewMoney) :-
+    (ID == 'A' -> updateMoney1(NewMoney) ; updateMoney2(NewMoney)).
+checkPlayerLocationByID(ID, Loc) :-
+    (ID == 'A' -> player1(_, Loc, _, _) ; player2(_, Loc, _, _)).
 
 writeCard(ID,[]).
 writeCard(ID,[H|T]) :- write(ID),write('. '),write(H),nl,NewId is ID + 1,writeCard(NewId,T),!.
