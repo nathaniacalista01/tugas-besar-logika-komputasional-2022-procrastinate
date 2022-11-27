@@ -383,7 +383,8 @@ bayarProperty2 :- player2(ID,Loc,Money,ListCard),
                 (Result == 1, printAngelCard(Answer),
                   (Answer == 1, useAngelCard2,!;
                   Answer == 0, notUseAngelCard,prosesBayar('V',Price));
-                Result == 0,prosesBayar('V',Price)),acProperty.
+                Result == 0,
+                prosesBayar('V',Price),acProperty).
 /* Player 1 mau akuisisi bangunan Player 2 */
 acProperty :- write('Apakah kamu ingin mengakuisi Property ini? '),nl,
                write('Ketik 1 jika kamu ingin mengakuisis Property ini'),nl,

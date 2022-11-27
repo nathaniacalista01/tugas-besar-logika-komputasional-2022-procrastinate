@@ -7,8 +7,9 @@
 :- dynamic(uangBelumCukup/1).
 
 sanggupBayar(PlayerID, BiayaTanggungan) :-
-    asetPlayer(PlayerID, TotalAset), 
-    (TotalAset >= BiayaTanggungan ->
+    
+    uangPlayer(PlayerID, TotalUang), 
+    (TotalUang >= BiayaTanggungan ->
     (uangBelumCukup(PlayerID) -> retract(uangBelumCukup(PlayerID)); true, !);
     asserta(uangBelumCukup(PlayerID)), false).
 
@@ -30,9 +31,11 @@ uangHabis :-
 
 hampirBangkrut :-
     uangBelumCukup(PlayerID),
+    writeLoc(PlayerID),
     /*listProperti(PlayerID, ListProperti),*/
-    write('Properti mana yang ingin dijual?'), 
+    write('Properti mana yang ingin dijual? (Isi dengan kode Property dalam huruf kecil)'), 
     read(Answer), 
+
     /*jualProperti(PlayerID, ListProperti, Answer),*/
     (
         prosesBayar(PlayerID, BiayaTanggungan) -> (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
