@@ -227,7 +227,7 @@ checkMoney2(Money, PropertyLevel, Loc) :- propertyPrice(Loc, Price, PropertyLeve
 buyPropertyPlayer1 :- player1(ID,Loc,Money,_),checkIsProperty(Loc,Result), 
                      (Result == 1,
                       locOwnerDetail(Loc, OldID, OldPropertyLevel),
-                      OldID == ('-'),
+                      (OldID == ('-'),
                       write('Apakah kamu ingin membeli properti?'), nl,
                       write('Tanah (ketik 0)'), nl,
                       write('Bangunan Tingkat 1 (ketik 1)'), nl,
@@ -238,7 +238,9 @@ buyPropertyPlayer1 :- player1(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                       ((Answer == 0,checkMoney1(Money, Answer, Loc); Answer == 1,checkMoney1(Money, Answer, Loc); 
                       Answer == 2,checkMoney1(Money, Answer, Loc); Answer == 3,checkMoney1(Money, Answer, Loc);
                       Answer == -1, halt);
-                      write('Input tidak valid!'))
+                      write('Input tidak valid!'));
+                      player1inplayer2
+                      )
                      ;
                      Result == 0, write('Tidak bisa membeli property '),write(Loc)).
 
@@ -258,7 +260,7 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                       Answer == -1, halt);
                       write('Input tidak valid!'))
                       ;
-                      write('Masuk ke lahan pemain lain!'))
+                      player2inplayer1)
                      ;
                      Result == 0, write('Tidak bisa membeli property '),write(Loc)).
 
@@ -395,3 +397,13 @@ accProperty2 :- player2(ID,Loc,Money,_),
 buyProperty(X) :- 
                   (X == 1, buyPropertyPlayer1;
                   X == 2, buyPropertyPlayer2).
+
+player1inplayer2 :- player1(_,_,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
+                     write('Uang yang dipegang ='),write(Money),nl,
+                     write('Total kekayaan properti = '),countProperty('A',P),write(P),nl,
+                     write('Total Kekayaan = '),write(Money),write(P),Total is Money + P,write(Total).
+
+player2inplayer1 :- player2(_,_,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
+                     write('Uang yang dipegang :'),write(Money),nl,
+                     write('Total kekayaan properti : '),countProperty('V',P),write(P),nl,
+                     write('Total Kekayaan : '),write(Money),write(' + '),write(P),write(' = '),Total is Money + P,write(Total).
