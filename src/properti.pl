@@ -395,3 +395,16 @@ accProperty2 :- player2(ID,Loc,Money,_),
 buyProperty(X) :- 
                   (X == 1, buyPropertyPlayer1;
                   X == 2, buyPropertyPlayer2).
+
+jualProperty(ID, Money) :- countProperty(ID,N), Money is N, resetProperty(ID,1), !.
+
+resetProperty(ID, 31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), ID \= IDPlayer, !.
+
+resetProperty(ID, 31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), !,
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
+
+resetProperty(ID, IDX) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))),
+                           IDX1 is IDX + 1, resetProperty(ID, IDX1).
+
+resetProperty(ID, IDX) :- IDX1 is IDX + 1, resetProperty(ID, IDX1).
