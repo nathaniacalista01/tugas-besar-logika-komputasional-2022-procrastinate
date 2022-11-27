@@ -112,6 +112,7 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
 
 /* Condition Special Block */
 checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
+                            Loc \= ('A2'),
                             !,
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
@@ -131,7 +132,7 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
 /* Condition Vacant Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C == ('-'),
-                             D = ('-'),
+                             D == ('-'),
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -149,6 +150,7 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
 /* Kondisi Owned Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C \= ('-'),
+                             write('masuk'),
                              biayaSewa(Loc, RentPrice, D),
                              biayaAkuisisi(Loc, Price, D),
                              locName(Loc, A),  
