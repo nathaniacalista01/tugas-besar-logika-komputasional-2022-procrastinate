@@ -1,4 +1,4 @@
-:- inlcude('bangkrut.pl')
+:- inlcude('bangkrut.pl').
 /* Mekanisme Perpajakan */
 /* Total pajak adalah total aset dikalikan dengan 10%,
    Kalau uang tidak mencukupi untuk membayar pajak, maka akan dilakukan

@@ -1,5 +1,4 @@
-:- include('pemain.pl').
-# :- include('properti.pl').
+:- include('chancecard.pl').
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
@@ -74,52 +73,38 @@ locOwnerDetail('A1', '-', '-').
 locOwnerDetail('A2', '-', '-').
 locOwnerDetail('B1', '-', '-').
 locOwnerDetail('B2', '-', '-').
-locOwnerDetail('B3', '-', '-').
+locOwnerDetail('B3', 'V', 1).
 locOwnerDetail('C1', '-', '-').
 locOwnerDetail('C2', '-', '-').
 locOwnerDetail('C3', '-', '-').
 locOwnerDetail('D1', '-', '-').
-locOwnerDetail('D2', '-', '-').
+locOwnerDetail('D2', 'A', 3).
 locOwnerDetail('D3', '-', '-').
 locOwnerDetail('E1', '-', '-').
-locOwnerDetail('E2', '-', '-').
+locOwnerDetail('E2', 'A', 2).
 locOwnerDetail('E3', '-', '-').
 locOwnerDetail('F1', '-', '-').
 locOwnerDetail('F2', '-', '-').
-locOwnerDetail('F3', '-', '-').
+locOwnerDetail('F3', 'V', 0).
 locOwnerDetail('G1', '-', '-').
 locOwnerDetail('G2', '-', '-').
 locOwnerDetail('G3', '-', '-').
-locOwnerDetail('H1', '-', '-').
-locOwnerDetail('H2', '-', '-').
+locOwnerDetail('H1', 'V', 4).
+locOwnerDetail('H2', 'A', 1).
 
 /* Updating loc owner */
 /* Fakta*/
-updateAllLocOwner(_,[],[]).
+/* updateAllLocOwner(_,[],[]).*/
 
 /* Rules */
-updateAllLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
+/* updateAllLocOwner(ID,List1,List2) :- player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_),
                                     List1 is [Loc|Tail], 
                                     retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)).
+                                    asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)). */
 
 
 /* Mengubah kepemilikan sebuah loc */
 changeLocOwner(LocID, PlayerID, PropertyLevel) :- retract(locOwnerDetail(LocID,_,_)), asserta(locOwnerDetail(LocID, PlayerID, PropertyLevel)).
-
-/*updateLocOwner(ID,L,L)
-/*player1(ID,_,_,_,[],[],_).
-player1(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) :- retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                                           asserta(locOwnerDetail(Loc, ID, NewPropertyLevel)),
-                                                           
-player2(ID,_,_,_,[],[],_).
-player2(ID,_,_,_,[Loc|Tail],[NewPropertyLevel|TailP],_) */
-/*getLocOwner(Loc, '-', '-', []).
-getLocOwner(Loc, Player, PropertyLevel) :'-' player1(_,_,_,_,[Loc|R],_),
-                                                  
-updateLocOwner(Loc, Player, PropertyLevel) :'-' getLocOwner(Loc, Player, PropertyLevel, List1)
-                                              retract(locOwnerDetail(Loc, OldPlayer, OldPropertyLevel)),
-                                              asserta(locOwnerDetail(Loc, Player, PropertyLevel)), !.*/
 
 biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLevel),
                                            PropertyLevel \= 4,
@@ -184,3 +169,15 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 3, write('Bangunan 3');
                                     D = 4, write('Bangunan 4')), nl,
                              write('================================================').
+/* initPlayerTemp :- 
+                     player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
+checkPlayer1Location :- player1(ID1,Loc1,Money1,_,_),infoRound(X),
+                            (Loc1 == 'CC', getChanceCard(Money1,X,_Card)
+                            ;
+                            write('================= Selamat datang di ================= '), nl,
+                            write('=================       '),write(Loc1),write('         ================='),nl,
+                            write('====================================================='), cekPlayerTurn(Y),buyProperty(Y)
+                            ;
+                            Loc1 == 'JL', write('Selamat datang di JaiL!'),nl).
+
+checkPlayerLocation(X) :- (X == 1, checkPlayer1Location).
