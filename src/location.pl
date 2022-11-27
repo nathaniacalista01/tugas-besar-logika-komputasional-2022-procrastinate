@@ -111,8 +111,7 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
 
 /* Condition Special Block */
 checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
-                            Loc \= ('A2'),
-                            !,
+                            (Loc == ('CC'); Loc == ('CF'); Loc == ('JL'); Loc == ('TX'); Loc == ('FP'); Loc == ('GO'), Loc == ('WT')), 
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
                             write('================================================'), nl,
@@ -149,9 +148,8 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
 /* Kondisi Owned Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C \= ('-'),
-                             write('masuk'),
-                             biayaSewa(Loc, RentPrice, D),
-                             biayaAkuisisi(Loc, Price, D),
+                             biayaSewa(Loc, D, RentPrice),
+                             biayaAkuisisi(Loc, D, Price),
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -169,9 +167,14 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 2, write('Bangunan 2');
                                     D = 3, write('Bangunan 3');
                                     D = 4, write('Bangunan 4')), nl,
+<<<<<<< HEAD
                              write('================================================'),!.
 /* initPlayerTemp :- 
                      player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
+=======
+                             write('================================================').
+
+>>>>>>> 4b9a983d4235d896bf5b187f92746b3d1d6ff11f
 checkPlayer1Location :- player1(ID1,Loc1,Money1,_),infoRound(X),
                             (Loc1 == 'CC', getChanceCard(Money1,X,_Card)
                             ;
