@@ -91,6 +91,8 @@ asetPlayer(ID, Aset) :-
     (ID == 'A' -> player1(_, _, Uang, _), countProperty('A', P), Aset is Uang + P ; player2(_, _, Uang, _), countProperty('V', P), Aset is Uang + P).
 updateMoney(ID, NewMoney) :-
     (ID == 'A' -> updateMoney1(NewMoney) ; updateMoney2(NewMoney)).
+checkPlayerLocationByID(ID, Loc) :-
+    (ID == 'A' -> player1(_, Loc, _, _) ; player2(_, Loc, _, _)).
 
 writeCard(ID,[]).
 writeCard(ID,[H|T]) :- write(ID),write('. '),write(H),nl,NewId is ID + 1,writeCard(NewId,T),!.
