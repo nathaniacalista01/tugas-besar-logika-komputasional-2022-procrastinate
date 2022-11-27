@@ -165,7 +165,7 @@ biayaSewa(Loc, PropertyLevel, Price) :- PropertyLevel == 4,
                                         Price is 0.3 * Priceproperty.
 
 biayaAkuisisi(Loc, PropertyLevel, Price) :- biayaSewa(Loc, PropertyLevel, RentPrice),
-                                            Price is 0.7 * RentPrice.
+                                            Price is 0.7 * RentPrice,!.
                                           
 
 checkPropertyDetail(Loc) :- locName(Loc, A),
@@ -242,7 +242,8 @@ buyPropertyPlayer1 :- player1(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                       write('Ketik -1 jika tidak membeli'), nl,
                       read(Answer),
                       ((Answer == 0, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, Answer); 
-                       Answer == 1, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
+                       Answer == 1, propertyPrice(Loc, Price, Answer), 
+                       Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
                        Answer == 2, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
                        Answer == 3, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
                        Answer == -1, write('Tidak membeli properti'));
@@ -382,7 +383,7 @@ bayarProperty2 :- player2(ID,Loc,Money,ListCard),
                 (Result == 1, printAngelCard(Answer),
                   (Answer == 1, useAngelCard2,!;
                   Answer == 0, notUseAngelCard,prosesBayar('V',Price));
-                Result == 0,prosesBayar('V',Price)).
+                Result == 0,prosesBayar('V',Price)),acProperty.
 /* Player 1 mau akuisisi bangunan Player 2 */
 acProperty :- write('Apakah kamu ingin mengakuisi Property ini? '),nl,
                write('Ketik 1 jika kamu ingin mengakuisis Property ini'),nl,
@@ -391,7 +392,7 @@ acProperty :- write('Apakah kamu ingin mengakuisi Property ini? '),nl,
                (X == 1, acProperty1,!;
                X == 2, acProperty2,!),!.
 
-acProperty1 :- player1(ID,Loc,Money,ListCard),
+acProperty1 :- player1(ID,Loc,Money,ListCard),write(Loc),
                biayaAkuisisi(Loc, PropertyLevel, AccPrice),
                (Money < AccPrice -> write('Uangmu tidak cukup untuk akuisisi properti');
                  Money >= AccPrice -> write('Apakah kamu ingin mengakuisisi properti? (yes/no)'), nl,
@@ -400,24 +401,21 @@ acProperty1 :- player1(ID,Loc,Money,ListCard),
                  Answer == 'no' -> write('Tidak mengakuisisi properti');
                  write('Input tidak valid, masukan hanya yes/no'))).
 
-acProperty2 :- player2(ID,Loc,Money,ListCard),
-               biayaAkuisisi(Loc, PropertyLevel, AccPrice),
-               (Money < AccPrice -> write('Uangmu tidak cukup untuk akuisisi properti');
+acProperty2 :- player2(_,Loc,Money,ListCard),
+                locOwnerDetail(Loc, 'A', PropertyLevel),Temp is PropertyLevel,
+                biayaAkuisisi(Loc,Temp,AccPrice),
+                (Money < AccPrice -> write('Uangmu tidak cukup untuk akuisisi properti');
                  Money >= AccPrice -> write('Apakah kamu ingin mengakuisisi properti? (yes/no)'), nl,
-                 read(Answer), (Answer == 'yes' -> write('Berhasil mengakuisisi properti'), retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)),
+                 read(Answer), (Answer == 'yes' -> write('Berhasil mengakuisisi properti'), nl,retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)),
                  asserta(locOwnerDetail(Loc, ID, PropertyLevel)), pembayaran(ID, AccPrice);
                  Answer == 'no' -> write('Tidak mengakuisisi properti');
                  write('Input tidak valid, masukan hanya yes/no'))).
+               
+               
    
 buyProperty(X) :- 
                   (X == 1, buyPropertyPlayer1;
                   X == 2, buyPropertyPlayer2).
-
-player1inplayer2 :- player1(_,Loc1,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
-                     displayKekayaan('A'),locOwnerDetail(Loc1,'A',Level),Temp is Level,write(Level).
-
-player2inplayer1 :- player2(_,Loc2,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
-                     displayKekayaan('V'),locOwnerDetail(Loc2,'V',Level),write(Level).
 
 jualProperty(ID, Money) :- countProperty(ID,N), Money is N, resetProperty(ID,1), !.
 

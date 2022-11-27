@@ -65,7 +65,7 @@ printInfo2 :-
             
 checkPlayerDetail(Player):-
                         (Player = 'A',printInfo1),!;
-                        (Player = 'B',printInfo2),!.
+                        (Player = 'V',printInfo2),!.
 
 writeB(0) :- write(' - Tanah'), !.
 writeB(1) :- write(' - Bangunan 1'), !.
