@@ -273,20 +273,51 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                        );
                       Result == 0, write('Tidak bisa membeli properti '),write(Loc)).
 
-increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
+increasePropertyPlayer1 :- player1(ID,Loc,_,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
                            PropertyLevel == 3,
                            write('Apakah kamu ingin meningkatkan properti menjadi Landmark?'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti'), nl,
-                           write('Ketik 0 jika iya'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti menjadi Landmark'), nl,
+                           write('Ketik 0 jika tidak'), nl,
                            read(Answer),
-                           (Answer == 1 -> checkMoney(Money, 4, Loc, Bool),
-                            Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, ID, 4));
-                            Answer == 0 -> halt);
-                           write('Input tidak valid').
+                           (Answer == 1 -> propertyPrice(Loc, Price, 4), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 4), !;
+                            Answer == 0, !; write('Input tidak valid!'), nl, increasePropertyPlayer1).
+                           
 
-increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
+
+increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
+                           locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           IDPlayer == ID,
+                           write('==========================================================='), nl,
+                           write('                        BELI PROPERTI                      '), nl, 
+                           write('==========================================================='), nl,
+                           (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
+                           write('Ketik 0 jika tidak'), nl, 
+                           read(Answer), 
+                           (Answer == 1 -> propertyPrice(Loc, Price, 3), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 3);
+                           Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1);
+                           PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 2'), nl,
+                           write('Ketik 0 jika tidak'), nl, 
+                           read(Answer),
+                           (Answer == 1 -> propertyPrice(Loc, Price, 2), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 2), !;
+                           Answer == 2 -> propertyPrice(Loc, Price, 3), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 3), !;
+                           Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1);
+                           PropertyLevel == 0, write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 3 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti ke bangunan tingkat 2'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 1'), nl,
+                           write('Ketik 0 jika tidak'), nl, 
+                           read(Answer),
+                           (Answer == 1 -> propertyPrice(Loc, Price, 1), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 1), !;
+                           Answer == 2 -> propertyPrice(Loc, Price, 2), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 2), !;
+                           Answer == 3 -> propertyPrice(Loc, Price, 3), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 3), !;
+                           Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1)).
+
+increasePropertyPlayer2 :- player2(ID,Loc,_,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
                            PropertyLevel == 3,
@@ -294,60 +325,39 @@ increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            write('Ketik 1 jika ingin meningkatkan properti'), nl,
                            write('Ketik 0 jika tidak'), nl,
                            read(Answer),
-                           (Answer == 1 -> checkMoney(Money, 4, Loc, Bool),
-                            Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, ID, 4));
-                            Answer == 0 -> halt);
-                           write('Input tidak valid').
-
-increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
-                           locOwnerDetail(Loc, IDPlayer, PropertyLevel),
-                           IDPlayer == ID,
-                           (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
-                           write('Ketik 0 jika tidak'), read(Answer), Answer == 1 -> checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
-                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, IDPlayer, 3)), 
-                           Answer == 0 -> halt);
-                           (PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
-                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
-                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
-                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1)));
-                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)), 
-                           Answer == 0 -> halt);
-                           (PropertyLevel == 0 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
-                           write('Ketik 3 jika ingin meningkatkan properti tiga level'), nl,
-                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
-                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
-                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1));
-                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)); Answer == 3 -> asserta(locOwnerDetail(Loc, IDPlayer, 3));  
-                           Answer == 0 -> halt));
-                           write('Input tidak valid').
+                           (Answer == 1 -> propertyPrice(Loc, Price, 4), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 4), !;
+                            Answer == 0, !; write('Input tidak valid!'), nl, increasePropertyPlayer1).
 
 increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
+                           write('==========================================================='), nl,
+                           write('                        BELI PROPERTI                      '), nl, 
+                           write('==========================================================='), nl,
                            (PropertyLevel == 2 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
-                           write('Ketik 0 jika tidak'), read(Answer), Answer == 1 -> checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
-                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc, IDPlayer, 3)); 
-                           Answer == 0 -> halt),
-                           (PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
-                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
-                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
-                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1));
-                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)); 
-                           Answer == 0 -> halt)),
-                           (PropertyLevel == 0 -> write('Apakah kamu ingin meningkatkan properti?'), nl,
-                           write('Ketik 3 jika ingin meningkatkan properti tiga level'), nl,
-                           write('Ketik 2 jika ingin meningkatkan properti dua level'), nl,
-                           write('Ketik 1 jika ingin meningkatkan properti satu level'), nl,
-                           write('Ketik 0 jika tidak'), read(Answer), checkMoney(Money, PropertyLevel + Answer, Loc, Bool),
-                           Bool == 'true' -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), (Answer == 1 -> asserta(locOwnerDetail(Loc, IDPlayer, 1));
-                           Answer == 2 -> asserta(locOwnerDetail(Loc, IDPlayer, 2)); Answer == 3 -> asserta(locOwnerDetail(Loc, IDPlayer, 3));  
-                           Answer == 0 -> halt));
-                           write('Input tidak valid').
+                           write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
+                           write('Ketik 0 jika tidak'), nl, 
+                           read(Answer), 
+                           (Answer == 1 -> propertyPrice(Loc, Price, 3), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 3);
+                           Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1);
+                           PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 2'), nl,
+                           write('Ketik 0 jika tidak'), nl, 
+                           read(Answer),
+                           (Answer == 1 -> propertyPrice(Loc, Price, 2), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 2), !;
+                           Answer == 2 -> propertyPrice(Loc, Price, 3), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 3), !;
+                           Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1);
+                           PropertyLevel == 0, write('Apakah kamu ingin meningkatkan properti?'), nl,
+                           write('Ketik 3 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
+                           write('Ketik 2 jika ingin meningkatkan properti ke bangunan tingkat 2'), nl,
+                           write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 1'), nl,
+                           write('Ketik 0 jika tidak'), nl, 
+                           read(Answer),
+                           (Answer == 1 -> propertyPrice(Loc, Price, 1), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 1), !;
+                           Answer == 2 -> propertyPrice(Loc, Price, 2), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 2), !;
+                           Answer == 3 -> propertyPrice(Loc, Price, 3), Price1 is Price, prosesBeliProperti(ID, Price1, Loc, 3), !;
+                           Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1)).
 
 printAngelCard(Answer) :- write('=========== ANGEL CARD ==========='),nl,
                   write('Selamat, kamu mempunyai Angel Card, apakah kamu mau menggunakannya?'),nl,
