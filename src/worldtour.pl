@@ -9,47 +9,71 @@ maka pemain akan melanjutkan melempar dadu seperti biasa
 
 */
 
-:- include ('location.pl').
+:- include('location.pl').
+:- include('board.pl').
 
-player1('A','WT',300,[]).
+player1('A','WT',50,[]).
+player2('B','WT',500,[]).
 
 /* Mengecek apakah pemain sedang berada di petak WT */
 /* Fakta */
 
 /* Rules */
-isInWorldTour(PlayerID, Result) :- (PlayerID = 1 , player1(_,P1Loc,_,_), (P1Loc = 'WT', Result is 1; P1Loc \= 'WT', Result is 0)) ; 
-                                (PlayerID = 2, player2(_,P2Loc,_,_), (P2Loc = 'WT', Result is 1; P2Loc \= 'WT', Result is 0)),!.
+isInWorldTour(PlayerID, Result) :- ((PlayerID = 1 , player1(_,P1Loc,_,_), (P1Loc = 'WT', Result is 1; P1Loc \= 'WT', Result is 0)) ; 
+                                (PlayerID = 2, player2(_,P2Loc,_,_), (P2Loc = 'WT', Result is 1; P2Loc \= 'WT', Result is 0))),!.
 
 /* Melakukan cek apakah uang pada Player cukup untuk melakukan 
 World Tour dan apakah ingin melakukannya */
 /* Fakta */
 /* Rules */
-wantWorldTour(PlayerID, Choice) :- ((PlayerID = 1, player1(_,_,P1Money,_), (P1Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!', nl, Choice is 0;
+wantWorldTour(PlayerID, Choice) :- ((PlayerID = 1, player1(_,_,P1Money,_), (P1Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!'), nl, Choice is 0;
                                                                             P1Money >= 100, write('Apakah kamu ingin melakukan World Tour? 1 untuk Iya, 0 untuk Tidak : '), read(_UserChoice),
-                                                                                                (_UserChoice = 1, Choice is 1; _UserChoice \= 1, Choice is 0))));
-                                (PlayerID = 2, player2(_,_,P2Money,_), (P2Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!', nl, Choice is 0;
+                                                                                                (_UserChoice = 1, Choice is 1; _UserChoice \= 1, Choice is 0)));
+                                (PlayerID = 2, player2(_,_,P2Money,_), (P2Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!'), nl, Choice is 0;
                                                                             P2Money >= 100, write('Apakah kamu ingin melakukan World Tour? 1 untuk Iya, 0 untuk Tidak : '), read(_UserChoice),
-                                                                                                (_UserChoice = 1, Choice is 1; _UserChoice \= 1, Choice is 0))))),!.
+                                                                                                (_UserChoice = 1, Choice is 1; _UserChoice \= 1, Choice is 0)))),!.
 
 /* Mengecek apakah petak yang diinputkan user adalah petak yang valid */
 /* Mengembalikan 1 bila petak tersebut valid, mengembalikan 0 jika tidak */
 /* Fakta */
 /* Rules */
-isLocValid(Loc, Result) :- locName(X,_), X = Loc, Result is 1.
+isLocValid(Loc, Result) :- locName(X,_), X = Loc -> Result is 1 ; Result is 0.
 
 /* Menanyakan ke User, ke petak mana Ia ingin pergi */
 /* Loc adalah lokasi akhir yang ingin dituju User */
 /* AfterGo mengembalikan 1 bila petak tersebut berada setelah Go (sehingga mendapatkan uang)
     AfterGo mengembalikan 0 bila petak tersebut berada sebelum Go */
 
-/* askUserTravelLocation(Loc, AfterGo). */
+askUserTravelLocation(Loc, AfterGo, _Valid) :-  write('Ke petak mana kamu ingin pergi? (Masukkan inisial saja, e.g. : \'A2\'.)'), nl, write('Input yang tidak valid berarti tidak jadi melakukan World Tour : '),
+                                        read(Loc), isLocValid(Loc, _Valid), 
+                                        (_Valid = 0, AfterGo is 0;
+                                        _Valid = 1, tile(_,_,Loc,Idx), (Idx > 24 , AfterGo is 0 ; Idx < 24, AfterGo is 1; Idx = 24 , AfterGo is -1)), !.
 
 /* Melakukan World Tour */
 /* Fakta */
 /* Rules */
+goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- asciiWorldTour, PlayerID = 1, player1(_,P1Loc,P1Money,_), wantWorldTour(PlayerID, _Choice), 
+                                                                ( _Choice = 0, MoneyChanges is 0, FinalLoc = P1Loc; 
+                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid),
+                                                                    (Valid = 0, FinalLoc = P1Loc, MoneyChanges is 0;
+                                                                    Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
 
-/*
-goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- PlayerID = 1, player1(_,P1Loc,P1Money,_,_,_,_), wantWorldTour(PlayerID, _Choice), 
-                                                                ( Choice = 0, MoneyChanges is 0, FinalLoc is P1Loc; 
-                                                                    Choice = 1, ).
-                                                                    */
+goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- PlayerID = 2, player2(_,P2Loc,P2Money,_), wantWorldTour(PlayerID, _Choice), 
+                                                                ( _Choice = 0, MoneyChanges is 0, FinalLoc = P2Loc; 
+                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid), 
+                                                                    (Valid = 0, FinalLoc = P2Loc, MoneyChanges is 0;
+                                                                    Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
+
+/* Ascii untuk World Tour */
+asciiWorldTour :- write('================================================================'), nl,
+            write('================================================================'), nl,
+            write('====                                                        ===='), nl,
+            write('====     ========    ========    ||    ||    ======         ===='), nl,
+            write('====        ||       ||    ||    ||    ||    ||    ||       ===='), nl,
+            write('====        ||       ||    ||    ||    ||    ||====         ===='), nl,
+            write('====        ||       ||    ||    ||    ||    || ||          ===='), nl,
+            write('====        ||       ========    ========    ||   ||        ===='), nl,
+            write('====                                                        ===='), nl,
+            write('================================================================'), nl,
+            write('================================================================'), nl.
+        

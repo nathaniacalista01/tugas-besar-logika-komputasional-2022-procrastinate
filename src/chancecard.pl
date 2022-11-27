@@ -112,14 +112,26 @@ getChanceCard(Money, Round, _Card) :-
             getCCIndex(Money, Round, _Index), indexCard(_Card, _Index),
             write(''), nl, write('Anda mendapatkan : '), write(_Card), addChanceCard(_Card,1),!.
 
+/* Melakukan inisiasi Chance Card yang dimiliki player */
 initPlayerTemp :- asserta(player1('A','CC',_,_)).
 
-appendList( [], X, X).                                  
+/* Menambahkan Chance Card pada List */
+/* Fakta */
+appendList( [], X, X).                 
+/* Rules */                 
 appendList( [X | Y], Z, [X | W]) :- append( Y, Z, W).  
 
+/* Menambahkan Chance Card untuk player 1 */
 addChanceCardPlayer1(Card) :- 
                         retract(player1(ID1,Loc1,Money1,Propery1,List1)),appendList(List1,[Card],List2),
                         asserta(player1(ID1,Loc1,Money1,Property1,List2)).
+
+/* Menambahkan Chance Card untuk player 2 */
+addChanceCardPlayer2(Card) :- 
+                        retract(player2(ID1,Loc1,Money1,Propery1,List1)),appendList(List1,[Card],List2),
+                        asserta(player2(ID1,Loc1,Money1,Property1,List2)).
+
+/* Menambahkan Chance Card untuk player tertentu */
 addChanceCard(Card,X) :-
                 cekPlayerTurn(X),
                 (X == 1, addChanceCardPlayer1(Card);
