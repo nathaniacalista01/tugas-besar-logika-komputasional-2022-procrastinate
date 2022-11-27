@@ -37,7 +37,7 @@ updateMoney2(NewMoney) :-
     
 printInfo1 :-
             write('================================================'), nl,
-            player1(Id,Loc,Money,List1),
+            player1(_,Loc,Money,List1),
             write('              Informasi Player A '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
@@ -51,7 +51,7 @@ printInfo1 :-
 
 printInfo2 :-
             write('================================================'), nl,
-            player2(Id,Loc,Money,List1),
+            player2(_,Loc,Money,List1),
             write('              Informasi Player V '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
@@ -76,13 +76,13 @@ writeB(4) :- write(' - Landmark'), !.
 writeX(31,ID,_) :- locOwnerDetail('H2',ID1,_), ID \= ID1, nl, !.
 writeX(31,ID,NO) :- locOwnerDetail('H2',ID,B), write(NO), write('. '), write('H2'), writeB(B), nl.
 writeX(IDX,ID,NO) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), write(NO), write('. '), write(Loc), writeB(B), nl, IDX1 is IDX + 1, NO1 is NO + 1, writeX(IDX1,ID,NO1).
-writeX(IDX,ID,NO) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, writeX(IDX1,ID,NO).
+writeX(IDX,ID,NO) :- tile(_,_,_,IDX), IDX1 is IDX + 1, writeX(IDX1,ID,NO).
 writeLoc(ID) :- writeX(1,ID,1),!.
 
 countP(31,ID,0) :- locOwnerDetail('H2',ID1,_), ID \= ID1, !.
 countP(31,ID,N) :- locOwnerDetail('H2',ID,B), propertyPrice('H2',N,B), !.
 countP(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), propertyPrice(Loc,N1,B), IDX1 is IDX + 1, countP(IDX1,ID,N2), N is N1 + N2, !.
-countP(IDX,ID,N) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, countP(IDX1,ID,N).
+countP(IDX,ID,N) :- tile(_,_,_,IDX), IDX1 is IDX + 1, countP(IDX1,ID,N).
 countProperty(ID,N) :- countP(1,ID,N),!.
 
 uangPlayer(ID, Uang) :-
@@ -94,5 +94,5 @@ updateMoney(ID, NewMoney) :-
 checkPlayerLocationByID(ID, Loc) :-
     (ID == 'A' -> player1(_, Loc, _, _) ; player2(_, Loc, _, _)).
 
-writeCard(ID,[]).
+writeCard(_,[]).
 writeCard(ID,[H|T]) :- write(ID),write('. '),write(H),nl,NewId is ID + 1,writeCard(NewId,T),!.

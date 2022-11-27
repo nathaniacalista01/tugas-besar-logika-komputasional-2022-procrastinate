@@ -1,6 +1,3 @@
-:- include('chancecard.pl').
-:- include('pemain.pl').
-:- include('pajak.pl')
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
