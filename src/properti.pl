@@ -410,3 +410,11 @@ resetProperty(ID, IDX) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, Prope
                            IDX1 is IDX + 1, resetProperty(ID, IDX1).
 
 resetProperty(ID, IDX) :- IDX1 is IDX + 1, resetProperty(ID, IDX1).
+
+checkAngelCard([], 0).
+checkAngelCard([H|T], Result) :- (H == ('Angel Card'), Result is 1);
+                                 checkAngelCard(T, Result).
+
+remover(_, [], []).
+remover(R, [R|T], T).
+remover(R, [H|T], [H|T2]) :- H \= R, remover(R, T, T2).

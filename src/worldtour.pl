@@ -9,8 +9,13 @@ maka pemain akan melanjutkan melempar dadu seperti biasa
 
 */
 
+/* Hanya diaktifkan bila ingin mencoba modul ini
+:- include('location.pl').
+:- include('board.pl').
+
 player1('A','WT',50,[]).
 player2('B','WT',500,[]).
+*/
 
 /* Mengecek apakah pemain sedang berada di petak WT */
 /* Fakta */
