@@ -203,9 +203,30 @@ wentInTX(PlayerID) :-
        Loc == 'TX',
        bayarPajak(PlayerID).
 
-checkPlayerLocationBefore(X) :- (X = 1, checkPlayer1LocationBefore ; X = 2, checkPlayer2LocationBefore).
+checkPlayerLocationBefore(X, CanMove) :- (X = 1, checkPlayer1LocationBefore(CanMove) ; X = 2, checkPlayer2LocationBefore(CanMove)).
 
-checkPlayer1LocationBefore :- player1(_,P1Loc, P1Money,_), infoRound(CRound),
-                            (P1Loc = 'JL', remainTurnP1(JailTurn), 
-                            ( JailTurn = 0, startPlayerInJail(1);
-                            JailTurn \= 0, decrementTurnInJail(1) )).
+checkPlayer1LocationBefore(CanMove) :- player1(_,P1Loc, P1Money,_), infoRound(CRound),
+                            ((P1Loc = 'JL', remainTurnP1(JailTurn), 
+                            ( JailTurn == 0, releasePlayerFromJail(1), CanMove is 1;
+                            JailTurn == -1 , startPlayerInJail(1), jailMechanism(1, Release),
+                                                               (Release == 1, releasePlayerFromJail(1), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(1), CanMove is 0);
+                            JailTurn \= 0, JailTurn \= -1, jailMechanism(1, Release), 
+                                                               (Release == 1, releasePlayerFromJail(1), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(1), CanMove is 0))) ; 
+                            (P1Loc = 'WT', goWorldTour(1, FinalLoc, MoneyChanges), NewMoney is P1Money + MoneyChanges,
+                            retract(player1(_,P1Loc,P1Money,_)), asserta(player1(_,FinalLoc, NewMoney)), CanMove is 0 );
+                            CanMove is 1),!.
+
+checkPlayer2LocationBefore(CanMove) :- player2(_,P2Loc, P2Money,_), infoRound(CRound),
+                            ((P2Loc = 'JL', remainTurnP2(JailTurn), 
+                            ( JailTurn == 0, releasePlayerFromJail(2), CanMove is 1;
+                            JailTurn == -1 , startPlayerInJail(2), jailMechanism(2, Release),
+                                                               (Release == 1, releasePlayerFromJail(2), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(2), CanMove is 0);
+                            JailTurn \= 0, JailTurn \= -1, jailMechanism(2, Release), 
+                                                               (Release == 1, releasePlayerFromJail(2), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(2), CanMove is 0))) ; 
+                            (P2Loc = 'WT', goWorldTour(2, FinalLoc, MoneyChanges), NewMoney is P2Money + MoneyChanges,
+                            retract(player2(_,P2Loc,P2Money,_)), asserta(player2(_,FinalLoc, NewMoney)), CanMove is 0 );
+                            CanMove is 1),!.
