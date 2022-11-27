@@ -202,8 +202,8 @@ checkPropertyDetail(Loc) :- locName(Loc, A),
 /* increasePropertyPlayer2 :-  */
 checkIsProperty(X,Result) :- 
                      (X == 'GO', Result is 0;X == 'CF',Result is 0; X=='CC',Result is 0;X=='JL',Result is 0;X=='TX', Result is 0;X=='FP', Result is 0;
-                     X=='WT',Result is 0 ),!;
-                     (Result is 1). 
+                     X=='WT',Result is 0 ,!;
+                     Result is 1). 
 writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 0,
                                                     StringTingkat is 'tanah'.
 writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 1,
@@ -215,22 +215,23 @@ writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 3,
 writePropertyLevel(PropertyLevel, StringTingkat) :- PropertyLevel == 4,
                                                     StringTingkat is 'landmark'.
 
-checkMoney1(Money, PropertyLevel, Loc, Bool) :- propertyPrice(Loc, Price, PropertyLevel),
-                                               (Money < Price,Bool is 'false', write('Wah uangmu kurang! Tidak bisa membeli properti!');
-                                               Money >= Price, NewMoney is Money - Price,updateMoney1(NewMoney),Bool is 'true',
+checkMoney1(Money, PropertyLevel, Loc, Bool) :- write('Check Property 1'),propertyPrice(Loc, Price, PropertyLevel),
+                                               (Money < Price,write('masuk'), write('Wah uangmu kurang! Tidak bisa membeli properti!'), Bool is 0;
+                                               Money >= Price, NewMoney is Money - Price,updateMoney1(NewMoney),Bool is 1,
                                                writePropertyLevel(PropertyLevel,StringTingkat),
                                                write('Berhasil membeli'),write(StringTingkat),nl). 
 
 checkMoney2(Money, PropertyLevel, Loc, Bool) :- propertyPrice(Loc, Price, PropertyLevel),
-                                               (Money < Price,Bool is 'false', write('Wah uangmu kurang! Tidak bisa membeli properti!');
-                                               Money >= Price, NewMoney is Money - Price,updateMoney2(NewMoney),Bool is 'true',
+                                               (Money < Price,Bool is 0, write('Wah uangmu kurang! Tidak bisa membeli properti!');
+                                               Money >= Price, NewMoney is Money - Price,updateMoney2(NewMoney),Bool is 1,
                                                writePropertyLevel(PropertyLevel,StringTingkat),
                                                write('Berhasil membeli'),write(StringTingkat),nl). 
 
-buyPropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
-                     (checkIsProperty(Loc,Result) == 1, 
+/* Untuk boolean, 1 = True, 0 = False */
+buyPropertyPlayer1 :- player1(ID,Loc,Money,_,_),checkIsProperty(Loc,Result),write(Result), 
+                     (Result == 1,
                       locOwnerDetail(Loc, OldID, OldProperty),
-                      OldID == ('-'),
+                      OldID == ('-'),write('masuk'),
                       write('Apakah kamu ingin membeli properti?'), nl,
                       write('Tanah (ketik 0)'), nl,
                       write('Bangunan Tingkat 1 (ketik 1)'), nl,
@@ -238,13 +239,14 @@ buyPropertyPlayer1 :- player1(ID,Loc,Money,_,_,_),
                       write('Bangunan Tingkat 3 (ketik 3)'), nl,
                       write('Ketik -1 jika tidak membeli'), nl,
                       read(Answer),
-                      (Answer == 0; Answer == 1; Answer == 2; Answer == 3 -> checkMoney(Money, Answer, Loc, Bool),
-                       Bool == 'true' -> retract(locOwnerDetail(Loc, OldID, OldProperty)), asserta(locOwnerDetail(Loc, ID, Answer));
-                       Answer == -1 -> halt);
-                      write('Input tidak valid!');
-                     checkIsProperty(Loc,Result) == 0, write('Tidak bisa membeli property '),write(Loc)).
+                      (Answer == 0,checkMoney(Money, Answer, Loc, Bool); Answer == 1,checkMoney(Money, Answer, Loc, Bool); Answer == 2,checkMoney1(Money, Answer, Loc, Bool); 
+                        Answer == 3,checkMoney(Money, Answer, Loc, Bool),
+                       Bool == 1 -> retract(locOwnerDetail(Loc, OldID, OldProperty)), asserta(locOwnerDetail(Loc, ID, Answer));
+                       Answer == -1 -> halt;
+                      write('Input tidak valid!'));
+                     Result == 0, write('Tidak bisa membeli property '),write(Loc)).
 
-buyPropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
+buyPropertyPlayer2 :- player2(ID,Loc,Money,_,_),write(Loc),
                       locOwnerDetail(Loc, OldID, OldPropertyLevel),
                       OldID == ('-'),
                       write('Apakah kamu ingin membeli properti?'), nl,
@@ -254,8 +256,9 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_,_,_),
                       write('Bangunan Tingkat 3 (ketik 3)'), nl,
                       write('Ketik -1 jika tidak membeli'), nl,
                       read(Answer),
-                      (Answer == 0; Answer == 1; Answer == 2; Answer == 3 -> checkMoney(Money, Answer, Loc, Bool),
-                       Bool == 'true' -> retract(locOwnerDetail(Loc, OldID, OldPropertyLevel)), asserta(locOwnerDetail(Loc, ID, Answer));
+                      (Answer == 0; Answer == 1,checkMoney2(Money, Answer, Loc, Bool); Answer == 2,checkMoney2(Money, Answer, Loc, Bool); 
+                      Answer == 3,checkMoney2(Money, Answer, Loc, Bool),
+                       Bool == 1 -> retract(locOwnerDetail(Loc, OldID, OldPropertyLevel)), asserta(locOwnerDetail(Loc, ID, Answer));
                        Answer == -1 -> halt);
                       write('Input tidak valid!').
 
@@ -389,3 +392,6 @@ accProperty2 :- player2(ID,Loc,Money,_,_,_),
                  Answer == 'no' -> write('Tidak mengakuisisi properti'), halt);
                  write('Input tidak valid, masukan hanya yes/no')).
    
+buyProperty(X) :- 
+                  (X == 1, buyPropertyPlayer1;
+                  X == 2, buyPropertyPlayer2).

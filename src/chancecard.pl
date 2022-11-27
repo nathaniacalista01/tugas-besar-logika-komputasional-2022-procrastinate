@@ -118,10 +118,10 @@ appendList( [], X, X).
 appendList( [X | Y], Z, [X | W]) :- append( Y, Z, W).  
 
 addChanceCardPlayer1(Card) :- 
-                        retract(player1(_,_,_,_,List1)),appendList(List1,[Card],List2),
-                        asserta(player1(_,_,_,_,List2)).
+                        retract(player1(ID1,Loc1,Money1,Propery1,List1)),appendList(List1,[Card],List2),
+                        asserta(player1(ID1,Loc1,Money1,Property1,List2)).
 addChanceCard(Card,X) :-
-                retract(playerTurn(X)),
+                cekPlayerTurn(X),
                 (X == 1, addChanceCardPlayer1(Card);
                 X == 2, addChanceCardPlayer2(Card)).
 

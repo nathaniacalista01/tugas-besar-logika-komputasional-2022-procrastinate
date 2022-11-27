@@ -41,8 +41,7 @@ throwDice :-
             /* Kirim jumlah kedua dadu ke dalam fungsi updateLoc1 */
             X == 2 , throwDice2),!.
 
-afterMove:- cekPlayerTurn(X),
-                (X == 1,checkPlayerLocation(X)).
+afterMove:- cekPlayerTurn(X), checkPlayerLocation(X).
 
 buyProperty :-cekPlayerTurn(X),
                    (X == 1, buyPropertyPlayer1;

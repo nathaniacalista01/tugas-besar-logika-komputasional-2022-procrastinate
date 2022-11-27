@@ -4,7 +4,7 @@
 :- dynamic(player2/5).
 blank :- write(' ').
 
-initPlayer :- write('Masuk'),
+initPlayer :-
             asserta(player1('A','GO',1500,0,[])),!,
             asserta(player2('V','GO',1500,0,[])),!,
             write('Selamat bermain, pemain A!'),nl,
@@ -52,11 +52,11 @@ printInfo1 :-
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
             write('3. Total Nilai Properti     : '), countProperty('A',P), write(P),nl,
-            write('4. Total Aset               : '),TotalAsset is Money + Property,write(TotalAsset),nl,
+            write('4. Total Aset               : '),TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikian properti : '),nl,
             writeLoc('A'),
             write('================ List Cards ================ '),nl,
-            writeCard(List1),!.
+            writeCard(1,List1),!.
 
 printInfo2 :-
             write('================================================'), nl,
@@ -66,11 +66,11 @@ printInfo2 :-
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
             write('3. Total Nilai Properti     : '), countProperty('V',P), write(P),nl,
-            write('4. Total Aset               : '),TotalAsset is Money + Property,write(TotalAsset),nl,
+            write('4. Total Aset               : '),TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikan Properti : '),nl,
             writeLoc('V'),
             write('================ List Cards ================ '),nl,
-            writeCard(List1),!.
+            writeCard(1,List1),!.
             
 checkPlayerDetail(Player):-
                         (Player = 'A',printInfo1),!;
@@ -94,5 +94,5 @@ countP(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), propertyPrice(L
 countP(IDX,ID,N) :- tile(_,_,Loc,IDX), IDX1 is IDX + 1, countP(IDX1,ID,N).
 countProperty(ID,N) :- countP(1,ID,N),!.
 
-writeCard([]).
-writeCard([H|T]) :- write(H),nl,writeCard(T),!.
+writeCard(ID,[]).
+writeCard(ID,[H|T]) :- write(ID),write('. '),write(H),nl,NewId is ID + 1,writeCard(NewId,T),!.

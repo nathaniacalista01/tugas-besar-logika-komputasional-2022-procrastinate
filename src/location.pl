@@ -171,8 +171,13 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('================================================').
 /* initPlayerTemp :- 
                      player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
-checkPlayer1Location :- player1(ID1,Loc1,Money1,_,_,_,_),retract(round(X)),
-                            (Loc1 == 'CC', getChanceCard(Money1,X,_Card);
-                            Loc1 == '').
+checkPlayer1Location :- player1(ID1,Loc1,Money1,_,_),infoRound(X),
+                            (Loc1 == 'CC', getChanceCard(Money1,X,_Card)
+                            ;
+                            write('================= Selamat datang di ================= '), nl,
+                            write('=================       '),write(Loc1),write('         ================='),nl,
+                            write('====================================================='), cekPlayerTurn(Y),buyProperty(Y)
+                            ;
+                            Loc1 == 'JL', write('Selamat datang di JaiL!'),nl).
 
-checkPlayerLocation(X) :- (X == 1, checkPlayerLocation1).
+checkPlayerLocation(X) :- (X == 1, checkPlayer1Location).
