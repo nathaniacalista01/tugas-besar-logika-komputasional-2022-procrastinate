@@ -5,7 +5,7 @@
 blank :- write(' ').
 
 initPlayer :-
-            asserta(player1('A','JL',1500,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','H2',1500,['Get Out From Jail', 'Angel Card'])),!,
             asserta(player2('V','GO',1500,[])),!,
             write('Selamat bermain, pemain A!'),nl,
             printInfo1,nl,!,

@@ -80,7 +80,7 @@ locOwnerDetail('D1', '-', '-').
 locOwnerDetail('D2', 'A', 3).
 locOwnerDetail('D3', '-', '-').
 locOwnerDetail('E1', '-', '-').
-locOwnerDetail('E2', 'A', 2).
+locOwnerDetail('E2', 'A', 3).
 locOwnerDetail('E3', '-', '-').
 locOwnerDetail('F1', '-', '-').
 locOwnerDetail('F2', '-', '-').

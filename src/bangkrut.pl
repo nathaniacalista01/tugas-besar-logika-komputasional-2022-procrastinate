@@ -42,4 +42,4 @@ hampirBangkrut :-
 pembayaran(PlayerID, BiayaTanggungan) :-
     uangPlayer(PlayerID, Saldo), UangBaru is Saldo - BiayaTanggungan,
     ((PlayerID == 'A') -> (updateMoney1(UangBaru)) ; (updateMoney2(UangBaru))),
-    write('Uang mu telah terpotong menjadi: '), write(UangBaru).
+    write('Uang mu telah terpotong menjadi: '), write(UangBaru), nl.
