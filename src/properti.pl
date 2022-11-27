@@ -348,36 +348,25 @@ increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            Answer == 0 -> halt));
                            write('Input tidak valid').
 
-
 bayarProperty1 :- player1(ID,Loc,Money,ListCard),
                 locOwnerDetail(Loc, 'V', PropertyLevel),Temp is PropertyLevel,
                 write('Yah kamu terkena biaya sewa:('),biayaSewa(Loc,Temp,Price),
                 write(Price),nl,displayKekayaan('A'),
-                prosesBayar('A',Price).
+                prosesBayar('A',Price), acProperty.
 
 bayarProperty2 :- player2(ID,Loc,Money,ListCard),
                 locOwnerDetail(Loc, 'A', PropertyLevel),Temp is PropertyLevel,
                 write('Yah kamu terkena biaya sewa:('),biayaSewa(Loc,Temp,Price),
                 write(Price),nl,displayKekayaan('V'),
-                prosesBayar('V',Price).
+                prosesBayar('V',Price),acProperty.
 
-bayarProperty1 :- player1(ID,Loc,Money,ListCard),
-                  locOwnerDetail(Loc,IDPlayer,PropertyLevel),
-                  IDPlayer \= ID,
-                  IDPlayer \= ('-'),
-                  write('Yah kamu terkena biaya sewa:('), nl,
-                  biayaSewa(Loc, PropertyLevel, Price),
-                  Money >= Price,
-                  pembayaran(ID, Price).
-
-bayarProperty2 :- player2(ID,Loc,Money,ListCard),
-                  locOwnerDetail(Loc,IDPlayer,PropertyLevel),
-                  IDPlayer \= ID,
-                  IDPlayer \= ('-'),
-                  write('Yah kamu terkena biaya sewa:('), nl,
-                  biayaSewa(Loc, PropertyLevel, Price),
-                  Money >= Price,
-                  pembayaran(ID, Price).
+/* Player 1 mau akuisisi bangunan Player 2 */
+acProperty :- write('Apakah kamu ingin mengakuisi Property ini? '),nl,
+               write('Ketik 1 jika kamu ingin mengakuisis Property ini'),nl,
+               write('Ketik 0 jika kamu tidak ingin mengakuisisi Property ini'),nl,
+               cekPlayerTurn(X),
+               (X == 1, acProperty1;
+               X == 2, acProperty2).
 
 acProperty1 :- player1(ID,Loc,Money,ListCard),
                biayaAkuisisi(Loc, PropertyLevel, AccPrice),
