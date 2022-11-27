@@ -398,12 +398,23 @@ buyProperty(X) :-
                   (X == 1, buyPropertyPlayer1;
                   X == 2, buyPropertyPlayer2).
 
-player1inplayer2 :- player1(_,_,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
-                     write('Uang yang dipegang ='),write(Money),nl,
-                     write('Total kekayaan properti = '),countProperty('A',P),write(P),nl,
-                     write('Total Kekayaan = '),write(Money),write(P),Total is Money + P,write(Total).
 
-player2inplayer1 :- player2(_,_,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
-                     write('Uang yang dipegang :'),write(Money),nl,
-                     write('Total kekayaan properti : '),countProperty('V',P),write(P),nl,
-                     write('Total Kekayaan : '),write(Money),write(' + '),write(P),write(' = '),Total is Money + P,write(Total).
+
+player1inplayer2 :- player1(_,Loc1,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
+                     displayKekayaan('A'),locOwnerDetail(Loc1,'A',Level),Temp is Level,write(Level).
+
+player2inplayer1 :- player2(_,Loc2,Money,_),write('Sayang sekali, lahan ini sudah dimiliki oleh Player lain (: '),nl,
+                     displayKekayaan('V'),locOwnerDetail(Loc2,'V',Level),write(Level).
+
+jualProperty(ID, Money) :- countProperty(ID,N), Money is N, resetProperty(ID,1), !.
+
+resetProperty(ID, 31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), ID \= IDPlayer, !.
+
+resetProperty(ID, 31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), !,
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
+
+resetProperty(ID, IDX) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel),
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))),
+                           IDX1 is IDX + 1, resetProperty(ID, IDX1).
+
+resetProperty(ID, IDX) :- IDX1 is IDX + 1, resetProperty(ID, IDX1).
