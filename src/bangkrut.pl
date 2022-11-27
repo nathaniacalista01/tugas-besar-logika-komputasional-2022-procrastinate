@@ -6,31 +6,29 @@
 
 :- dynamic(uangBelumCukup/1).
 
-sanggupBayar(Player, BiayaTanggungan) :-
-    saldo(Player, Saldo),
-    aset(Player, Aset),
-    TotalAset is Saldo + Aset,
-    (TotalAset < BiayaTanggungan ->
-    asserta(uangBelumCukup(Player)); 
-    uangBelumCukup(Player), retract(uangBelumCukup(Player))).
+sanggupBayar(PlayerID, BiayaTanggungan) :-
+    asetPlayer(PlayerID, TotalAset),
+    (TotalAset > BiayaTanggungan ->
+    (uangBelumCukup(PlayerID) -> retract(uangBelumCukup(PlayerID)) ; true);
+    asserta(uangBelumCukup(PlayerID))).
 
-displayKekayaan :-
-    uang(Player, Uang),
-    aset(Player, Aset),
-    TotalAset is Uang + Aset,
+displayKekayaan(PlayerID) :-
+    uangPlayer(PlayerID, Saldo),
+    countProperty(PlayerID, TotalProperty),
+    asetPlayer(PlayerID, AsetA),
     write('Uang yang dipegang: '),
-    write(Uang), nl,
+    write(Saldo), nl,
     write('Total kekayaan properti: '),
-    write(Aset), nl,
+    write(TotalProperty), nl,
     write('Total kekayaan: '),
-    write(Uang), write(' + '), write(Aset), write(' = '), write(TotalAset), nl.
+    write(Saldo), write(' + '), write(TotalProperty), write(' = '), write(AsetA), nl.
 
-prosesUangTidakCukup(Player, BiayaTanggungan) :-
-    sanggupBayar(Player, BiayaTanggungan),
-    displayKekayaan,
+prosesBayar(PlayerID, BiayaTanggungan) :-
+    sanggupBayar(PlayerID, BiayaTanggungan) -> (pembayaran(PlayerID, BiayaTanggungan));
+    (displayKekayaan(PlayerID),
     write('Biaya Tanggungan: '),
     write(BiayaTanggungan), nl,
-    uangHabis.
+    uangHabis).
 
 uangHabis :-
     write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'), nl,
@@ -40,15 +38,21 @@ uangHabis :-
     write('Input tidak valid >:( !, jawab hanya (yes/no)'), nl, lanjut).
 
 uangHabis(y) :-
-    uangBelumCukup(Player),
-    listProperti(Player, ListProperti),
+    uangBelumCukup(PlayerID),
+    listProperti(PlayerID, ListProperti),
     write('Properti mana yang ingin dijual?'), 
     read(Answer), 
-    jualProperti(Player, ListProperti, Answer), 
+    jualProperti(PlayerID, ListProperti, Answer), 
     /* Update uang sekarang, cekbangkrut lagi*/
     (
-        uangBelumCukup(Player, BiayaTanggungan) -> uangHabis(y) ;
+        uangBelumCukup(PlayerID, BiayaTanggungan) -> uangHabis(y) ;
         (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
-        retract(uangBelumCukup(Player)))
+        retract(uangBelumCukup(PlayerID)))
     ),
     nl.
+
+pembayaran(PlayerID, BiayaTanggungan) :-
+    uangPlayer(PlayerID, Saldo),
+    UangBaru is Saldo - BiayaTanggungan,
+    ((PlayerID == 'A') -> (updateMoney1(UangBaru)) ; (updateMoney2(UangBaru))),
+    write('Uang mu telah terpotong menjadi: '), write(UangBaru).
