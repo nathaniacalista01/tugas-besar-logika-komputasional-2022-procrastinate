@@ -271,8 +271,8 @@ buyPropertyPlayer2 :- player2(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                        Answer == 3, propertyPrice(Loc, Price, Answer), Price1 is Price, prosesBeliProperti(ID, Price, Loc, Answer); 
                        Answer == -1, write('Tidak membeli properti');
                        write('Input tidak valid!'), nl, buyPropertyPlayer1);
-                       OldID == ('V'), bayarProperty1;
-                       OldID == ID, increasePropertyPlayer1);
+                       OldID == ('A'), bayarProperty2;
+                       OldID == ID, increasePropertyPlayer2);
                       Result == 0, write('Tidak bisa membeli properti '),write(Loc)).
 
 increasePropertyPlayer1 :- player1(ID,Loc,_,_),
