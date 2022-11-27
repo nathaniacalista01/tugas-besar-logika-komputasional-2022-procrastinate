@@ -348,25 +348,48 @@ increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            Answer == 0 -> halt));
                            write('Input tidak valid').
 
+printAngelCard(Answer) :- write('=========== ANGEL CARD ==========='),nl,
+                  write('Selamat, kamu mempunyai Angel Card, apakah kamu mau menggunakannya?'),nl,
+                  write('Ketik 1 jika ingin menggunakan Angel Card'),nl,
+                  write('Ketik 0 jika tidak ingin menggunakan Angel Card'),nl,
+                  read(Temp), Answer is Temp.
+
+notUseAngelCard :-
+                  write(' ================ Yahh, kamu tetap harus membayar =============='),
+                  nl.
+useAngelCard1 :- retract(player1(ID,Loc,Money,ListCard)), remover('Angel Card',ListCard,NewList),
+                  asserta(player1(ID,Loc,Money,NewList)),
+                  write('============ Angel Card Dihapus ============'),nl,!.
+
+useAngelCard2 :- retract(player2(ID,Loc,Money,ListCard)), remover('Angel Card',ListCard,NewList),
+                  asserta(player2(ID,Loc,Money,NewList)),
+                  write('============ Angel Card Dihapus ============'),nl,!.
+
 bayarProperty1 :- player1(ID,Loc,Money,ListCard),
                 locOwnerDetail(Loc, 'V', PropertyLevel),Temp is PropertyLevel,
-                write('Yah kamu terkena biaya sewa:('),biayaSewa(Loc,Temp,Price),
+                write('Yah kamu terkena biaya sewa: '),biayaSewa(Loc,Temp,Price),
                 write(Price),nl,displayKekayaan('A'),
-                prosesBayar('A',Price), acProperty.
+                checkAngelCard(ListCard,Result),
+                (Result == 1, printAngelCard(Answer),
+                  (Answer == 1, useAngelCard1,!;
+                  Answer == 0, notUseAngelCard,prosesBayar('A',Price),!);
+                Result == 0,prosesBayar('A',Price),!).
 
 bayarProperty2 :- player2(ID,Loc,Money,ListCard),
                 locOwnerDetail(Loc, 'A', PropertyLevel),Temp is PropertyLevel,
-                write('Yah kamu terkena biaya sewa:('),biayaSewa(Loc,Temp,Price),
-                write(Price),nl,displayKekayaan('V'),
-                prosesBayar('V',Price),acProperty.
-
+                write('Yah kamu terkena biaya sewa: '),biayaSewa(Loc,Temp,Price),
+                write(Price),nl,displayKekayaan('V'),checkAngelCard(ListCard,Result),
+                (Result == 1, printAngelCard(Answer),
+                  (Answer == 1, useAngelCard2,!;
+                  Answer == 0, notUseAngelCard,prosesBayar('V',Price));
+                Result == 0,prosesBayar('V',Price)).
 /* Player 1 mau akuisisi bangunan Player 2 */
 acProperty :- write('Apakah kamu ingin mengakuisi Property ini? '),nl,
                write('Ketik 1 jika kamu ingin mengakuisis Property ini'),nl,
                write('Ketik 0 jika kamu tidak ingin mengakuisisi Property ini'),nl,
                cekPlayerTurn(X),
-               (X == 1, acProperty1;
-               X == 2, acProperty2).
+               (X == 1, acProperty1,!;
+               X == 2, acProperty2,!),!.
 
 acProperty1 :- player1(ID,Loc,Money,ListCard),
                biayaAkuisisi(Loc, PropertyLevel, AccPrice),

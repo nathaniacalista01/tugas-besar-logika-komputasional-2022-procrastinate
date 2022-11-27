@@ -69,4 +69,4 @@ askUserJailChoice(PlayerID, Result) :- PlayerID = 2, remainTurnP2(P2Turn),
 
 /* Mekanisme Jail */
 jailMechanism(PlayerID) :- PlayerID = 1, askUserJailChoice(PlayerID, Answer),
-                        (Answer = 1, )
+                        (Answer = 1).
