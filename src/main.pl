@@ -1,5 +1,4 @@
 :- include('bangkrut.pl').
-/* :- include('location.pl') */
 :- include('pajak.pl').
 :- include('properti.pl').
 :- include('pemain.pl').

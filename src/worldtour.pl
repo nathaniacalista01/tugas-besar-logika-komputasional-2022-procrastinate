@@ -9,9 +9,6 @@ maka pemain akan melanjutkan melempar dadu seperti biasa
 
 */
 
-:- include('location.pl').
-:- include('board.pl').
-
 player1('A','WT',50,[]).
 player2('B','WT',500,[]).
 
