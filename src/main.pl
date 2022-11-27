@@ -1,6 +1,6 @@
-/* :- include('bangkrut.pl'). */
+:- include('bangkrut.pl').
 /* :- include('location.pl') */
-/* :- include('pajak.pl').*/
+:- include('pajak.pl').
 :- include('properti.pl').
 :- include('pemain.pl').
 :- include('location.pl').
@@ -8,6 +8,7 @@
 :- include('pesan.pl').
 :- include('board.pl').
 :- include('dice.pl').
+
 :- dynamic(round/1).
 :- dynamic(win/1).
 :- dynamic(start/1).

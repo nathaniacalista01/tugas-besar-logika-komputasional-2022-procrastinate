@@ -173,7 +173,7 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('================================================').
 /* initPlayerTemp :- 
                      player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
-checkPlayer1Location :- player1(ID1,Loc1,Money1,_,_),infoRound(X),
+checkPlayer1Location :- player1(ID1,Loc1,Money1,_),infoRound(X),
                             (Loc1 == 'CC', getChanceCard(Money1,X,_Card)
                             ;
                             write('================= Selamat datang di ================= '), nl,

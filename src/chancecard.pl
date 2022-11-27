@@ -112,7 +112,7 @@ getChanceCard(Money, Round, _Card) :-
             getCCIndex(Money, Round, _Index), indexCard(_Card, _Index),
             write(''), nl, write('Anda mendapatkan : '), write(_Card), addChanceCard(_Card,1),!.
 
-initPlayerTemp :- asserta(player1('A','CC',_,_,[])).
+initPlayerTemp :- asserta(player1('A','CC',_,_)).
 
 appendList( [], X, X).                                  
 appendList( [X | Y], Z, [X | W]) :- append( Y, Z, W).  

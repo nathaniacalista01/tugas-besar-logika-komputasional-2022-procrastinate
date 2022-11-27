@@ -4,9 +4,11 @@
    Kalau uang tidak mencukupi untuk membayar pajak, maka akan dilakukan
    proses eksekusi jual properti untuk menambah saldo */
 
-pajak(Player, TotalAset) :-
-    TotalPajak is TotalAset * (-1) * 0.1,
-    sanggupBayar(Player, TotalPajak) -> uangHabis(y);
-    (updateSaldo(Player, TotalPajak),
-    write('Total pajak yang harus dibayar adalah '), 
-    write(TotalPajak), nl).
+bayarPajak(PlayerID) :-
+    uangPlayer(PlayerID, Saldo),
+    asetPlayer(PlayerID, TotalAset),
+    TotalPajak is TotalAset * 0.1,
+    (sanggupBayar(PlayerID, TotalPajak) -> (prosesBayar(PlayerID, TotalPajak)) ; (updateMoney(PlayerID, TotalPajak))),
+    nl,
+    write('Total pajak yang dibayar adalah '), 
+    write(TotalPajak), nl.

@@ -17,17 +17,17 @@ player1('A','WT',300,[]).
 /* Fakta */
 
 /* Rules */
-isInWorldTour(PlayerID, Result) :- (PlayerID = 1 , player1(_,P1Loc,_,_,_,_,_), (P1Loc = 'WT', Result is 1; P1Loc \= 'WT', Result is 0)) ; 
-                                (PlayerID = 2, player2(_,P2Loc,_,_,_,_,_), (P2Loc = 'WT', Result is 1; P2Loc \= 'WT', Result is 0)),!.
+isInWorldTour(PlayerID, Result) :- (PlayerID = 1 , player1(_,P1Loc,_,_), (P1Loc = 'WT', Result is 1; P1Loc \= 'WT', Result is 0)) ; 
+                                (PlayerID = 2, player2(_,P2Loc,_,_), (P2Loc = 'WT', Result is 1; P2Loc \= 'WT', Result is 0)),!.
 
 /* Melakukan cek apakah uang pada Player cukup untuk melakukan 
 World Tour dan apakah ingin melakukannya */
 /* Fakta */
 /* Rules */
-wantWorldTour(PlayerID, Choice) :- ((PlayerID = 1, player1(_,_,P1Money,_,_,_,_), (P1Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!', nl, Choice is 0;
+wantWorldTour(PlayerID, Choice) :- ((PlayerID = 1, player1(_,_,P1Money,_), (P1Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!', nl, Choice is 0;
                                                                             P1Money >= 100, write('Apakah kamu ingin melakukan World Tour? 1 untuk Iya, 0 untuk Tidak : '), read(_UserChoice),
                                                                                                 (_UserChoice = 1, Choice is 1; _UserChoice \= 1, Choice is 0))));
-                                (PlayerID = 2, player2(_,_,P2Money,_,_,_,_), (P2Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!', nl, Choice is 0;
+                                (PlayerID = 2, player2(_,_,P2Money,_), (P2Money < 100, write('Kamu tidak memiliki uang yang cukup untuk melakukan World Tour!', nl, Choice is 0;
                                                                             P2Money >= 100, write('Apakah kamu ingin melakukan World Tour? 1 untuk Iya, 0 untuk Tidak : '), read(_UserChoice),
                                                                                                 (_UserChoice = 1, Choice is 1; _UserChoice \= 1, Choice is 0))))),!.
 
