@@ -11,15 +11,16 @@
 /* penjara(PlayerID, Turn) */
 :- dynamic(penjara/2).
 
-hargaKeluarPenjara(1000).
+hargaKeluarPenjara(100).
 
 penjara(PlayerID, Turn) :-
+    penjara(PlayerID, _),
     write('================================================================================================'), nl,
     write('Selamat Datang di Keimusho! Berikut adalah beberapa opsi pilihan yang dapat kamu ambil!'), nl,
     write('================================================================================================'), nl,
     write('1. Kamu harus menunggu sebanyak '), write(Turn), write(' turn lagi!'),  nl,
-    write('2. Kamu ada kartu keluar penjara? Ketik "out" untuk keluar sekarang!'),  nl,
-    write('3. Mau keluar tapi gak ada kartu? Ketik "bayar" untuk membayar'), nl,
+    write('2. Kamu ada kartu keluar penjara? Ketik "out." untuk keluar sekarang!'),  nl,
+    write('3. Mau keluar tapi gak ada kartu? Ketik "bayar." untuk membayar'), nl,
     write('   bayaran seharga $'), hargaKeluarPenjara(X), write(X), write(' untuk keluar sekarang.'), nl,
     write('4. Ketik "throwDice." untuk melempar dadu lagi!'), nl,
     write('================================================================================================'), nl,
@@ -46,11 +47,11 @@ bayarKeluarPenjara(PlayerID) :-
     write('Kamu gak punya uang! jadi kamu tunggu giliran lagi aja ya...')
     ), penjara(PlayerID).
 
-insertPenjara(Player) :-
-    asserta(penjara(Player, 0)).
+insertPenjara(PlayerID) :-
+    asserta(penjara(PlayerID, 0)).
 
 deletePenjara(Player) :-
-    retract(penjara(Player, _)).
+    retract(penjara(PlayerID, _)).
 
 inJail :-
     player(PlayerID, Loc, _, _),

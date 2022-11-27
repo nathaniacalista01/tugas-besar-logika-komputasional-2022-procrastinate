@@ -26,7 +26,7 @@ uangHabis :-
     write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'), nl, read(Answer),
     (Answer == 'yes' -> hampirBangkrut;
     Answer == 'no' -> (write('Sayang cepat sekali menyerah, selamat tinggal :)'), halt);
-    write('Input tidak valid >:( !, jawab hanya (yes/no)'), nl, lanjut).
+    write('Input tidak valid >:( !, jawab hanya (yes./no.)'), nl, lanjut).
 
 hampirBangkrut :-
     uangBelumCukup(PlayerID),

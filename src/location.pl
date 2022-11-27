@@ -1,4 +1,3 @@
-:- include('chancecard.pl').
 :- dynamic(locOwnerDetail/3).
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
@@ -193,3 +192,13 @@ checkPlayer2Location :- player2(ID2,Loc2,Money2,_), infoRound(X),
                             cekPlayerTurn(Y),buyProperty(Y)).
 checkPlayerLocation(X) :- (X == 1, checkPlayer1Location;
                             X == 2, checkPlayer2Location).
+
+wentInJL(PlayerID) :-
+       checkPlayerLocationByID(PlayerID, Loc),
+       Loc == 'JL',
+       insertPenjara(PlayerID).
+
+wentInTX(PlayerID) :-
+       checkPlayerLocationByID(PlayerID, Loc),
+       Loc == 'TX',
+       bayarPajak(PlayerID).

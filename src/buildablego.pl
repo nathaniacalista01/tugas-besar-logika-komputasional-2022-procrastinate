@@ -1,7 +1,3 @@
-include('pemain.pl').
-include('board.pl').
-include('location.pl').
-
 :- dynamic(buildAccess/1).
 
 goBuildProperti() :-
