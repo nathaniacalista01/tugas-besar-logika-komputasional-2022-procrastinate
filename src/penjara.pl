@@ -9,13 +9,14 @@
     4. Apabila pemain membayar uang sebesar X */
 
 
-/* Hanya dinyalakan untuk testing
+/* Hanya dinyalakan untuk testing 
 :- include('pemain.pl').
 :- include('dice.pl').
+:- include('chancecard.pl').
 player1('A', 'JL', 500, ['Angel Card', 'A Card', 'Get Out From Jail']).
 player2('B', 'JL', 0, []).
-infoRound(3).
-*/
+infoRound(3).*/
+
 
 
 /* penjara(PlayerID, Turn) */
@@ -25,15 +26,17 @@ infoRound(3).
 
 hargaKeluarPenjara(100).
 remainTurnP1(-1).
-remainTurnP2(2).
+remainTurnP2(-1).
 
 
 /* Algoritma pertama (untuk dadu pertam) = (Money * 21 - Round + 80 + JailTurn*5)  mod 6 */
 /* Algoritma kedua (untuk dadu kedua) = (Money * 19 - Round + 55 + JailTurn*8) mod6 */
 
 /* Randomizer untuk dice dalam jail */
-jailDiceRandomizer(Money, Round, JailTurn, Result1, Result2) :- Result1 is mod(Money*21 - Round + 80 + JailTurn*5, 6),
-                                                        Result2 is mod(Money*19 - Round + 55 + JailTurn*8, 6).
+jailDiceRandomizer(Money, Round, JailTurn, Result1, Result2) :- Res1 is mod(Money*21 - Round + 80 + JailTurn*5, 6),
+                                                        Res2 is mod(Money*19 - Round + 55 + JailTurn*8, 6), 
+                                                        (Res1 = 0 -> Result1 is 6; Result1 is Res1),
+                                                        (Res2 = 0 -> Result2 is 6; Result2 is Res2).
 
 
 isDouble(Money, Round, JailTurn, Double) :-  jailDiceRandomizer(Money, Round, JailTurn, _Res1, _Res2),
@@ -94,8 +97,8 @@ checkGetOutJailCard([H|T], Result) :- (H = 'Get Out From Jail', Result is 1); ch
 /* Fakta */
 removeGetOutJailCard(List, [], List).
 /* Rule */
-removeGetOutJailCard(InitList, [H|T], FinalList) :- H = 'Get Out From Jail' -> removeGetOutJailCard(InitList, T, FinalList) ;
-                                                appendList(InitList, [H], ResList), removeGetOutJailCard(ResList, T, FinalList),!.
+removeGetOutJailCard(List, [H|T], FinalList) :- H = 'Get Out From Jail' -> removeGetOutJailCard(List, T, FinalList) ;
+                                                appendList(List, [H], ResList), removeGetOutJailCard(ResList, T, FinalList),!.
 
 /* Mekanisme Jail */
 jailMechanism(PlayerID, Release) :- PlayerID = 1, player1(_,_,P1Money,CardList), infoRound(CRound), remainTurnP1(P1Remain),askUserJailChoice(PlayerID, Answer),
