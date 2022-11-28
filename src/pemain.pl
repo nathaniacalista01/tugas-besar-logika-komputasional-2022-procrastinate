@@ -8,8 +8,8 @@ blank :- write(' ').
 passGo('-').
 
 initPlayer :-
-            asserta(player1('A','GO',10000.0,['Get Out From Jail', 'Angel Card'])),!,
-            asserta(player2('V','JL',10000.0,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','GO',0.0,[])),!,
+            asserta(player2('V','JL',0.0,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
@@ -72,7 +72,7 @@ printInfo2 :-
             write('================ List Cards ================ '),nl,
             writeCard(1,List1),!.
             
-checkPlayerDetail(Player):- player1(ID1,_,_,_), player2(ID2,_,_,_),
+checkPlayerDetail(Player):- start(1), player1(ID1,_,_,_), player2(ID2,_,_,_),
                         (Player = ID1,printInfo1),!;
                         (Player = ID2,printInfo2),!.
 

@@ -7,4 +7,4 @@ bayarPajak(PlayerID) :-
     countProperty(PlayerID, TotalProperti),
     TotalPajak is TotalProperti * 0.1,
     prosesBayar(PlayerID, TotalPajak),
-    nl, write('Total pajak yang dibayar adalah '), write(TotalPajak), nl.
+    nl, write('Total pajak yang dibayar adalah '), write(TotalPajak), nl, !.

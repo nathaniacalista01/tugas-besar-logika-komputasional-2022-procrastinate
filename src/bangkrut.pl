@@ -7,7 +7,6 @@
 :- dynamic(uangBelumCukup/1).
 
 sanggupBayar(PlayerID, BiayaTanggungan) :-
-    
     uangPlayer(PlayerID, TotalUang), 
     (TotalUang >= BiayaTanggungan ->
     (uangBelumCukup(PlayerID) -> retract(uangBelumCukup(PlayerID)); true, !);
