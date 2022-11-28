@@ -182,12 +182,12 @@ checkLocationDetail(Loc) :-  start(1), locOwnerDetail(Loc, C, D),
 
 
 
-checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 2000, updateMoney1(NewMoney);!).
+checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 2000, updateMoney1(NewMoney),retract(passGo(Z)),asserta(passGo('-'));!).
 
-checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 2000, updateMoney2(NewMoney);!).
+checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 2000, updateMoney2(NewMoney),retract(passGo(Z)),asserta(passGo('-'));!).
 
 checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
-                            checkPassGo1,checkInGo1,
+                            checkPassGo1,
                             ( (Loc1 == '1C'; Loc1 == '2C'; Loc1 == '3C' ), getChanceCard(Money1,X,_Card),
                                    (_Card = 'Free $1000', NewMoney is Money1 + 1000, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
                                     _Card = 'Free $1500', NewMoney is Money1 + 1500, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)); 
@@ -208,10 +208,10 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                             (Loc1 == 'JL', write('Keberuntunganmu membawamu ke penjara.'),nl);
                             (Loc1 == 'WT', write('Kamu berada pada petak World Tour. Silahkan tunggu turn berikutnya untuk menggunakan mekanisme World Tour'), nl);
                             (Loc1 == 'FP', write('Kamu berada di area bebas parkir. Tidak terjadi apa-apa'));
-                            checkIsProperty(Loc1,Result),(Result == 1,buyProperty;!)
+                            buyProperty
                             ),!.
 checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
-                            checkPassGo2,checkInGo2,
+                            checkPassGo2,
                             ( (Loc2 == '1C'; Loc2 == '2C'; Loc2 == '3C' ), getChanceCard(Money2,X,_Card),
                                    (_Card = 'Free $1000', NewMoney is Money2 + 1000, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List));
                                     _Card = 'Free $1500', NewMoney is Money2 + 1500, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)); 

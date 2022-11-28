@@ -62,7 +62,7 @@ calculateRandomChance(Money, Round, Result) :- NewRound is Round - 1 , calculate
 /* Fakta */
 
 /* Rules */
-getCCIndex(Money, Round, Result) :- Int is round(Money), calculateRandomChance(Int, Round, RandInt), 
+getCCIndex(Money, Round, Result) :- Int is round(Money), RandInt is 0, 
                                         (RandInt = 777, Result is 1; 
                                         RandInt >= 750, RandInt =< 799, Result is 2;
                                         RandInt >= 700, RandInt =< 749, Result is 10;
@@ -74,6 +74,8 @@ getCCIndex(Money, Round, Result) :- Int is round(Money), calculateRandomChance(I
                                         RandInt >= 550, RandInt =< 699, Result is 9;
                                         RandInt >= 800, RandInt =< 999, Result is 8),!.
 
+
+/* calculateRandomChance(Int, Round, RandInt) */
 
 /* Ascii Art untuk kartu */
 /* Fakta */

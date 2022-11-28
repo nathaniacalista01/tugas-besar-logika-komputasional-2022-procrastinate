@@ -10,7 +10,6 @@
 :- include('chancecard.pl').
 :- include('worldtour.pl').
 :- include('coinflip.pl').
-:- include('buildablego.pl').
 
 :- dynamic(round/1).
 :- dynamic(win/1).

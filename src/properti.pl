@@ -409,7 +409,7 @@ bayarProperty2 :- player2(_ID, Loc, _Money,ListCard),
                 (Result == 1 -> printAngelCard(Answer),
                   (Answer == 1, useAngelCard2,acProperty,!;
                   Answer == 0, notUseAngelCard,prosesBayar('V',Price),start(X),(X \= 0, acProperty;!));
-                Result == 0 , prosesBayar('V',Price)).
+                Result == 0 , prosesBayar('V',Price),acProperty,!).
 /* Player 1 mau akuisisi bangunan Player 2 */
 acProperty :-  cekPlayerTurn(X),
                (X == 1, acProperty1,!;
@@ -507,3 +507,4 @@ stealProperty2 :- write('Yes! Kamu dapat mengakuisisi properti player A!'), nl,
                   checkLocOwner2(Answer, Result, Level),
                   (Result == 0 -> write('Masukan lokasi tidak valid!'), nl, stealProperty2;
                   Result == 1, updatePropertyOwner(Answer, 'V', Level), !).
+
