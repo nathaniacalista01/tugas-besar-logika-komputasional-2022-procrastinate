@@ -39,7 +39,7 @@ wantWorldTour(PlayerID, Choice) :- ((PlayerID = 1, player1(_,_,P1Money,_), (P1Mo
 /* Mengembalikan 1 bila petak tersebut valid, mengembalikan 0 jika tidak */
 /* Fakta */
 /* Rules */
-isLocValid(Loc, Result) :- locName(X,_), X = Loc -> Result is 1 ; Result is 0.
+isLocValid(Loc, Result) :- locName(X,_), X = Loc -> Result is 1 ; Result is 0, write(Result).
 
 /* Menanyakan ke User, ke petak mana Ia ingin pergi */
 /* Loc adalah lokasi akhir yang ingin dituju User */

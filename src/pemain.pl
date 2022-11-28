@@ -8,8 +8,8 @@ blank :- write(' ').
 passGo('-').
 
 initPlayer :-
-            asserta(player1('A','G2',10000,['Get Out From Jail', 'Angel Card'])),!,
-            asserta(player2('V','GO',10000,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','WT',10000.0,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','WT',10000.0,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
@@ -18,7 +18,7 @@ initPlayer :-
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 
-updatePassGo(ID) :- write('Update Pass Go'),retract(passGo(A)),asserta(passGo(ID)).
+updatePassGo(ID) :- write('Update Pass Go'),nl,retract(passGo(A)),asserta(passGo(ID)).
 
 updateLoc1(NewLoc) :- 
                 retract(player1(Id,Loc,Money,List1)),
