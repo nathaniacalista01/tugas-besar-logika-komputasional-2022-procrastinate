@@ -182,9 +182,9 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
 
 
 
-checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 2000, updateMoney1(NewMoney);!).
+checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 2000, updateMoney1(NewMoney),retract(passGo(Z)),asserta(passGo('-'));!).
 
-checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 2000, updateMoney2(NewMoney);!).
+checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 2000, updateMoney2(NewMoney),retract(passGo(Z)),asserta(passGo('-'));!).
 
 checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                             checkPassGo1,checkInGo1,
