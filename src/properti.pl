@@ -168,7 +168,7 @@ biayaAkuisisi(Loc, PropertyLevel, Price) :- biayaSewa(Loc, PropertyLevel, RentPr
                                             Price is 0.7 * RentPrice,!.
                                           
 
-checkPropertyDetail(Loc) :- locName(Loc, A),
+checkPropertyDetail(Loc) :- start(1), locName(Loc, A),
                             locDesc(Loc, B),
                             propertyPrice(Loc, Price0, 0),
                             propertyPrice(Loc, Price1, 1),
@@ -507,3 +507,4 @@ stealProperty2 :- write('Yes! Kamu dapat mengakuisisi properti player A!'), nl,
                   checkLocOwner2(Answer, Result, Level),
                   (Result == 0 -> write('Masukan lokasi tidak valid!'), nl, stealProperty2;
                   Result == 1, updatePropertyOwner(Answer, 'V', Level), !).
+

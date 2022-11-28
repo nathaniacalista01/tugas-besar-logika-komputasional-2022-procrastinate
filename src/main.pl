@@ -10,7 +10,6 @@
 :- include('chancecard.pl').
 :- include('worldtour.pl').
 :- include('coinflip.pl').
-:- include('buildablego.pl').
 
 :- dynamic(round/1).
 :- dynamic(win/1).
@@ -35,7 +34,7 @@ introduction :-
 help :-
     write('List Command yang dapat digunakan : '), nl,
     write('         Command                    |       Kegunaan            '), nl,
-    write('?- board.                           |   Menampilkan Kondisi Papan dan Posisi pemain'), nl,
+    write('?- map.                             |   Menampilkan Kondisi Papan dan Posisi pemain'), nl,
     write('?- checkPlayerDetail(<ID>).         |   Menampilkan Kondisi Pemain, ganti <ID> dengan ID pemain '), nl,
     write('?- checkLocationDetail(<Petak>).    |   Menampilkan Keterangan Petak, ganti <Petak> dengan Initial Petak'), nl,
     write('?- checkPropertyDetail(<Petak>).    |   Menampilkan Keterangan Property pada suatu petak, ganti <Petak> dengan Initial Petak'), nl,
@@ -45,7 +44,7 @@ help :-
 quit :-
     retract(start(_)), asserta(start(0)).
 map:-
-    start(1),board,!.
+    start(1), board,!.
 
 /* Mengubah Player Turn */
 changePlayerTurn :- cekPlayerTurn(X), (X = 1, retract(playerTurn(_)), asserta(playerTurn(2));
@@ -61,20 +60,20 @@ updateDiceCount :- diceCount(X), New is X + 1, retract(diceCount(_)), asserta(di
 resetDiceCount :- retract(diceCount(_)), asserta(diceCount(0)).
 
 /* Melempar dadu untuk melanjutkan permainan */
-throwDice :- 
+throwDice :- start(1),
             cekPlayerTurn(X), infoRound(Z), 
             /* Kalau sekarang giliran player 1, randomize dadu untuk player 1 dan update lokasi player 1 */
             (X == 1, asciiPlayerTurn(X,Z), beforeMove(CanMove), 
                 (CanMove = 1, throwDice1(Dice1, Dice2) ,
                                 (Dice1 \= Dice2, resetDiceCount, writeNormal(Dice1, Dice2), afterMove, changePlayerTurn ; 
-                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player1(ID, Loc, Money, List)), asserta(player1(ID, 'JL', Money, List)), startPlayerInJail(1), changePlayerTurn;
+                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player1(ID, Loc, Money, List)), asserta(player1(ID, 'JL', Money, List)), startPlayerInJail(1), resetDiceCount, changePlayerTurn;
                                                                                 Num \= 3, writeDouble(Dice1,Dice2), afterMove))); 
                 CanMove = 0, afterMove, changePlayerTurn)  ;
             /* Kirim jumlah kedua dadu ke dalam fungsi updateLoc1 */
             X == 2 ,asciiPlayerTurn(X,Z),beforeMove(CanMove), 
                 (CanMove = 1, throwDice2(Dice1, Dice2), 
                                 (Dice1 \= Dice2, resetDiceCount, writeNormal(Dice1, Dice2), afterMove, changePlayerTurn ; 
-                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player2(ID, Loc, Money, List)), asserta(player2(ID, 'JL', Money, List)), startPlayerInJail(2), changePlayerTurn;
+                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player2(ID, Loc, Money, List)), asserta(player2(ID, 'JL', Money, List)), startPlayerInJail(2), resetDiceCount, changePlayerTurn;
                                                                                 Num \= 3, writeDouble(Dice1,Dice2), afterMove))); 
                  CanMove = 0, afterMove, changePlayerTurn), updateRound),!.
 
