@@ -62,7 +62,7 @@ calculateRandomChance(Money, Round, Result) :- NewRound is Round - 1 , calculate
 /* Fakta */
 
 /* Rules */
-getCCIndex(Money, Round, Result) :- Int is round(Money), RandInt is 0, 
+getCCIndex(Money, Round, Result) :- Int is round(Money), RandInt is 700, 
                                         (RandInt = 777, Result is 1; 
                                         RandInt >= 750, RandInt =< 799, Result is 2;
                                         RandInt >= 700, RandInt =< 749, Result is 10;

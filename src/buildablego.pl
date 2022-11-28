@@ -29,7 +29,7 @@ tambahBangunan1 :- write('===================== LIST PROPERTY ==================
                     write('5. Ketik 4 untuk menjadikannya ke Landmark'),nl,
                     read(Level),(Level \= 1, Level \= 2, Level \= 3, Level \= 4, Level \= 0, write('Input tidak valid, silakan ulangi lagi!'),nl,tambahBangunan1,!;
                     upgradeProperti1(Loc,Level),write('================= UPGRADE SELESAI ================='),nl,
-                    write(Loc), write(' sekarang sudah di level '), locOwnerDetail(Loc,'A',Level),writeB(Level)).
+                    write(Loc), write(' sekarang sudah di level '), locOwnerDetail(Loc,'A',Level),writeB(Level),nl).
 
 tambahBangunan2 :- write('===================== LIST PROPERTY ====================='),nl,
                     writeLoc('V'),nl, write('Silakan pilih properti yang mau kamu bangun!'),nl,
@@ -39,7 +39,7 @@ tambahBangunan2 :- write('===================== LIST PROPERTY ==================
                     write('5. Ketik 4 untuk menjadikannya ke Landmark'),nl,
                     read(Level),(Level \= 1, Level \= 2, Level \= 3, Level \= 4, Level \= 0, write('Input tidak valid, silakan ulangi lagi!'),nl,tambahBangunan2,!;
                     upgradeProperti2(Loc,Level),write('================= UPGRADE SELESAI ================='),nl,
-                    write(Loc), write(' sekarang sudah di level '), locOwnerDetail(Loc,'V',Level),writeB(Level)).
+                    write(Loc), write(' sekarang sudah di level '), locOwnerDetail(Loc,'V',Level),writeB(Level),nl).
 
 upgradeProperti1(Loc,NewLevel) :-retract(locOwnerDetail(Loc,'A',OldLevel)),asserta(locOwnerDetail(Loc,'A',NewLevel)).
 upgradeProperti2(Loc,NewLevel) :-retract(locOwnerDetail(Loc,'V',OldLevel)),asserta(locOwnerDetail(Loc,'V',NewLevel)).
