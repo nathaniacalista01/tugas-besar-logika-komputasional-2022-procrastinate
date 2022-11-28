@@ -2,6 +2,7 @@
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel). */
 /* Inisial Lokasi '-' Nama Lokasi */
+
 locName('A1', 'Beijing').
 locName('A2', 'Oriental Avenue').
 locName('B1', 'Taipei').
@@ -24,6 +25,7 @@ locName('G2', 'London').
 locName('G3', 'Paris').
 locName('H1', 'Washington DC').
 locName('H2', 'Jakarta').
+
 /* Special location */
 locName('GO', 'Start').
 locName('CF', 'Coin Flip').
@@ -35,6 +37,7 @@ locName('1X', 'Tax').
 locName('2X', 'Tax').
 locName('FP', 'Free Parking').
 locName('WT', 'World Tour').
+
 /* Inisial Lokasi, Keterangan Lokasi */
 locDesc('A1', 'Ibu Kota China').
 locDesc('A2', 'Ibu Kota Avenue').
@@ -71,14 +74,13 @@ locDesc('2X', 'Special Block : Pay Tax').
 locDesc('FP', 'Special Block : Do Nothing').
 locDesc('WT', 'Special Block : Travel Anywhere').
 
-
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel) */
 /* Inisialisasi locOwnerDetail */
-locOwnerDetail('A1', '-', '-').
+locOwnerDetail('A1', 'V', 0).
 locOwnerDetail('A2', '-', '-').
 locOwnerDetail('B1', '-', '-').
 locOwnerDetail('B2', '-', '-').
-locOwnerDetail('B3', 'V', 1).
+locOwnerDetail('B3', '-', 1).
 locOwnerDetail('C1', '-', '-').
 locOwnerDetail('C2', '-', '-').
 locOwnerDetail('C3', '-', '-').
@@ -91,10 +93,10 @@ locOwnerDetail('E3', '-', '-').
 locOwnerDetail('F1', '-', '-').
 locOwnerDetail('F2', '-', '-').
 locOwnerDetail('F3', 'V', 0).
-locOwnerDetail('G1', '-', '-').
+locOwnerDetail('G1', 'A', 0).
 locOwnerDetail('G2', '-', '-').
 locOwnerDetail('G3', '-', '-').
-locOwnerDetail('H1', 'V', 4).
+locOwnerDetail('H1', '-', 4).
 locOwnerDetail('H2', 'A', 1).
 
 /* Updating loc owner */

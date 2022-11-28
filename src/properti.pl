@@ -253,7 +253,7 @@ buyPropertyPlayer1 :- player1(ID,Loc,Money,_),checkIsProperty(Loc,Result),
                        OldID == ID, increasePropertyPlayer1);
                       Result == 0, write('Tidak bisa membeli properti '),write(Loc)).
 
-buyPropertyPlayer2 :- write('masuk buy prop'),player2(ID,Loc,Money,_),checkIsProperty(Loc,Result), 
+buyPropertyPlayer2 :- player2(ID,Loc,Money,_),checkIsProperty(Loc,Result), 
                      (Result == 1,
                       locOwnerDetail(Loc, OldID, OldPropertyLevel),
                       (OldID == ('-'),
@@ -395,9 +395,9 @@ bayarProperty2 :- player2(ID,Loc,Money,ListCard),
                 write(Price),nl,displayKekayaan('V'),
                 checkAngelCard(ListCard,Result),
                 (Result == 1 -> printAngelCard(Answer),
-                  (Answer == 1, useAngelCard2,!;
-                  Answer == 0, notUseAngelCard,prosesBayar('V',Price)), acProperty, !;
-                Result == 0 -> prosesBayar('V',Price), acProperty, !).
+                  (Answer == 1, useAngelCard2,acProperty,!;
+                  Answer == 0, notUseAngelCard,prosesBayar('V',Price),start(X),(X \= 0, acProperty;!));
+                Result == 0 , prosesBayar('V',Price)).
 /* Player 1 mau akuisisi bangunan Player 2 */
 acProperty :-  cekPlayerTurn(X),
                (X == 1, acProperty1,!;

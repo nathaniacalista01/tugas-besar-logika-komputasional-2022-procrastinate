@@ -21,26 +21,25 @@ displayKekayaan(PlayerID) :-
 
 prosesBayar(PlayerID, BiayaTanggungan) :-
     sanggupBayar(PlayerID, BiayaTanggungan) -> (pembayaran(PlayerID, BiayaTanggungan));
-    (displayKekayaan(PlayerID), write('Biaya Tanggungan: '), write(BiayaTanggungan), nl, uangHabis).
+    (displayKekayaan(PlayerID), write('Biaya Tanggungan: '), write(BiayaTanggungan), nl, tidakSanggupBayar(PlayerID,BiayaTanggungan)).
 
-uangHabis :-
-    write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'), nl, read(Answer),
-    (Answer == 'yes' -> hampirBangkrut;
-    Answer == 'no' -> (write('Sayang cepat sekali menyerah, selamat tinggal :)'), halt);
-    write('Input tidak valid >:( !, jawab hanya (yes./no.)'), nl, lanjut).
+tidakSanggupBayar(PlayerID,BiayaTanggungan):- asetPlayer(PlayerID,Asset),
+                                                (Asset >= BiayaTanggungan,
+                                                    write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'),nl,read(Answer),
+                                                    (Answer == 'yes',writeLoc(PlayerID),write('Properti mana yang ingin kamu jual? (masukkan nomor yang valid)'), read(Answer2),
+                                                        sellPropertyN(PlayerID,Answer2,Price), updateMoneyBangkrut(PlayerID,Price),
+                                                        uangPlayer(PlayerID,Uang), 
+                                                            (Uang >= BiayaTanggungan, write('Horee, kamu sudah bisa bayar uang tanggunganmu'),updateMoneyFinished(PlayerID,BiayaTanggungan),nl; 
+                                                            Uang < BiayaTanggungan, tidakSanggupBayar(PlayerID,BiayaTanggungan));
+                                                    Answer == 'no', write('Sayang sekali, kamu cepat menyerah, selamat tinggal :(('));
+                                                Asset < BiayaTanggungan, write('Sayang sekali, semua asset kamu tidak cukup untuk membayar denda ini'),!,
+                                                retract(start(Z)),asserta(start(0))).
 
-hampirBangkrut :-
-    uangBelumCukup(PlayerID),
-    writeLoc(PlayerID),
-    /*listProperti(PlayerID, ListProperti),*/
-    write('Properti mana yang ingin dijual? (Isi dengan kode Property dalam huruf kecil)'), 
-    read(Answer),
-    sellPropertyN(PlayerID,Answer), 
-    (
-        prosesBayar(PlayerID, BiayaTanggungan) -> (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
-        retract(uangBelumCukup(PlayerID))) ; (hampirBangkrut)
-    ).
+updateMoneyBangkrut(PlayerID,Price) :- (PlayerID == 'A', player1(_,_,Money1,_),NewMoney is Money1 + Price,updateMoney1(NewMoney);
+                                        PlayerID == 'V',player2(_,_,Money2,_), NewMoney is Money2 + Price, updateMoney2(NewMoney)).
 
+updateMoneyFinished(PlayerID,BiayaTanggungan) :- (PlayerID == 'A', player1(_,_,Money1,_),NewMoney is Money1 - BiayaTanggungan, updateMoney1(NewMoney);
+                                                    PlayerID == 'V', player2(_,_,Money2,_),NewMoney is Money2 - BiayaTanggungan, updateMoney2(NewMoney)).
 pembayaran(PlayerID, BiayaTanggungan) :-
     uangPlayer(PlayerID, Saldo), UangBaru is Saldo - BiayaTanggungan,
     ((PlayerID == 'A') -> (updateMoney1(UangBaru)) ; (updateMoney2(UangBaru))),
