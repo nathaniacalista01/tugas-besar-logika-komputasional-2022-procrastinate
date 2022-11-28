@@ -29,8 +29,8 @@ diceOutput2(Round,Money,Dice1,Dice2) :-
 /* Algoritma untuk Dadu Player 1 */
 /* Algoritma pertama (untuk dadu pertam) = (Money * 2 - Round + 230)mod 6 */
 /* Algoritma kedua (untuk dadu kedua) = (Money * 5 - Round + 99)mod6 */
-diceRandomizer1(X,Y,Result1,Result2):- Z is round(Y), Temp1 is mod(2*Z - X+230,6), dice(Temp1,Angka1), Result1 is 3, 
-                                                      Temp2 is mod(5*Z-X+99,6), dice(Temp2,Angka2),Result2 is 3.
+diceRandomizer1(X,Y,Result1,Result2):- Z is round(Y), Temp1 is mod(4,6), dice(Temp1,Angka1), Result1 is 3, 
+                                                      Temp2 is mod(5,6), dice(Temp2,Angka2),Result2 is 2.
 
 /* Algoritma untuk Dadu Player 2 */
 /* Algoritma pertama (untuk dadu pertam) = (Money * 3 - Round + 565)mod 6 */
