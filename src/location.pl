@@ -76,28 +76,28 @@ locDesc('WT', 'Special Block : Travel Anywhere').
 
 /* locOwnerDetail(Loc, Player(Owner), PropertyLevel) */
 /* Inisialisasi locOwnerDetail */
-locOwnerDetail('A1', 'V', 0).
+locOwnerDetail('A1', '-', '-').
 locOwnerDetail('A2', '-', '-').
 locOwnerDetail('B1', '-', '-').
 locOwnerDetail('B2', '-', '-').
-locOwnerDetail('B3', '-', 1).
+locOwnerDetail('B3', 'A', '0').
 locOwnerDetail('C1', '-', '-').
 locOwnerDetail('C2', '-', '-').
 locOwnerDetail('C3', '-', '-').
-locOwnerDetail('D1', '-', '-').
-locOwnerDetail('D2', 'A', 3).
+locOwnerDetail('D1', 'V', '2').
+locOwnerDetail('D2', 'A', '3').
 locOwnerDetail('D3', '-', '-').
 locOwnerDetail('E1', '-', '-').
-locOwnerDetail('E2', 'A', 3).
+locOwnerDetail('E2', '-', '-').
 locOwnerDetail('E3', '-', '-').
 locOwnerDetail('F1', '-', '-').
-locOwnerDetail('F2', '-', '-').
-locOwnerDetail('F3', 'V', 0).
-locOwnerDetail('G1', 'A', 0).
+locOwnerDetail('F2', 'V', '0').
+locOwnerDetail('F3', 'V', '1').
+locOwnerDetail('G1', '-', '-').
 locOwnerDetail('G2', '-', '-').
 locOwnerDetail('G3', '-', '-').
-locOwnerDetail('H1', '-', 4).
-locOwnerDetail('H2', 'A', 1).
+locOwnerDetail('H1', '-', '-').
+locOwnerDetail('H2', '-', '-').
 
 /* Updating loc owner */
 /* Fakta*/
@@ -121,7 +121,7 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
 checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
                             (Loc == ('1C'); Loc == ('2C'); Loc == ('3C'); Loc == ('CF'); 
                             Loc == ('JL'); Loc == ('1X'); Loc == ('2X');Loc == ('FP'); 
-                            Loc == ('GO'), Loc == ('WT')), 
+                            Loc == ('GO'); Loc == ('WT')), 
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
                             write('================================================'), nl,

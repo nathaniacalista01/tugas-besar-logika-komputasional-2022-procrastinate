@@ -21,6 +21,7 @@
 /* Menyalakan Game */
 start :- 
         initPlayer,
+        /* introduction, */
         asserta(round(1)),
         asserta(start(1)),
         asserta(diceCount(0)),
