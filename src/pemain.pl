@@ -106,12 +106,12 @@ checkPlayerLocationByID(ID, Loc) :-
 writeCard(_,[]).
 writeCard(ID,[H|T]) :- write(ID),write('. '),write(H),nl,NewId is ID + 1,writeCard(NewId,T),!.
 
-resetPropertyN(31,ID,NO,N) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), NO == N, !,
+resetPropertyN(31,ID,NO,N,Price) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), propertyPrice(Loc,Price,PropertyLevel), NO == N, !,
                            (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
-resetPropertyN(IDX,ID,NO,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel), NO == N, ID == IDPlayer,
+resetPropertyN(IDX,ID,NO,N,Price) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel), propertyPrice(Loc,Price,PropertyLevel), NO == N, ID == IDPlayer,
                            (IDPlayer == ID -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
-resetPropertyN(IDX,ID,NO,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, PropertyLevel), NO =< N,
-                            IDX1 is IDX + 1, NO1 is NO + 1, resetPropertyN(IDX1,ID,NO1,N).                            
-resetPropertyN(IDX,ID,NO,N) :- IDX1 is IDX + 1, resetPropertyN(IDX1,ID,NO,N).
+resetPropertyN(IDX,ID,NO,N,Price) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, PropertyLevel), NO =< N,
+                            IDX1 is IDX + 1, NO1 is NO + 1, resetPropertyN(IDX1,ID,NO1,N,Price).                            
+resetPropertyN(IDX,ID,NO,N,Price) :- IDX1 is IDX + 1, resetPropertyN(IDX1,ID,NO,N,Price).
 
-sellPropertyN(ID,N) :- resetPropertyN(1,ID,1,N),!.
+sellPropertyN(ID,N,Price) :- resetPropertyN(1,ID,1,N,Price1), Price is 0.8*Price1, !.
