@@ -2,9 +2,9 @@
     Jenis Kartu                     | Probabilitas  | Deskripsi
     - Kartu Tax                     |       20%     | Pemain akan ditempatkan ke tempat tax terdekat 
     - Kartu Hadiah                  |               | Pemain mendapatkan uang dengan nominal tertentu
-            S 100                   |       10%     |
-            S 200                   |       7,5%    |
-            S 500                   |       2,5%    |
+            S 1000                  |       10%     |
+            S 1500                  |       7,5%    |
+            S 2000                  |       2,5%    |
     - Kartu Get out from Jail       |       15%     | Pemain mendapatkan kesempatan untuk tidak masuk penjara
     - Kartu Go to Jail              |       20%     | Pemain langsung dimasukkan ke penjara
     - Kartu Go to World Tour        |       15%     | Pemain langsung ditempatkan kepada petak World Tour
@@ -18,9 +18,9 @@
 
 /* Fakta Kartu */
 card('Go To Tax').
-card('Free $100').
-card('Free $200').
-card('Free $500').
+card('Free $1000').
+card('Free $1500').
+card('Free $2000').
 card('Get Out From Jail').
 card('Go To Jail').
 card('Go To World Tour').
@@ -31,9 +31,9 @@ card('Instant Win').
 indexCard('Instant Win', 1).
 indexCard('Angel Card', 2).
 indexCard('Go To Tax', 3).
-indexCard('Free $100', 4).
-indexCard('Free $200', 5).
-indexCard('Free $500', 6).
+indexCard('Free $1000', 4).
+indexCard('Free $1500', 5).
+indexCard('Free $2000', 6).
 indexCard('Get Out From Jail', 7).
 indexCard('Go To Jail', 8).
 indexCard('Go To World Tour', 9).

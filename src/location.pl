@@ -179,24 +179,23 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 4, write('Bangunan 4')), nl,
                              write('================================================').
 
-/* initPlayerTemp :- 
-                     player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
 
-checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 200, updateMoney1(NewMoney);!).
 
-checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 200, updateMoney2(NewMoney);!).
+checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 2000, updateMoney1(NewMoney);!).
+
+checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 2000, updateMoney2(NewMoney);!).
 
 checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                             checkPassGo1,
                             ( (Loc1 == '1C'; Loc1 == '2C'; Loc1 == '3C' ), getChanceCard(Money1,X,_Card),
-                                   (_Card = 'Free $100', NewMoney is Money1 + 100, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
-                                    _Card = 'Free $200', NewMoney is Money1 + 200, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)); 
-                                    _Card = 'Free $500', NewMoney is Money1 + 500, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
+                                   (_Card = 'Free $1000', NewMoney is Money1 + 1000, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
+                                    _Card = 'Free $1500', NewMoney is Money1 + 1500, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)); 
+                                    _Card = 'Free $2000', NewMoney is Money1 + 2000, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
                                     _Card = 'Instant Win', write('SELAMAT! Player '), write(ID1), write(' telah memenangkan permainan!'), quit;
                                     _Card = 'Go To Tax', tile(_,_,Loc1,Idx), 
                                                         ((Idx > 28 ; Idx < 4) ->  retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, '1X', Money1, List)) ; 
                                                                                     retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, '2X', Money1, List)));
-                                   _Card = 'Go To Jail', retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, 'JL', Money1, List));
+                                   _Card = 'Go To Jail', retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, 'JL', Money1, List)), startPlayerInJail(1);
                                    _Card = 'Go To World Tour', retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, 'WT', Money1, List));
                                    _Card = 'Angel Card', addChanceCard(_Card,1);
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
@@ -204,7 +203,7 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                             ((Loc1 == '1X'; Loc1 == '2X'), wentInTX(1)); 
                             (Loc1 == 'CF',startCoinFlip,  playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
                             /* (Loc1 == 'GO', ); */
-                            (Loc1 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
+                            (Loc1 == 'JL', write('Keberuntunganmu membawamu ke penjara.'),nl);
                             (Loc1 == 'WT', write('Kamu berada pada petak World Tour. Silahkan tunggu turn berikutnya untuk menggunakan mekanisme World Tour'), nl);
                             (Loc1 == 'FP', write('Kamu berada di area bebas parkir. Tidak terjadi apa-apa'));
                             buyProperty
@@ -212,14 +211,14 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
 checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
                             checkPassGo2,
                             ( (Loc2 == '1C'; Loc2 == '2C'; Loc2 == '3C' ), getChanceCard(Money2,X,_Card),
-                                   (_Card = 'Free $100', NewMoney is Money2 + 100, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List));
-                                    _Card = 'Free $200', NewMoney is Money2 + 200, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)); 
-                                    _Card = 'Free $500', NewMoney is Money2 + 500, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List));
+                                   (_Card = 'Free $1000', NewMoney is Money2 + 1000, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List));
+                                    _Card = 'Free $1500', NewMoney is Money2 + 1500, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)); 
+                                    _Card = 'Free $2000', NewMoney is Money2 + 2000, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List));
                                     _Card = 'Instant Win', write('SELAMAT! Player '), write(ID2), write(' telah memenangkan permainan!'), quit;
                                     _Card = 'Go To Tax', tile(_,_,Loc2,Idx), 
                                                         ((Idx > 28 ; Idx < 4) ->  retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, '1X', Money2, List)) ; 
                                                                                     retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, '2X', Money2, List)));
-                                   _Card = 'Go To Jail', retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, 'JL', Money2, List));
+                                   _Card = 'Go To Jail', retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, 'JL', Money2, List)), startPlayerInJail(2);
                                    _Card = 'Go To World Tour', retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, 'WT', Money2, List));
                                    _Card = 'Angel Card', addChanceCard(_Card,1);
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
@@ -227,7 +226,7 @@ checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
                             ((Loc2 == '1X'; Loc2 == '2X'), wentInTX(2)); 
                             (Loc2 == 'CF', startCoinFlip, playCoinFlip(Money2, X, FinalPrize), NewMoney is Money2+FinalPrize, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)));
                             /* (Loc2 == 'GO', ); */
-                            (Loc2 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
+                            (Loc2 == 'JL', write('Keberuntunganmu membawamu ke penjara.'),nl);
                             (Loc2 == 'WT', write('Kamu berada pada petak World Tour. Silahkan tunggu turn berikutnya untuk menggunakan mekanisme World Tour'), nl);
                             (Loc2 == 'FP', write('Kamu berada di area bebas parkir. Tidak terjadi apa-apa'));
                             buyProperty
@@ -246,9 +245,7 @@ checkPlayerLocationBefore(X, CanMove) :- (X = 1, checkPlayer1LocationBefore(CanM
 checkPlayer1LocationBefore(CanMove) :- player1(P1ID,P1Loc, P1Money,_), 
                             ((P1Loc = 'JL', remainTurnP1(JailTurn), 
                             ( JailTurn == 0, releasePlayerFromJail(1), CanMove is 1;
-                            JailTurn == -1 , startPlayerInJail(1), jailMechanism(1, Release),
-                                                               (Release == 1, releasePlayerFromJail(1), CanMove is 1;
-                                                               Release == 0, decrementTurnInJail(1), CanMove is 0);
+                            JailTurn == -1 , canMove is 1;
                             JailTurn \= 0, JailTurn \= -1, jailMechanism(1, Release), 
                                                                (Release == 1, releasePlayerFromJail(1), CanMove is 1;
                                                                Release == 0, decrementTurnInJail(1), CanMove is 0))) ; 
@@ -261,9 +258,7 @@ checkPlayer1LocationBefore(CanMove) :- player1(P1ID,P1Loc, P1Money,_),
 checkPlayer2LocationBefore(CanMove) :- player2(P2ID,P2Loc, P2Money,_), 
                             ((P2Loc = 'JL', remainTurnP2(JailTurn), 
                             ( JailTurn == 0, releasePlayerFromJail(2), CanMove is 1;
-                            JailTurn == -1 , startPlayerInJail(2), jailMechanism(2, Release),
-                                                               (Release == 1, releasePlayerFromJail(2), CanMove is 1;
-                                                               Release == 0, decrementTurnInJail(2), CanMove is 0);
+                            JailTurn == -1 , canMove is 1;
                             JailTurn \= 0, JailTurn \= -1, jailMechanism(2, Release), 
                                                                (Release == 1, releasePlayerFromJail(2), CanMove is 1;
                                                                Release == 0, decrementTurnInJail(2), CanMove is 0))) ; 

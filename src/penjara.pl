@@ -21,10 +21,14 @@ infoRound(3).*/
 
 /* penjara(PlayerID, Turn) */
 /* :- dynamic(penjara/2). */
+:- dynamic(isP1InJail/1).
+:- dynamic(isP2InJail/2).
 :- dynamic(remainTurnP1/1).
 :- dynamic(remainTurnP2/1).
 
-hargaKeluarPenjara(100).
+hargaKeluarPenjara(1500).
+isP1InJail(0).
+isP2InJail(0).
 remainTurnP1(-1).
 remainTurnP2(-1).
 
@@ -106,7 +110,7 @@ jailMechanism(PlayerID, Release) :- PlayerID = 1, player1(_,_,P1Money,CardList),
                                             (HaveCard = 1, write('Kamu keluar dari penjara menggunakan Chance Card!'), nl, removeGetOutJailCard([],CardList, FinalList),
                                             retract(player1(ID,P1Loc,P1Money,CardList)), asserta(player1(ID,P1Loc,P1Money, FinalList)), Release is 1;
                                             HaveCard = 0, write('Kamu bohong, kamu tidak memiliki kartu tersebut.'), nl, Release is 0); 
-                                Answer = 2, ( P1Money >= 100 -> write('Kamu membayar sebesar $ 100 untuk keluar dari penjara.'), nl, NewMoney is P1Money - 100,
+                                Answer = 2, ( P1Money >= 1500 -> write('Kamu membayar sebesar $ 1500 untuk keluar dari penjara.'), nl, NewMoney is P1Money - 1500,
                                             retract(player1(ID,P1Loc,P1Money,CardList)), asserta(player1(ID,P1Loc,NewMoney, CardList)), Release is 1; 
                                                                 write('Oops! Uang kamu tidak cukup.'), nl, Release is 0 );
                                 Answer = 3, isDouble(P1Money, CRound, P1Remain, Double),
@@ -118,7 +122,7 @@ jailMechanism(PlayerID, Release) :- PlayerID = 2, player2(_,_,P2Money,CardList),
                                             (HaveCard = 1, write('Kamu keluar dari penjara menggunakan Chance Card!'), nl, removeGetOutJailCard([],CardList, FinalList),
                                             retract(player2(ID,P2Loc,P2Money,CardList)), asserta(player2(ID,P2Loc,P2Money, FinalList)), Release is 1;
                                             HaveCard = 0, write('Kamu bohong, kamu tidak memiliki kartu tersebut.'), nl, Release is 0); 
-                                Answer = 2, ( P2Money >= 100 -> write('Kamu membayar sebesar $ 100 untuk keluar dari penjara.'), nl, NewMoney is P2Money - 100,
+                                Answer = 2, ( P2Money >= 1500 -> write('Kamu membayar sebesar $ 1500 untuk keluar dari penjara.'), nl, NewMoney is P2Money - 1500,
                                             retract(player2(ID,P2Loc,P2Money,CardList)), asserta(player2(ID,P2Loc,NewMoney, CardList)), Release is 1; 
                                                                 write('Oops! Uang kamu tidak cukup.'), nl, Release is 0 );
                                 Answer = 3, isDouble(P2Money, CRound, P2Remain, Double),

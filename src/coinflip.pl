@@ -7,9 +7,9 @@
 */
 
 /* Spesifikasi hadiah yang didapatkan 
-Round 1             | $ 500
-Round 2             | $ 1000
-Round 3             | $ 1500
+Round 1             | $ 2000
+Round 2             | $ 4000
+Round 3             | $ 6000
 */
 
 
@@ -20,9 +20,9 @@ programCoinFlip(1).
 
 /* Fakta Hadiah Coin Flip */
 prizeCoinFlip(0, 0).
-prizeCoinFlip(500, 1).
-prizeCoinFlip(1000, 2).
-prizeCoinFlip(1500,3).
+prizeCoinFlip(2000, 1).
+prizeCoinFlip(4000, 2).
+prizeCoinFlip(6000, 3).
 
 /*
     Randomizer untuk chance card 
@@ -125,7 +125,7 @@ asciiTail   :-  write('             ____________________'), nl,
 /* Fakta */
 /* Rules */
 coinFlipRound(Money, Round, Count, Continue) :-  programCoinFlip(1), displayRoundTitle(Count, _Choice), 
-                                        Temp is 10/10, Int is round(Temp),
+                                        Temp is Money/10, Int is round(Temp),
                                         calculateRandomFlip(Int, Round, Count, _Result), displayAsciiCoinFlip(_Result), nl,
                                         (( _Choice = _Result, write('Selamat kamu memenangkan round ini!'), nl, askUserContinue(_Answer),
                                         ( (_Answer = 1, Continue is 1); (_Answer = 0, Continue is 2)) ) ;
