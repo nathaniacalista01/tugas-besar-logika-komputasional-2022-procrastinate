@@ -186,7 +186,7 @@ checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 200
 checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 2000, updateMoney2(NewMoney);!).
 
 checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
-                            checkPassGo1,
+                            checkPassGo1,checkInGo1,
                             ( (Loc1 == '1C'; Loc1 == '2C'; Loc1 == '3C' ), getChanceCard(Money1,X,_Card),
                                    (_Card = 'Free $1000', NewMoney is Money1 + 1000, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
                                     _Card = 'Free $1500', NewMoney is Money1 + 1500, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)); 

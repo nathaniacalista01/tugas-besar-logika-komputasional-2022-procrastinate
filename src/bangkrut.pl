@@ -26,7 +26,7 @@ prosesBayar(PlayerID, BiayaTanggungan) :-
 tidakSanggupBayar(PlayerID,BiayaTanggungan):- asetPlayer(PlayerID,Asset),
                                                 (Asset >= BiayaTanggungan,
                                                     write('Wah, uangmu kurang! Apakah kamu ingin tetap melanjutkan?'),nl,read(Answer),
-                                                    (Answer == 'yes',writeLoc(PlayerID),write('Properti mana yang ingin kamu jual? (masukkan nomor yang valid)'), read(Answer2),
+                                                    (Answer == 'yes',writeLocSewa(PlayerID),write('Properti mana yang ingin kamu jual? (masukkan nomor yang valid)'), read(Answer2),
                                                         sellPropertyN(PlayerID,Answer2,Price), updateMoneyBangkrut(PlayerID,Price),
                                                         uangPlayer(PlayerID,Uang), 
                                                             (Uang >= BiayaTanggungan, write('Horee, kamu sudah bisa bayar uang tanggunganmu'),updateMoneyFinished(PlayerID,BiayaTanggungan),nl; 
