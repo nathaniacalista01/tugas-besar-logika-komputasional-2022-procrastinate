@@ -7,40 +7,39 @@
 */
 
 /* Spesifikasi hadiah yang didapatkan 
-Round 1             | $ 200
-Round 2             | $ 600
-Round 3             | $ 1000
+Round 1             | $ 500
+Round 2             | $ 1000
+Round 3             | $ 1500
 */
 
 
 /* Variable untuk melanjutkan permainan */
 :- dynamic(programCoinFlip/1).
-:- dynamic(prizeVal/1).
 
 programCoinFlip(1).
 
 /* Fakta Hadiah Coin Flip */
 prizeCoinFlip(0, 0).
-prizeCoinFlip(200, 1).
-prizeCoinFlip(600, 2).
-prizeCoinFlip(1000,3).
+prizeCoinFlip(500, 1).
+prizeCoinFlip(1000, 2).
+prizeCoinFlip(1500,3).
 
 /*
     Randomizer untuk chance card 
     Menggunakan metode LCG
     X[n+1] = (X[n]*(a) + c) mod m
-    X[0] => Money + 323 (seed)
+    X[0] => Money/10 + 323 (seed)
     n adalah banyaknya iterasi, yaitu menggunakan round
-    a dan c adalah konstan value, dimana a = count + 5, c = 10 
+    a dan c adalah konstan value, dimana a = count + 5, c = 11
     count adalah ronde ke berapa pada coin flip (untuk menghindari angka yang sama muncul berulang kali)
 */ 
 
 /* Mencari angka random untuk permainan coin flip */
 /* Fakta */
-calculateRandomFlip(Money, 0,_, Money+323).
+calculateRandomFlip(Money, 0,_, div(Money,10)+323).
 
 /* Rules */
-calculateRandomFlip(Money, Round, Count, Result) :- NewRound is Round - 1, calculateRandomFlip(Money, NewRound, Count, NewResult), Result is (((NewResult*(Count+5))+10) mod 2), !.
+calculateRandomFlip(Money, Round, Count, Result) :- NewRound is Round - 1, calculateRandomFlip(Money, NewRound, Count, NewResult), Result is (((NewResult*(Count+5))+11) mod 2), !.
 
 
 

@@ -5,8 +5,8 @@
 blank :- write(' ').
 
 initPlayer :-
-            asserta(player1('A','GO',1500,['Get Out From Jail', 'Angel Card'])),!,
-            asserta(player2('V','GO',1500,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','GO',10000,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','GO',10000,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
@@ -16,14 +16,16 @@ initPlayer :-
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 updateLoc1(NewLoc) :- 
                 retract(player1(Id,Loc,Money,List1)),
-                tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
+                tile(_,_,Loc,LocNumber), 
+                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ; NewLocNumber is LocNumber + NewLoc),
                 tile(_,_,X,NewLocNumber),
                 asserta(player1(Id,X,Money,List1)),!.
 
 
 updateLoc2(NewLoc) :-
                 retract(player2(Id,Loc,Money,List1)),
-                tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
+                tile(_,_,Loc,LocNumber),
+                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ; NewLocNumber is LocNumber + NewLoc),
                 tile(_,_,X,NewLocNumber),
                 asserta(player2(Id,X,Money,List1)),!.
 
@@ -43,7 +45,7 @@ printInfo1 :-
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
-            write('3. Total Nilai Properti     : '), countProperty('A',P), write(P),nl,
+            write('3. Total Nilai Properti     : '), countProperty(ID,P), write(P),nl,
             write('4. Total Aset               : '),TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikian properti : '),nl,
             writeLoc('A'),
@@ -57,7 +59,7 @@ printInfo2 :-
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '), write(Money),nl,
-            write('3. Total Nilai Properti     : '), countProperty('V',P), write(P),nl,
+            write('3. Total Nilai Properti     : '), countProperty(ID,P), write(P),nl,
             write('4. Total Aset               : '), TotalAsset is Money + P,write(TotalAsset),nl,
             write('Daftar kepemilikan Properti : '),nl,
             writeLoc('V'),
@@ -104,3 +106,13 @@ checkPlayerLocationByID(ID, Loc) :-
 
 writeCard(_,[]).
 writeCard(ID,[H|T]) :- write(ID),write('. '),write(H),nl,NewId is ID + 1,writeCard(NewId,T),!.
+
+resetPropertyN(31,ID,NO,N) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlayer, PropertyLevel), NO == N, !,
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
+resetPropertyN(IDX,ID,NO,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel), NO == N, ID == IDPlayer,
+                           (IDPlayer == ID -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
+resetPropertyN(IDX,ID,NO,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, PropertyLevel), NO =< N,
+                            IDX1 is IDX + 1, NO1 is NO + 1, resetPropertyN(IDX1,ID,NO1,N).                            
+resetPropertyN(IDX,ID,NO,N) :- IDX1 is IDX + 1, resetPropertyN(IDX1,ID,NO,N).
+
+sellPropertyN(ID,N) :- resetPropertyN(1,ID,1,N),!.
