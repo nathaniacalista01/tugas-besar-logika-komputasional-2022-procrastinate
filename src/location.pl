@@ -118,7 +118,7 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
                                            Price is 0.7 * RentPrice.
 
 /* Condition Special Block */
-checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
+checkLocationDetail(Loc) :- start(1), locName(Loc, A), locDesc(Loc, B),
                             (Loc == ('1C'); Loc == ('2C'); Loc == ('3C'); Loc == ('CF'); 
                             Loc == ('JL'); Loc == ('1X'); Loc == ('2X');Loc == ('FP'); 
                             Loc == ('GO'); Loc == ('WT')), 
@@ -139,7 +139,7 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
 
 
 /* Condition Vacant Land */
-checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+checkLocationDetail(Loc) :-  start(1), locOwnerDetail(Loc, C, D),
                              C == ('-'),
                              D == ('-'),
                              locName(Loc, A),  
@@ -157,7 +157,7 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('================================================'),!.
 
 /* Kondisi Owned Land */
-checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
+checkLocationDetail(Loc) :-  start(1), locOwnerDetail(Loc, C, D),
                              C \= ('-'),
                              biayaSewa(Loc, D, RentPrice),
                              biayaAkuisisi(Loc, D, Price),
@@ -202,7 +202,7 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1);
                                    _Card = 'Steal Property', stealProperty1
                                    ) ;
-                            ((Loc1 == '1X'; Loc1 == '2X'), wentInTX(1)); 
+                            ((Loc1 == '1X'; Loc1 == '2X'), wentInTX('A')); 
                             (Loc1 == 'CF',write('masuk coin flip'),startCoinFlip,  playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
                             /* (Loc1 == 'GO', ); */
                             (Loc1 == 'JL', write('Keberuntunganmu membawamu ke penjara.'),nl);
@@ -226,7 +226,7 @@ checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1);
                                    _Card = 'Steal Property', stealProperty2
                                    ) ;
-                            ((Loc2 == '1X'; Loc2 == '2X'), wentInTX(2)); 
+                            ((Loc2 == '1X'; Loc2 == '2X'), wentInTX('V')); 
                             (Loc2 == 'CF', startCoinFlip, playCoinFlip(Money2, X, FinalPrize), NewMoney is Money2+FinalPrize, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)));
                             /* (Loc2 == 'GO', ); */
                             (Loc2 == 'JL', write('Keberuntunganmu membawamu ke penjara.'),nl);
