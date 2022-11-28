@@ -37,6 +37,7 @@ help :-
     write('?- board.                           |   Menampilkan Kondisi Papan dan Posisi pemain'), nl,
     write('?- checkPlayerDetail(<ID>).         |   Menampilkan Kondisi Pemain, ganti <ID> dengan ID pemain '), nl,
     write('?- checkLocationDetail(<Petak>).    |   Menampilkan Keterangan Petak, ganti <Petak> dengan Initial Petak'), nl,
+    write('?- checkPropertyDetail(<Petak>).    |   Menampilkan Keterangan Property pada suatu petak, ganti <Petak> dengan Initial Petak'), nl,
     write('?- throwDice.                       |   Melempar dadu dan melanjutkan permainan'), nl.
 
 /* Mematikan game */

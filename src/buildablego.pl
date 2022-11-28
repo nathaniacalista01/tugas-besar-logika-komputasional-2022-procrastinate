@@ -36,3 +36,11 @@ askIfWantToBuild() :-
 
 afterBuild() :-
     retract(buildAccess(_)),!.
+
+getLocN(31,ID,N,N,31) :- tile(_,_,Loc,31), locOwnerDetail(Loc, ID, _),!.
+getLocN(IDX,ID,N,N,IDX) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, _),!.
+getLocN(IDX,ID,NO,N,LocID) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, _), NO =< N,
+                            IDX1 is IDX + 1, NO1 is NO + 1, getLocN(IDX1,ID,NO1,N,LocID).                            
+getLocN(IDX,ID,NO,N,LocID) :- IDX1 is IDX + 1, getLocN(IDX1,ID,NO,N,LocID).
+
+getLocX(ID,N,Loc) :- getLocN(1,ID,1,N,LocID), tile(_,_,Loc,LocID), !.

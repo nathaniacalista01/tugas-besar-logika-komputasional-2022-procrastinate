@@ -8,8 +8,8 @@ blank :- write(' ').
 passGo('-').
 
 initPlayer :-
-            asserta(player1('A','GO',10000.0,['Angel Card', 'Get Out From Jail'])),!,
-            asserta(player2('V','GO',10000.0,[])),!,
+            asserta(player1('A','GO',10000.0,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','JL',10000.0,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
