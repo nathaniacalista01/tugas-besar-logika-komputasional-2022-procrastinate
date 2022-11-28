@@ -43,8 +43,8 @@ startGame(true).
 
 board :-  startGame(true), !, drawBoard,
             write('    Posisi pemain:'), nl,
-            player1(_ID1,_Loc1,_,_), write(_ID1), write(': '), write(_Loc1), nl,
-            player2(_ID2,_Loc2,_,_), write(_ID2), write(': '), write(_Loc2),!.
+            player1(_ID1,_Loc1,_,_), write('    '), write(_ID1), write(': '), write(_Loc1), nl,
+            player2(_ID2,_Loc2,_,_), write('    '), write(_ID2), write(': '), write(_Loc2),!.
 
 board :- write('Permainan belum dimulai'), nl.
 

@@ -62,7 +62,7 @@ goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- asciiWorldTour, PlayerID = 1, 
 
 goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- PlayerID = 2, player2(_,P2Loc,_,_), wantWorldTour(PlayerID, _Choice), 
                                                                 ( _Choice = 0, MoneyChanges is 0, FinalLoc = P2Loc; 
-                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid), 
+                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid), write(ChoiceLoc), write(AfterGo), write(Valid),
                                                                     (Valid = 0, FinalLoc = P2Loc, MoneyChanges is 0;
                                                                     Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
 
