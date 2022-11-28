@@ -474,7 +474,7 @@ checkLocOwner2(Loc, Result, Level1) :- locOwnerDetail(Loc, IDPlayer, Level),
                                        IDPlayer == ('A'), Level\= 4, Result is 1, Level1 is Level), !.
 stealProperty1 :- countBanyakProperty('V', Count),
                   Count == 0,
-                  write('Sayang sekali player V tidak memiliki properti untuk diakuisisi:('), nl.
+                  write('Sayang sekali player V tidak memiliki properti untuk diakuisisi:('), nl, !.
                   
 stealProperty1 :- write('Yes! Kamu dapat mengakuisisi properti player V!'), nl, 
                   write('Properti mana yang ingin kamu akuisisi? (ketik lokasi, contoh: \'A1\')'), nl,
@@ -486,7 +486,7 @@ stealProperty1 :- write('Yes! Kamu dapat mengakuisisi properti player V!'), nl,
 
 stealProperty2 :- countBanyakProperty('A', Count),
                   Count == 0,
-                  write('Sayang sekali player A tidak memiliki properti untuk diakuisisi:('), nl.
+                  write('Sayang sekali player A tidak memiliki properti untuk diakuisisi:('), nl, !.
                   
 stealProperty2 :- write('Yes! Kamu dapat mengakuisisi properti player A!'), nl, 
                   write('Properti mana yang ingin kamu akuisisi? (ketik lokasi, contoh: \'A1\')'), nl,

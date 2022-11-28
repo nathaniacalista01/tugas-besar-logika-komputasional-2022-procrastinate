@@ -143,17 +143,18 @@ getCoinFlip(Money, GameRound, FlipRound, Prize, Stop) :- programCoinFlip(1), coi
                                                     _Continue = 2, write('Permainan Coin Flip telah selesai. Kamu mendapatkan $'), prizeCoinFlip(_cPrize, FlipRound), write(_cPrize), Prize is _cPrize, Stop is 1;
                                                     _Continue = 1, (FlipRound = 3, write('Permainan coin flip sudah mencapai ronde terakhir.') ; FlipRound \= 3, write('Anda melanjutkan permainan Coin Flip.')), prizeCoinFlip(_cPrize, FlipRound), Prize is _cPrize, Stop is 0), nl,!.
 
-
-
 /* Mengatur permainan Coinflip secara keseluruhan */
 /* Fakta */
 /* Rules */
 playCoinFlip(Money, GameRound, FinalPrize) :- programCoinFlip(1), getCoinFlip(Money, GameRound, 1, _TempPrize, _Stop),
-                                            (_TempPrize = 0, FinalPrize is 0, exitCoinFlip; 
-                                            _TempPrize \= 0,(_Stop = 1, FinalPrize is _TempPrize, exitCoinFlip ; 
+                                            (_TempPrize = 0, FinalPrize is 0, addPrize(FinalPrize),exitCoinFlip; 
+                                            _TempPrize \= 0,(_Stop = 1, FinalPrize is _TempPrize,addPrize(FinalPrize),exitCoinFlip; 
                                                             _Stop = 0 , startCoinFlip, getCoinFlip(Money, GameRound, 2, _TempPrize2, _Stop2),
-                                                            (_TempPrize2 = 0, FinalPrize is 0, exitCoinFlip ; 
-                                                             _TempPrize2 \= 0, (_Stop2 = 1, FinalPrize is _TempPrize2, exitCoinFlip ;
+                                                            (_TempPrize2 = 0, FinalPrize is 0,addPrize(FinalPrize), exitCoinFlip; 
+                                                             _TempPrize2 \= 0, (_Stop2 = 1, FinalPrize is _TempPrize2, addPrize(FinalPrize),exitCoinFlip;
                                                                                _Stop2 = 0, startCoinFlip, getCoinFlip(Money, GameRound, 3, _TempPrize3, _Stop3),
-                                                                                (_TempPrize3 = 0, FinalPrize is 0, exitCoinFlip;
-                                                                                (_TempPrize3 \= 0, FinalPrize is _TempPrize3, exitCoinFlip)))))),!.
+                                                                                (_TempPrize3 = 0, FinalPrize is 0,addPrize(FinalPrize),exitCoinFlip;
+                                                                                (_TempPrize3 \= 0, FinalPrize is _TempPrize3,addPrize(FinalPrize), exitCoinFlip)))))),!.
+
+addPrize(Money):- cekPlayerTurn(X),(X == 1 , player1(_,_,Money1,_),NewMoney is Money1 + Money, updateMoney1(NewMoney);
+                                    X == 2,player2(_,_,Money2,_),NewMoney is Money2 + Money,updateMoney2(NewMoney)),!.
