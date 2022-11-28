@@ -115,3 +115,12 @@ resetPropertyN(IDX,ID,NO,N,Price) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, 
 resetPropertyN(IDX,ID,NO,N,Price) :- IDX1 is IDX + 1, resetPropertyN(IDX1,ID,NO,N,Price).
 
 sellPropertyN(ID,N,Price) :- resetPropertyN(1,ID,1,N,Price1), Price is 0.8*Price1, !.
+
+writeZ(31,ID,_) :- locOwnerDetail('H2',ID1,_), ID \= ID1, nl, !.
+writeZ(31,ID,NO) :- locOwnerDetail('H2',ID,B), biayaSewa('H2',B,P), 
+                    write(NO), write('. '), write('H2'), writeB(B), write(': '), write(P), nl.
+writeZ(IDX,ID,NO) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), biayaSewa(Loc,B,P), 
+                    write(NO), write('. '), write(Loc), writeB(B), write(': '), write(P), nl, 
+                    IDX1 is IDX + 1, NO1 is NO + 1, writeZ(IDX1,ID,NO1).
+writeZ(IDX,ID,NO) :- tile(_,_,_,IDX), IDX1 is IDX + 1, writeZ(IDX1,ID,NO).
+writeLocSewa(ID) :- writeZ(1,ID,1),!.
