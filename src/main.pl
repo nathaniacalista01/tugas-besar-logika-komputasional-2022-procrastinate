@@ -9,7 +9,7 @@
 :- include('dice.pl').
 :- include('chancecard.pl').
 :- include('worldtour.pl').
-:- incluce('coinflip.pl').
+:- include('coinflip.pl').
 
 :- dynamic(round/1).
 :- dynamic(win/1).

@@ -495,5 +495,3 @@ stealProperty2 :- write('Yes! Kamu dapat mengakuisisi properti player A!'), nl,
                   checkLocOwner2(Answer, Result, Level),
                   (Result == 0 -> write('Masukan lokasi tidak valid!'), nl, stealProperty2;
                   Result == 1, updatePropertyOwner(Answer, 'V', Level), !).
-
-getProperty(IDX,PlayerId,Result) :- getP(1,IDX,PlayerID,Result).
