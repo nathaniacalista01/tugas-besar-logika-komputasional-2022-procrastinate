@@ -13,11 +13,11 @@ dice(5,5).
 
 
 throwDice1(Dice1,Dice2) :- 
-                player1(_,_,Money1,_),write('Sekarang adalah giliran player 1!'),nl,infoRound(Y),diceOutput1(Y,Money1,Dice1,Dice2),  NewLoc is Dice1 + Dice2 , updateLoc1(NewLoc),!.
+                player1(_,_,Money1,_),write('Sekarang adalah giliran player 1!'),nl,infoRound(Y),diceOutput1(Y,Money1,Dice1,Dice2), asciiDice(Dice1), asciiDice(Dice2), NewLoc is Dice1 + Dice2 , updateLoc1(NewLoc),!.
 
 
 throwDice2(Dice3, Dice4):-
-                player2(_,_,Money2,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput2(Y,Money2,Dice3,Dice4), NewLoc is Dice3 + Dice4, updateLoc2(NewLoc),!.
+                player2(_,_,Money2,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput2(Y,Money2,Dice3,Dice4),  asciiDice(Dice3), asciiDice(Dice4),NewLoc is Dice3 + Dice4, updateLoc2(NewLoc),!.
 
 diceOutput1(Round,Money,Dice1,Dice2) :- 
                                 diceRandomizer1(Round,Money,Angka1,Angka2),

@@ -283,6 +283,7 @@ buyPropertyPlayer2 :- player2(ID,Loc,_Money,_),checkIsProperty(Loc,Result),
 increasePropertyPlayer1 :- player1(ID,Loc,_,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
+                           !,
                            write('================================================'), nl,
                            write('              Beli Properti '), nl, 
                            write('================================================'), nl,
@@ -297,6 +298,7 @@ increasePropertyPlayer1 :- player1(ID,Loc,_,_),
 increasePropertyPlayer1 :- player1(ID,Loc,_Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
+                           !,
                            write('================================================'), nl,
                            write('              Beli Properti '), nl, 
                            write('================================================'), nl,
@@ -328,6 +330,7 @@ increasePropertyPlayer1 :- player1(ID,Loc,_Money,_),
 increasePropertyPlayer2 :- player2(ID,Loc,_,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
+                           !,
                            write('================================================'), nl,
                            write('              Beli Properti '), nl, 
                            write('================================================'), nl,
@@ -342,6 +345,7 @@ increasePropertyPlayer2 :- player2(ID,Loc,_,_),
 increasePropertyPlayer2 :- player2(ID,Loc,_Money,_),
                            locOwnerDetail(Loc, IDPlayer, PropertyLevel),
                            IDPlayer == ID,
+                           !,
                            write('================================================'), nl,
                            write('              Beli Properti '), nl, 
                            write('================================================'), nl,
@@ -468,8 +472,8 @@ writeLocWithoutLandmark(ID) :- writeY(1,ID,1),!.
 
 /* Procedure Count Jumlah Properti */
 countY(31,ID,0) :- locOwnerDetail('H2',ID1,_), ID \= ID1, !.
-countY(31,ID,1) :- locOwnerDetail('H2',ID,_),!.
-countY(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,_), IDX1 is IDX + 1, countY(IDX1,ID,N2), N is 1 + N2, !.
+countY(31,ID,1) :- locOwnerDetail('H2',ID,Level), Level\= 4, !.
+countY(IDX,ID,N) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,Level), Level \= 4, IDX1 is IDX + 1, countY(IDX1,ID,N2), N is 1 + N2, !.
 countY(IDX,ID,N) :- tile(_,_,_,IDX), IDX1 is IDX + 1, countY(IDX1,ID,N).
 countBanyakProperty(ID,N) :- countY(1,ID,N),!.
 

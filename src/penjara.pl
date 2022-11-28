@@ -95,7 +95,7 @@ askUserJailChoice(PlayerID, Result) :- PlayerID = 2, remainTurnP2(P2Turn),
 /* Fakta */
 checkGetOutJailCard([], 0).
 /* Rules */
-checkGetOutJailCard([H|T], Result) :- (H = 'Get Out From Jail', Result is 1); checkGetOutJailCard(T, Result).
+checkGetOutJailCard([H|T], Result) :- (H = 'Get Out From Jail', Result is 1) ,!; checkGetOutJailCard(T, Result).
 
 /* Remove get out from jail card */
 /* Fakta */
