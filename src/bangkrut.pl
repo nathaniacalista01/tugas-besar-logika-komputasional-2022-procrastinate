@@ -37,7 +37,7 @@ hampirBangkrut :-
     read(Answer),
     sellPropertyN(PlayerID,Answer), 
     (
-        prosesBayar(PlayerID, BiayaTanggungan) -> (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
+        prosesBayar(PlayerID, _BiayaTanggungan) -> (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
         retract(uangBelumCukup(PlayerID))) ; (hampirBangkrut)
     ).
 

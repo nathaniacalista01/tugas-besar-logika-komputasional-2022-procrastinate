@@ -39,7 +39,7 @@ jailDiceRandomizer(Money, Round, JailTurn, Result1, Result2) :- Res1 is mod(Mone
                                                         (Res2 = 0 -> Result2 is 6; Result2 is Res2).
 
 
-isDouble(Money, Round, JailTurn, Double) :-  jailDiceRandomizer(Money, Round, JailTurn, _Res1, _Res2),
+isDouble(Money, Round, JailTurn, Double) :-  Int is round(Money), jailDiceRandomizer(Int, Round, JailTurn, _Res1, _Res2),
                                             write('Dadu 1 : '), write(_Res1), nl, write('Dadu 2 : '), write(_Res2), nl,
                                             asciiDice(_Res1), asciiDice(_Res2), (_Res1 = _Res2 -> Double is 1; Double is 0).
 

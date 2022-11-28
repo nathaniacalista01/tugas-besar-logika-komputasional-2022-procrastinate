@@ -200,7 +200,7 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
                                    /* _Card = 'Steal Property', ini belum ditambahin */
                             ((Loc1 == '1X'; Loc1 == '2X'), wentInTX(1)); 
-                            (Loc1 == 'CF', startCoinFlip, playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
+                            (Loc1 == 'CF',startCoinFlip,  playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
                             /* (Loc1 == 'GO', ); */
                             (Loc1 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
                             (Loc1 == 'WT', write('Kamu berada pada petak World Tour. Silahkan tunggu turn berikutnya untuk menggunakan mekanisme World Tour'), nl);

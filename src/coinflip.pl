@@ -125,7 +125,7 @@ asciiTail   :-  write('             ____________________'), nl,
 /* Fakta */
 /* Rules */
 coinFlipRound(Money, Round, Count, Continue) :-  programCoinFlip(1), displayRoundTitle(Count, _Choice), 
-                                        Temp is div(Money/10), Int is round(Temp),
+                                        Temp is 10/10, Int is round(Temp),
                                         calculateRandomFlip(Int, Round, Count, _Result), displayAsciiCoinFlip(_Result), nl,
                                         (( _Choice = _Result, write('Selamat kamu memenangkan round ini!'), nl, askUserContinue(_Answer),
                                         ( (_Answer = 1, Continue is 1); (_Answer = 0, Continue is 2)) ) ;

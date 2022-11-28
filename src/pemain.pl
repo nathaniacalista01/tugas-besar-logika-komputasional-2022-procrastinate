@@ -8,8 +8,8 @@ blank :- write(' ').
 passGo('-').
 
 initPlayer :-
-            asserta(player1('A','WT',10000.0,['Get Out From Jail', 'Angel Card'])),!,
-            asserta(player2('V','WT',10000.0,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','G3',10000.0,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','JL',10000.0,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
@@ -18,7 +18,7 @@ initPlayer :-
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 
-updatePassGo(ID) :- write('Update Pass Go'),nl,retract(passGo(A)),asserta(passGo(ID)).
+updatePassGo(ID) :- write('Update Pass Go'),nl,retract(passGo(_)),asserta(passGo(ID)).
 
 updateLoc1(NewLoc) :- 
                 retract(player1(Id,Loc,Money,List1)),
@@ -110,7 +110,7 @@ resetPropertyN(31,ID,NO,N,Price) :- tile(_,_,Loc,31), locOwnerDetail(Loc, IDPlay
                            (IDPlayer == ID -> retract(locOwnerDetail(Loc,IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
 resetPropertyN(IDX,ID,NO,N,Price) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, IDPlayer, PropertyLevel), propertyPrice(Loc,Price,PropertyLevel), NO == N, ID == IDPlayer,
                            (IDPlayer == ID -> retract(locOwnerDetail(Loc, IDPlayer, PropertyLevel)), asserta(locOwnerDetail(Loc,'-','-'))).
-resetPropertyN(IDX,ID,NO,N,Price) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, PropertyLevel), NO =< N,
+resetPropertyN(IDX,ID,NO,N,Price) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc, ID, _), NO =< N,
                             IDX1 is IDX + 1, NO1 is NO + 1, resetPropertyN(IDX1,ID,NO1,N,Price).                            
 resetPropertyN(IDX,ID,NO,N,Price) :- IDX1 is IDX + 1, resetPropertyN(IDX1,ID,NO,N,Price).
 
