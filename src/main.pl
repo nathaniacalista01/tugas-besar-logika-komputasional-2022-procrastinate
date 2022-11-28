@@ -43,7 +43,7 @@ help :-
 
 /* Mematikan game */
 quit :-
-    retract(start(_)), asserta(start(0)).
+    retract(start(_)), asserta(start(0)),!.
 map:-
     start(1), board,!.
 
