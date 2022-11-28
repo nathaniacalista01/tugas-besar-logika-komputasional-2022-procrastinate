@@ -299,7 +299,7 @@ increasePropertyPlayer1 :- player1(ID,Loc,Money,_),
                            write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
                            write('Ketik 0 jika tidak'), nl, 
                            read(Answer), 
-                           (Answer == 1 -> propertyPrice(Loc, Price, 3), propertyPrice(Loc, Price0, 2), Price1 is Price - Price0, prosesIncreaseProperti(ID, Price1, Loc, 3);
+                           (Answer == 1 -> propertyPrice(Loc, Price, 3), propertyPrice(Loc, Price0, 2), Price1 is Price - Price0, prosesIncreaseProperti(ID, Price1, Loc, 3), !;
                            Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1);
                            PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
                            write('Ketik 2 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
@@ -341,7 +341,7 @@ increasePropertyPlayer2 :- player2(ID,Loc,Money,_),
                            write('Ketik 1 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
                            write('Ketik 0 jika tidak'), nl, 
                            read(Answer), 
-                           (Answer == 1 -> propertyPrice(Loc, Price, 3), propertyPrice(Loc, Price0, 2), Price1 is Price - Price0, prosesIncreaseProperti(ID, Price1, Loc, 3);
+                           (Answer == 1 -> propertyPrice(Loc, Price, 3), propertyPrice(Loc, Price0, 2), Price1 is Price - Price0, prosesIncreaseProperti(ID, Price1, Loc, 3), !;
                            Answer == 0 , !; write('Input tidak valid!'), nl, increasePropertyPlayer1);
                            PropertyLevel == 1, write('Apakah kamu ingin meningkatkan properti?'), nl,
                            write('Ketik 2 jika ingin meningkatkan properti ke bangunan tingkat 3'), nl,
@@ -390,14 +390,14 @@ bayarProperty1 :- player1(ID,Loc,Money,ListCard),
                 Result == 0 -> prosesBayar('A',Price), acProperty, !).
 
 bayarProperty2 :- player2(ID,Loc,Money,ListCard),
-                locOwnerDetail(Loc, 'V', PropertyLevel),Temp is PropertyLevel,
+                locOwnerDetail(Loc, 'A', PropertyLevel),Temp is PropertyLevel,
                 write('Yah kamu terkena biaya sewa: '),biayaSewa(Loc,Temp,Price),
-                write(Price),nl,displayKekayaan('A'),
+                write(Price),nl,displayKekayaan('V'),
                 checkAngelCard(ListCard,Result),
                 (Result == 1 -> printAngelCard(Answer),
-                  (Answer == 1, useAngelCard1,!;
-                  Answer == 0, notUseAngelCard,prosesBayar('A',Price)), acProperty, !;
-                Result == 0 -> prosesBayar('A',Price), acProperty, !).
+                  (Answer == 1, useAngelCard2,!;
+                  Answer == 0, notUseAngelCard,prosesBayar('V',Price)), acProperty, !;
+                Result == 0 -> prosesBayar('V',Price), acProperty, !).
 /* Player 1 mau akuisisi bangunan Player 2 */
 acProperty :-  cekPlayerTurn(X),
                (X == 1, acProperty1,!;
@@ -413,7 +413,7 @@ acProperty1 :- player1(ID,Loc,Money,_),
                  Answer == 'no' -> write('Tidak mengakuisisi properti'), !;
                  write('Input tidak valid, masukan hanya yes/no'),nl, acProperty1)).
 
-acProperty2 :- player2(_,Loc,Money,ListCard),
+acProperty2 :- player2(ID,Loc,Money,_),
                 locOwnerDetail(Loc, 'A', PropertyLevel),Temp is PropertyLevel,
                 biayaAkuisisi(Loc,Temp,AccPrice),
                 (Money < AccPrice -> write('Uangmu tidak cukup untuk akuisisi properti'), !;
