@@ -5,11 +5,12 @@
 blank :- write(' ').
 
 initPlayer :-
-            asserta(player1('A','GO',1500,[])),!,
-            asserta(player2('V','GO',0,['Angel Card'])),!,
-            write('Selamat bermain, pemain A!'),nl,
+            asserta(player1('A','GO',1500,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','GO',1500,['Get Out From Jail', 'Angel Card'])),!,
+            player1(ID1,_,_,_), player2(ID2,_,_,_),
+            write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
-            write('Selamat bermain, pemain B!'),nl,
+            write('Selamat bermain, pemain '),write(ID2), write('!'),nl,
             printInfo2,nl,!.
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
@@ -37,8 +38,8 @@ updateMoney2(NewMoney) :-
     
 printInfo1 :-
             write('================================================'), nl,
-            player1(_,Loc,Money,List1),
-            write('              Informasi Player A '), nl,
+            player1(ID,Loc,Money,List1),
+            write('              Informasi Player '),write(ID), write(' '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '),write(Money),nl,
@@ -51,8 +52,8 @@ printInfo1 :-
 
 printInfo2 :-
             write('================================================'), nl,
-            player2(_,Loc,Money,List1),
-            write('              Informasi Player V '), nl,
+            player2(ID,Loc,Money,List1),
+            write('              Informasi Player '),write(ID), write(' '), nl,
             write('==============================================='),nl,
             write('1. Lokasi                   : '), write(Loc), nl,
             write('2. Total Uang               : '), write(Money),nl,
@@ -63,9 +64,9 @@ printInfo2 :-
             write('================ List Cards ================ '),nl,
             writeCard(1,List1),!.
             
-checkPlayerDetail(Player):-
-                        (Player = 'A',printInfo1),!;
-                        (Player = 'V',printInfo2),!.
+checkPlayerDetail(Player):- player1(ID1,_,_,_), player2(ID2,_,_,_),
+                        (Player = ID1,printInfo1),!;
+                        (Player = ID2,printInfo2),!.
 
 writeB(0) :- write(' - Tanah'), !.
 writeB(1) :- write(' - Bangunan 1'), !.
@@ -78,6 +79,13 @@ writeX(31,ID,NO) :- locOwnerDetail('H2',ID,B), write(NO), write('. '), write('H2
 writeX(IDX,ID,NO) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), write(NO), write('. '), write(Loc), writeB(B), nl, IDX1 is IDX + 1, NO1 is NO + 1, writeX(IDX1,ID,NO1).
 writeX(IDX,ID,NO) :- tile(_,_,_,IDX), IDX1 is IDX + 1, writeX(IDX1,ID,NO).
 writeLoc(ID) :- writeX(1,ID,1),!.
+
+getL(Number,ID,_) :- locOwnerDetail('H2',ID1,_),ID \= ID1,nl,!.
+getL(Number,ID,31,Result) :- locOwnerDetail('H2',ID,B),Result is 'H2'.
+getL(Number,ID,IDX,Result) :- tile(_,_,Loc,IDX),locOwnerDetail(Loc,ID,B),(IDX == Number, Result is Loc ,write(Result),!; IDX1 is IDX + 1,getL(Number,ID,IDX1,Result)).
+getL(Number,ID,IDX,Result) :- tile(_,_,_,IDX),IDX1 is IDX + 1, getL(Number,ID,IDX1,Result). 
+getLoc(Number,ID,Result) :- getL(Number,ID,1,Result).
+
 
 countP(31,ID,0) :- locOwnerDetail('H2',ID1,_), ID \= ID1, !.
 countP(31,ID,N) :- locOwnerDetail('H2',ID,B), propertyPrice('H2',N,B), !.

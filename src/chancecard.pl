@@ -83,15 +83,15 @@ asciiCard :-    write('         ______________________________'), nl,
                 write('       _|____________________________  |'), nl,
                 write('      |                              | |'), nl,
                 write('      |         ____________         | |'), nl,
-                write('      |       _|  ________  |_       | |'), nl,
-                write('      |      |  _|        |_  |      | |'), nl,
-                write('      |      | |            | |      | |'), nl,
-                write('      |      |_|           _| |      | |'), nl,
-                write('      |                  _|  _|      | |'), nl,
-                write('      |                _|  _|        | |'), nl,
-                write('      |              _|  _|          | |'), nl,
-                write('      |             |  _|            | |'), nl,
-                write('      |             | |              | |'), nl,
+                write('      |        |  ________  |        | |'), nl,
+                write('      |       |  |        |  |       | |'), nl,
+                write('      |      |  |          |  |      | |'), nl,
+                write('      |      |_|            | |      | |'), nl,
+                write('      |                   _|  |      | |'), nl,
+                write('      |                 _|  _|       | |'), nl,
+                write('      |               _|  _|         | |'), nl,
+                write('      |              |  _|           | |'), nl,
+                write('      |             |  |             | |'), nl,
                 write('      |             | |              | |'), nl,
                 write('      |             |_|              | |'), nl,
                 write('      |              _               | |'), nl,
@@ -123,13 +123,13 @@ appendList( [X | Y], Z, [X | W]) :- append( Y, Z, W).
 
 /* Menambahkan Chance Card untuk player 1 */
 addChanceCardPlayer1(Card) :- 
-                        retract(player1(ID1,Loc1,Money1,Propery1,List1)),appendList(List1,[Card],List2),
-                        asserta(player1(ID1,Loc1,Money1,Property1,List2)).
+                        retract(player1(ID1,Loc1,Money1,List1)),appendList(List1,[Card],List2),
+                        asserta(player1(ID1,Loc1,Money1,List2)).
 
 /* Menambahkan Chance Card untuk player 2 */
 addChanceCardPlayer2(Card) :- 
-                        retract(player2(ID1,Loc1,Money1,Propery1,List1)),appendList(List1,[Card],List2),
-                        asserta(player2(ID1,Loc1,Money1,Property1,List2)).
+                        retract(player2(ID1,Loc1,Money1,List1)),appendList(List1,[Card],List2),
+                        asserta(player2(ID1,Loc1,Money1,List2)).
 
 /* Menambahkan Chance Card untuk player tertentu */
 addChanceCard(Card,X) :-

@@ -80,7 +80,7 @@ locOwnerDetail('D1', '-', '-').
 locOwnerDetail('D2', 'A', 3).
 locOwnerDetail('D3', '-', '-').
 locOwnerDetail('E1', '-', '-').
-locOwnerDetail('E2', 'A', 2).
+locOwnerDetail('E2', 'A', 3).
 locOwnerDetail('E3', '-', '-').
 locOwnerDetail('F1', '-', '-').
 locOwnerDetail('F2', '-', '-').
@@ -111,8 +111,7 @@ biayaAkuisisi(Loc, Price, PropertyLevel):- biayaSewa(Loc, RentPrice, PropertyLev
 
 /* Condition Special Block */
 checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
-                            Loc \= ('A2'),
-                            !,
+                            (Loc == ('CC'); Loc == ('CF'); Loc == ('JL'); Loc == ('TX'); Loc == ('FP'); Loc == ('GO'), Loc == ('WT')), 
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
                             write('================================================'), nl,
@@ -124,7 +123,7 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
                             Loc == 'TX', write('Deskripsi Tambahan    : '), write('Pay. Your. Debt. *Gun Click Sounds*');
                             Loc == 'FP', write('Deskripsi Tambahan    : '), write('Nothing happened... Now what?');
                             Loc == 'GO', write('Deskripsi Tambahan    : '), write('You get the money right? riightt...?');
-                            Loc == 'WT', write('Deskripsi Tambahan    : '), write('Pintu kemana saja has been spawned.')), nl.
+                            Loc == 'WT', write('Deskripsi Tambahan    : '), write('Pintu kemana saja has been spawned.')), nl,!.
 
 
 
@@ -144,14 +143,13 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              write('Biaya Sewa Saat Ini: '), write('-'), nl, 
                              write('Biaya Akuisisi     : '), write('-'), nl, 
                              write('Tingkatan Properti : '), write('-'), nl,
-                             write('================================================').
+                             write('================================================'),!.
 
 /* Kondisi Owned Land */
 checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                              C \= ('-'),
-                             write('masuk'),
-                             biayaSewa(Loc, RentPrice, D),
-                             biayaAkuisisi(Loc, Price, D),
+                             biayaSewa(Loc, D, RentPrice),
+                             biayaAkuisisi(Loc, D, Price),
                              locName(Loc, A),  
                              locDesc(Loc, B),
                              !,
@@ -170,8 +168,7 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 3, write('Bangunan 3');
                                     D = 4, write('Bangunan 4')), nl,
                              write('================================================').
-/* initPlayerTemp :- 
-                     player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
+
 checkPlayer1Location :- player1(ID1,Loc1,Money1,_),infoRound(X),
                             (Loc1 == 'CC', getChanceCard(Money1,X,_Card)
                             ;
@@ -203,9 +200,34 @@ wentInTX(PlayerID) :-
        Loc == 'TX',
        bayarPajak(PlayerID).
 
-checkPlayerLocationBefore(X) :- (X = 1, checkPlayer1LocationBefore ; X = 2, checkPlayer2LocationBefore).
+checkPlayerLocationBefore(X, CanMove) :- (X = 1, checkPlayer1LocationBefore(CanMove) ; X = 2, checkPlayer2LocationBefore(CanMove)).
 
-checkPlayer1LocationBefore :- player1(_,P1Loc, P1Money,_), infoRound(CRound),
-                            (P1Loc = 'JL', remainTurnP1(JailTurn), 
-                            ( JailTurn = 0, startPlayerInJail(1);
-                            JailTurn \= 0, decrementTurnInJail(1) )).
+checkPlayer1LocationBefore(CanMove) :- player1(P1ID,P1Loc, P1Money,_), infoRound(CRound),
+                            ((P1Loc = 'JL', remainTurnP1(JailTurn), 
+                            ( JailTurn == 0, releasePlayerFromJail(1), CanMove is 1;
+                            JailTurn == -1 , startPlayerInJail(1), jailMechanism(1, Release),
+                                                               (Release == 1, releasePlayerFromJail(1), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(1), CanMove is 0);
+                            JailTurn \= 0, JailTurn \= -1, jailMechanism(1, Release), 
+                                                               (Release == 1, releasePlayerFromJail(1), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(1), CanMove is 0))) ; 
+                            (P1Loc = 'WT', goWorldTour(1, FinalLoc, MoneyChanges), NewMoney is P1Money + MoneyChanges,
+                            retract(player1(_,P1Loc,P1Money,_)), asserta(player1(_,FinalLoc, NewMoney)), 
+                            (FinalLoc = 'WT' -> CanMove is 1 , write('Player '), write(P1ID), write(' tidak berpindah!'); 
+                            CanMove is 0, write('Player '), write(P1ID), write(' telah berpindah ke petak '), write(FinalLoc)));
+                            CanMove is 1),!.
+
+checkPlayer2LocationBefore(CanMove) :- player2(P2ID,P2Loc, P2Money,_), infoRound(CRound),
+                            ((P2Loc = 'JL', remainTurnP2(JailTurn), 
+                            ( JailTurn == 0, releasePlayerFromJail(2), CanMove is 1;
+                            JailTurn == -1 , startPlayerInJail(2), jailMechanism(2, Release),
+                                                               (Release == 1, releasePlayerFromJail(2), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(2), CanMove is 0);
+                            JailTurn \= 0, JailTurn \= -1, jailMechanism(2, Release), 
+                                                               (Release == 1, releasePlayerFromJail(2), CanMove is 1;
+                                                               Release == 0, decrementTurnInJail(2), CanMove is 0))) ; 
+                            (P2Loc = 'WT', goWorldTour(2, FinalLoc, MoneyChanges), NewMoney is P2Money + MoneyChanges,
+                            retract(player2(_,P2Loc,P2Money,_)), asserta(player2(_,FinalLoc, NewMoney)), 
+                            (FinalLoc = 'WT' -> CanMove is 1 , write('Player '), write(P2ID), write(' tidak berpindah!'); 
+                            CanMove is 0, write('Player '), write(P2ID), write(' telah berpindah ke petak '), write(FinalLoc)));
+                            CanMove is 1),!.

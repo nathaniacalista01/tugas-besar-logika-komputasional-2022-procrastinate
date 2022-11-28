@@ -35,7 +35,7 @@ hampirBangkrut :-
     /*listProperti(PlayerID, ListProperti),*/
     write('Properti mana yang ingin dijual? (Isi dengan kode Property dalam huruf kecil)'), 
     read(Answer), 
-
+    writeLocWithoutLandmark('').
     /*jualProperti(PlayerID, ListProperti, Answer),*/
     (
         prosesBayar(PlayerID, BiayaTanggungan) -> (write('Uangmu sudah cukup untuk melunasi hutang, selamat bermain kembali :)'),
@@ -45,4 +45,4 @@ hampirBangkrut :-
 pembayaran(PlayerID, BiayaTanggungan) :-
     uangPlayer(PlayerID, Saldo), UangBaru is Saldo - BiayaTanggungan,
     ((PlayerID == 'A') -> (updateMoney1(UangBaru)) ; (updateMoney2(UangBaru))),
-    write('Uang mu telah terpotong menjadi: '), write(UangBaru).
+    write('Uang mu telah terpotong menjadi: '), write(UangBaru), nl.

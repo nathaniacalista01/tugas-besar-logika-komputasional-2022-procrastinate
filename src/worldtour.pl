@@ -9,7 +9,7 @@ maka pemain akan melanjutkan melempar dadu seperti biasa
 
 */
 
-/* Hanya diaktifkan bila ingin mencoba modul ini
+/* Hanya diaktifkan bila ingin mencoba modul ini 
 :- include('location.pl').
 :- include('board.pl').
 
@@ -54,28 +54,28 @@ askUserTravelLocation(Loc, AfterGo, _Valid) :-  write('Ke petak mana kamu ingin 
 /* Melakukan World Tour */
 /* Fakta */
 /* Rules */
-goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- asciiWorldTour, PlayerID = 1, player1(_,P1Loc,P1Money,_), wantWorldTour(PlayerID, _Choice), 
+goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- asciiWorldTour, PlayerID = 1, player1(_,P1Loc,_,_), wantWorldTour(PlayerID, _Choice), 
                                                                 ( _Choice = 0, MoneyChanges is 0, FinalLoc = P1Loc; 
                                                                 _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid),
                                                                     (Valid = 0, FinalLoc = P1Loc, MoneyChanges is 0;
                                                                     Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
 
-goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- PlayerID = 2, player2(_,P2Loc,P2Money,_), wantWorldTour(PlayerID, _Choice), 
+goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- PlayerID = 2, player2(_,P2Loc,_,_), wantWorldTour(PlayerID, _Choice), 
                                                                 ( _Choice = 0, MoneyChanges is 0, FinalLoc = P2Loc; 
                                                                 _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid), 
                                                                     (Valid = 0, FinalLoc = P2Loc, MoneyChanges is 0;
                                                                     Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
 
 /* Ascii untuk World Tour */
-asciiWorldTour :- write('================================================================'), nl,
-            write('================================================================'), nl,
-            write('====                                                        ===='), nl,
-            write('====     ========    ========    ||    ||    ======         ===='), nl,
-            write('====        ||       ||    ||    ||    ||    ||    ||       ===='), nl,
-            write('====        ||       ||    ||    ||    ||    ||====         ===='), nl,
-            write('====        ||       ||    ||    ||    ||    || ||          ===='), nl,
-            write('====        ||       ========    ========    ||   ||        ===='), nl,
-            write('====                                                        ===='), nl,
-            write('================================================================'), nl,
-            write('================================================================'), nl.
-        
+asciiWorldTour :- 
+        write(' _____         ______                _______   _______   _     _   _______ '), nl,                                                  
+        write(' |:  |         |    |               |__   __| |  ___  | | |   | | |  ___  |'), nl,                                             
+        write(' |:   `|______|______|______           | |    | |   | | | |   | | | |___| |'), nl,                         
+        write(' |:______             |_____|_____     | |    | |   | | | |   | | |     __|'), nl,                   
+        write(' |____|-)_,---------,_____________|    | |    | |   | | | |   | | | || |   '), nl,            
+        write('            |       |                  | |    | |   | | | |   | | | | | |  '), nl,                   
+        write('             |     |                   | |    | |___| | | |___| | | |  | | '), nl,                    
+        write('             |____|                    |_|    |_______| |_______| |_|   |_|'), nl, nl.      
+
+                   
+                                       
