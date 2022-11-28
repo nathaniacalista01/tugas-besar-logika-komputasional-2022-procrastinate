@@ -46,23 +46,23 @@ isLocValid(Loc, Result) :- locName(X,_), X = Loc -> Result is 1 ; Result is 0.
 /* AfterGo mengembalikan 1 bila petak tersebut berada setelah Go (sehingga mendapatkan uang)
     AfterGo mengembalikan 0 bila petak tersebut berada sebelum Go */
 
-askUserTravelLocation(Loc, AfterGo, _Valid) :-  write('Ke petak mana kamu ingin pergi? (Masukkan inisial saja, e.g. : \'A2\'.)'), nl, write('Input yang tidak valid berarti tidak jadi melakukan World Tour : '),
-                                        read(Loc), isLocValid(Loc, _Valid), 
-                                        (_Valid = 0, AfterGo is 0;
-                                        _Valid = 1, tile(_,_,Loc,Idx), (Idx > 24 , AfterGo is 0 ; Idx < 24, AfterGo is 1; Idx = 24 , AfterGo is -1)), !.
+askUserTravelLocation(Loc, AfterGo, Valid) :-  write('Ke petak mana kamu ingin pergi? (Masukkan inisial saja, e.g. : \'A2\'.)'), nl, write('Input yang tidak valid berarti tidak jadi melakukan World Tour : '),
+                                        read(Loc), isLocValid(Loc, Valid), 
+                                        (Valid = 0, AfterGo is 0;
+                                        Valid = 1, tile(_,_,Loc,Idx), (Idx > 24 , AfterGo is 0 ; Idx < 24, AfterGo is 1; Idx = 24 , AfterGo is -1)), !.
 
 /* Melakukan World Tour */
 /* Fakta */
 /* Rules */
 goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- asciiWorldTour, PlayerID = 1, player1(_,P1Loc,_,_), wantWorldTour(PlayerID, _Choice), 
                                                                 ( _Choice = 0, MoneyChanges is 0, FinalLoc = P1Loc; 
-                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid),
+                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid), 
                                                                     (Valid = 0, FinalLoc = P1Loc, MoneyChanges is 0;
                                                                     Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
 
 goWorldTour(PlayerID, FinalLoc, MoneyChanges ) :- PlayerID = 2, player2(_,P2Loc,_,_), wantWorldTour(PlayerID, _Choice), 
                                                                 ( _Choice = 0, MoneyChanges is 0, FinalLoc = P2Loc; 
-                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid), write(ChoiceLoc), write(AfterGo), write(Valid),
+                                                                _Choice = 1, askUserTravelLocation(ChoiceLoc, AfterGo, Valid),
                                                                     (Valid = 0, FinalLoc = P2Loc, MoneyChanges is 0;
                                                                     Valid = 1, FinalLoc = ChoiceLoc, (AfterGo = 1 , MoneyChanges is 100 ;  AfterGo = 0, MoneyChanges is -100; AfterGo = -1, MoneyChanges is 0))),!.
 

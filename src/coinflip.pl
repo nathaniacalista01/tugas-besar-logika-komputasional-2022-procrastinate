@@ -36,7 +36,7 @@ prizeCoinFlip(1500,3).
 
 /* Mencari angka random untuk permainan coin flip */
 /* Fakta */
-calculateRandomFlip(Money, 0,_, div(Money,10)+323).
+calculateRandomFlip(Money, 0,_, Money+323).
 
 /* Rules */
 calculateRandomFlip(Money, Round, Count, Result) :- NewRound is Round - 1, calculateRandomFlip(Money, NewRound, Count, NewResult), Result is (((NewResult*(Count+5))+11) mod 2), !.
@@ -125,7 +125,8 @@ asciiTail   :-  write('             ____________________'), nl,
 /* Fakta */
 /* Rules */
 coinFlipRound(Money, Round, Count, Continue) :-  programCoinFlip(1), displayRoundTitle(Count, _Choice), 
-                                        calculateRandomFlip(Money, Round, Count, _Result), displayAsciiCoinFlip(_Result), nl,
+                                        Temp is div(Money/10), Int is round(Temp),
+                                        calculateRandomFlip(Int, Round, Count, _Result), displayAsciiCoinFlip(_Result), nl,
                                         (( _Choice = _Result, write('Selamat kamu memenangkan round ini!'), nl, askUserContinue(_Answer),
                                         ( (_Answer = 1, Continue is 1); (_Answer = 0, Continue is 2)) ) ;
                                          _Choice \= _Result, write('Maaf, kamu tidak menebak dengan benar.'), nl, write('Permainan Coin Flip telah selesai. Kamu tidak mendapatkan apa apa.'),nl, Continue is 0),!.

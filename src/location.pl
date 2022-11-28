@@ -179,27 +179,6 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 4, write('Bangunan 4')), nl,
                              write('================================================').
 
-checkPlayer1Location :- player1(ID1,Loc1,Money1,_),infoRound(X),
-                            (Loc1 == 'CC', getChanceCard(Money1,X,_Card)
-                            ;
-                            write('================= Selamat datang di ================= '), nl,
-                            write('=================       '),write(Loc1),write('         ================='),nl,
-                            write('====================================================='), nl,
-                            cekPlayerTurn(Y),buyProperty(Y)
-                            ;
-                            Loc1 == 'JL', write('Selamat datang di JaiL!'),nl).
-checkPlayer2Location :- player2(ID2,Loc2,Money2,_), infoRound(X),
-                            (Loc1 == 'CC', getChanceCard(Money2,X,_Card)
-                            ;
-                            Loc1 == 'JL', write('Selamat datang di JaiL!'),nl
-                            ;
-                            write('================= Selamat datang di ================= '), nl,
-                            write('=================       '),write(Loc2),write('         ================='),nl,
-                            write('====================================================='), nl,
-                            cekPlayerTurn(Y),buyProperty(Y)).
-checkPlayerLocation(X) :- (X == 1, checkPlayer1Location;
-                            X == 2, checkPlayer2Location),
-                             write('================================================'),!.
 /* initPlayerTemp :- 
                      player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
 
@@ -222,7 +201,7 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                                    _Card = 'Angel Card', addChanceCard(_Card,1);
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
                                    /* _Card = 'Steal Property', ini belum ditambahin */
-                            /*((Loc1 == '1X'; Loc1 == '2X'), ); */
+                            ((Loc1 == '1X'; Loc1 == '2X'), wentInTX(1)); 
                             (Loc1 == 'CF', startCoinFlip, playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
                             /* (Loc1 == 'GO', ); */
                             (Loc1 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
@@ -245,7 +224,7 @@ checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
                                    _Card = 'Angel Card', addChanceCard(_Card,1);
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
                                    /* _Card = 'Steal Property', ini belum ditambahin */
-                            /*((Loc2 == '1X'; Loc2 == '2X'), ); */
+                            ((Loc2 == '1X'; Loc2 == '2X'), wentInTX(2)); 
                             (Loc2 == 'CF', startCoinFlip, playCoinFlip(Money2, X, FinalPrize), NewMoney is Money2+FinalPrize, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)));
                             /* (Loc2 == 'GO', ); */
                             (Loc2 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
@@ -257,14 +236,9 @@ checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
 checkPlayerLocationAfter(X) :- (X == 1, checkPlayer1LocationAfter;
                             X == 2, checkPlayer2LocationAfter).
 
-wentInJL(PlayerID) :-
-       checkPlayerLocationByID(PlayerID, Loc),
-       Loc == 'JL',
-       insertPenjara(PlayerID).
-
 wentInTX(PlayerID) :-
        checkPlayerLocationByID(PlayerID, Loc),
-       Loc == 'TX',
+       (Loc == '1X'; Loc == '2X'),
        bayarPajak(PlayerID).
 
 checkPlayerLocationBefore(X, CanMove) :- (X = 1, checkPlayer1LocationBefore(CanMove) ; X = 2, checkPlayer2LocationBefore(CanMove)).
@@ -278,10 +252,10 @@ checkPlayer1LocationBefore(CanMove) :- player1(P1ID,P1Loc, P1Money,_),
                             JailTurn \= 0, JailTurn \= -1, jailMechanism(1, Release), 
                                                                (Release == 1, releasePlayerFromJail(1), CanMove is 1;
                                                                Release == 0, decrementTurnInJail(1), CanMove is 0))) ; 
-                            (P1Loc = 'WT', goWorldTour(1, FinalLoc, MoneyChanges), NewMoney is P1Money + MoneyChanges,
+                            (P1Loc = 'WT', goWorldTour(1, FinalLoc, MoneyChanges),  NewMoney is P1Money + MoneyChanges,
                             retract(player1(P1ID,P1Loc,P1Money,CardList)), asserta(player1(P1ID,FinalLoc, NewMoney,CardList)), 
-                            (FinalLoc = 'WT' -> CanMove is 1 , write('Player '), write(P1ID), write(' tidak berpindah!'), nl; 
-                            CanMove is 0, write('Player '), write(P1ID), write(' telah berpindah ke petak '), write(FinalLoc), nl));
+                            (FinalLoc = 'WT' , write('Player '), write(P1ID), write(' tidak berpindah!'), nl, CanMove is 1; 
+                            FinalLoc \= 'WT', write('Player '), write(P1ID), write(' telah berpindah ke petak '), write(FinalLoc), nl, CanMove is 0));
                             CanMove is 1),!.
 
 checkPlayer2LocationBefore(CanMove) :- player2(P2ID,P2Loc, P2Money,_), 
@@ -295,6 +269,6 @@ checkPlayer2LocationBefore(CanMove) :- player2(P2ID,P2Loc, P2Money,_),
                                                                Release == 0, decrementTurnInJail(2), CanMove is 0))) ; 
                             (P2Loc = 'WT', goWorldTour(2, FinalLoc, MoneyChanges), NewMoney is P2Money + MoneyChanges,
                             retract(player2(P2ID,P2Loc,P2Money,CardList)), asserta(player2(P2ID,FinalLoc, NewMoney,CardList)), 
-                            (FinalLoc = 'WT' -> CanMove is 1 , write('Player '), write(P2ID), write(' tidak berpindah!'), nl; 
-                            CanMove is 0, write('Player '), write(P2ID), write(' telah berpindah ke petak '), write(FinalLoc), nl));
+                            (FinalLoc = 'WT', write('Player '), write(P2ID), write(' tidak berpindah!'), nl, CanMove is 1 ; 
+                            FinalLoc \= 'WT', write('Player '), write(P2ID), write(' telah berpindah ke petak '), write(FinalLoc), nl, CanMove is 0));
                             CanMove is 1),!.

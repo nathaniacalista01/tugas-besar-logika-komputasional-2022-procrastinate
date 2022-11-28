@@ -18,7 +18,7 @@ initPlayer :-
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 
-updatePassGo(ID) :- write('Update Pass Go'),retract(passGo(A)),asserta(passGo(ID)).
+updatePassGo(ID) :- write('Update Pass Go'),nl,retract(passGo(A)),asserta(passGo(ID)).
 
 updateLoc1(NewLoc) :- 
                 retract(player1(Id,Loc,Money,List1)),
