@@ -64,14 +64,14 @@ throwDice :-
             (X == 1, asciiPlayerTurn(X,Z), beforeMove(CanMove), 
                 (CanMove = 1, throwDice1(Dice1, Dice2) ,
                                 (Dice1 \= Dice2, resetDiceCount, writeNormal(Dice1, Dice2), afterMove, changePlayerTurn ; 
-                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player1(ID, Loc, Money, List)), asserta(player1(ID, 'JL', Money, List)), changePlayerTurn;
+                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player1(ID, Loc, Money, List)), asserta(player1(ID, 'JL', Money, List)), startPlayerInJail(1), changePlayerTurn;
                                                                                 Num \= 3, writeDouble(Dice1,Dice2), afterMove))); 
                 CanMove = 0, afterMove, changePlayerTurn)  ;
             /* Kirim jumlah kedua dadu ke dalam fungsi updateLoc1 */
             X == 2 ,asciiPlayerTurn(X,Z),beforeMove(CanMove), 
                 (CanMove = 1, throwDice2(Dice1, Dice2), 
                                 (Dice1 \= Dice2, resetDiceCount, writeNormal(Dice1, Dice2), afterMove, changePlayerTurn ; 
-                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player2(ID, Loc, Money, List)), asserta(player2(ID, 'JL', Money, List)), changePlayerTurn;
+                                Dice1 = Dice2, updateDiceCount, (diceCount(Num), (Num = 3, writeDouble(Dice1,Dice2), write('Oopsie, kamu masuk penjara!'), retract(player2(ID, Loc, Money, List)), asserta(player2(ID, 'JL', Money, List)), startPlayerInJail(2), changePlayerTurn;
                                                                                 Num \= 3, writeDouble(Dice1,Dice2), afterMove))); 
                  CanMove = 0, afterMove, changePlayerTurn), updateRound),!.
 

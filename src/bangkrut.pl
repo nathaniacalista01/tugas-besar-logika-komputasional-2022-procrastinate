@@ -33,7 +33,7 @@ tidakSanggupBayar(PlayerID,BiayaTanggungan):- asetPlayer(PlayerID,Asset),
                                                             Uang < BiayaTanggungan, tidakSanggupBayar(PlayerID,BiayaTanggungan));
                                                     Answer == 'no', write('Sayang sekali, kamu cepat menyerah, selamat tinggal :(('));
                                                 Asset < BiayaTanggungan, write('Sayang sekali, semua asset kamu tidak cukup untuk membayar denda ini'),!,
-                                                retract(start(Z)),asserta(start(0))).
+                                                retract(start(_Z)),asserta(start(0))).
 
 updateMoneyBangkrut(PlayerID,Price) :- (PlayerID == 'A', player1(_,_,Money1,_),NewMoney is Money1 + Price,updateMoney1(NewMoney);
                                         PlayerID == 'V',player2(_,_,Money2,_), NewMoney is Money2 + Price, updateMoney2(NewMoney)).

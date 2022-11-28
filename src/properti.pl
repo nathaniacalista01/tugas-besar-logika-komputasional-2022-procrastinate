@@ -253,7 +253,7 @@ buyPropertyPlayer1 :- player1(ID,Loc, _Money,_),checkIsProperty(Loc,Result),
                        OldID == ID, increasePropertyPlayer1);
                       Result == 0, write('Tidak bisa membeli properti '),write(Loc)).
 
-buyPropertyPlayer2 :- player2(ID,Loc,Money,_),checkIsProperty(Loc,Result), 
+buyPropertyPlayer2 :- player2(ID,Loc,_Money,_),checkIsProperty(Loc,Result), 
                      (Result == 1,
                       locOwnerDetail(Loc, OldID, _OldPropertyLevel),
                       (OldID == ('-'),
@@ -495,3 +495,4 @@ stealProperty2 :- write('Yes! Kamu dapat mengakuisisi properti player A!'), nl,
                   checkLocOwner2(Answer, Result, Level),
                   (Result == 0 -> write('Masukan lokasi tidak valid!'), nl, stealProperty2;
                   Result == 1, updatePropertyOwner(Answer, 'V', Level), !).
+
