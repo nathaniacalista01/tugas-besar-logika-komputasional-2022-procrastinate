@@ -196,11 +196,17 @@ checkPlayer2Location :- player2(ID2,Loc2,Money2,_), infoRound(X),
                             write('====================================================='), nl,
                             cekPlayerTurn(Y),buyProperty(Y)).
 checkPlayerLocation(X) :- (X == 1, checkPlayer1Location;
-                            X == 2, checkPlayer2Location).
+                            X == 2, checkPlayer2Location),
                              write('================================================'),!.
 /* initPlayerTemp :- 
                      player1('A','CC',1500,0,[],[],[]),asserta(round(1)). */
+
+checkPassGo1 :- passGo(X),(X == 'A',player1(_,_,Money,_),NewMoney is Money + 200, updateMoney1(NewMoney);!).
+
+checkPassGo2 :- passGo(X),(X == 'V',player2(_,_,Money,_),NewMoney is Money + 200, updateMoney2(NewMoney);!).
+
 checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
+                            checkPassGo1,
                             ( (Loc1 == '1C'; Loc1 == '2C'; Loc1 == '3C' ), getChanceCard(Money1,X,_Card),
                                    (_Card = 'Free $100', NewMoney is Money1 + 100, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List));
                                     _Card = 'Free $200', NewMoney is Money1 + 200, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)); 
@@ -223,6 +229,7 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                             buyProperty
                             ),!.
 checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
+                            checkPassGo2,
                             ( (Loc2 == '1C'; Loc2 == '2C'; Loc2 == '3C' ), getChanceCard(Money2,X,_Card),
                                    (_Card = 'Free $100', NewMoney is Money2 + 100, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List));
                                     _Card = 'Free $200', NewMoney is Money2 + 200, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)); 
