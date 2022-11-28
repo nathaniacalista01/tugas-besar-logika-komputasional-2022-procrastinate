@@ -97,7 +97,7 @@ locOwnerDetail('G1', '-', '-').
 locOwnerDetail('G2', '-', '-').
 locOwnerDetail('G3', '-', '-').
 locOwnerDetail('H1', '-', '-').
-locOwnerDetail('H2', 'A', 1).
+locOwnerDetail('H2', 'V', 4).
 
 /* Updating loc owner */
 /* Fakta*/
