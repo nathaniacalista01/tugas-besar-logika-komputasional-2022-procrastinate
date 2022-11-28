@@ -2,7 +2,10 @@
 /* player(PlayerID, Loc, Money, List of Card) */
 :- dynamic(player1/4).
 :- dynamic(player2/4).
+:- dynamic(passGo/1).
 blank :- write(' ').
+
+passGo('-').
 
 initPlayer :-
             asserta(player1('A','GO',10000,['Get Out From Jail', 'Angel Card'])),!,
@@ -14,20 +17,23 @@ initPlayer :-
             printInfo2,nl,!.
 
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
+
+updatePassGo(ID) :- write('Update Pass Go'),retract(passGo(A)),asserta(passGo(ID)).
+
 updateLoc1(NewLoc) :- 
                 retract(player1(Id,Loc,Money,List1)),
                 tile(_,_,Loc,LocNumber), 
-                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ; NewLocNumber is LocNumber + NewLoc),
+                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ,updatePassGo('A'); NewLocNumber is LocNumber + NewLoc),
                 tile(_,_,X,NewLocNumber),
                 asserta(player1(Id,X,Money,List1)),!.
-
-
 updateLoc2(NewLoc) :-
                 retract(player2(Id,Loc,Money,List1)),
                 tile(_,_,Loc,LocNumber),
-                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ; NewLocNumber is LocNumber + NewLoc),
+                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32,updatePassGo('V'); NewLocNumber is LocNumber + NewLoc),
                 tile(_,_,X,NewLocNumber),
                 asserta(player2(Id,X,Money,List1)),!.
+
+
 
 /* Fungsi untuk update jumlah uang dari player pertama dan kedua */
 updateMoney1(NewMoney) :-
@@ -81,13 +87,6 @@ writeX(31,ID,NO) :- locOwnerDetail('H2',ID,B), write(NO), write('. '), write('H2
 writeX(IDX,ID,NO) :- tile(_,_,Loc,IDX), locOwnerDetail(Loc,ID,B), write(NO), write('. '), write(Loc), writeB(B), nl, IDX1 is IDX + 1, NO1 is NO + 1, writeX(IDX1,ID,NO1).
 writeX(IDX,ID,NO) :- tile(_,_,_,IDX), IDX1 is IDX + 1, writeX(IDX1,ID,NO).
 writeLoc(ID) :- writeX(1,ID,1),!.
-
-getL(Number,ID,_) :- locOwnerDetail('H2',ID1,_),ID \= ID1,nl,!.
-getL(Number,ID,31,Result) :- locOwnerDetail('H2',ID,B),Result is 'H2'.
-getL(Number,ID,IDX,Result) :- tile(_,_,Loc,IDX),locOwnerDetail(Loc,ID,B),(IDX == Number, Result is Loc ,write(Result),!; IDX1 is IDX + 1,getL(Number,ID,IDX1,Result)).
-getL(Number,ID,IDX,Result) :- tile(_,_,_,IDX),IDX1 is IDX + 1, getL(Number,ID,IDX1,Result). 
-getLoc(Number,ID,Result) :- getL(Number,ID,1,Result).
-
 
 countP(31,ID,0) :- locOwnerDetail('H2',ID1,_), ID \= ID1, !.
 countP(31,ID,N) :- locOwnerDetail('H2',ID,B), propertyPrice('H2',N,B), !.
