@@ -13,14 +13,18 @@ dice(5,5).
 
 /* Generate random number dengan algoritma yang ada */
 
-/* Algoritma pertama (untuk dadu pertam) = (Money * 13 - Round + 7)mod 6 */
-/* Algoritma kedua (untuk dadu kedua) = (Money * 11 - Round + 5)mod6 */
 
-diceRandomizer(X,Y,Result1,Result2):- Temp1 is mod(2*Y - X+230,6), dice(Temp1,Angka1),
-                                    Result1 is Angka1, Temp2 is mod(5*Y-X+99,6),
-                                    dice(Temp2,Angka2),Result2 is Angka2.
-/*mod(2*Y - X+230,6)*/
-/*mod(5*Y-X+99,6)*/
+/* Algoritma untuk Dadu Player 1 */
+/* Algoritma pertama (untuk dadu pertam) = (Money * 2 - Round + 230)mod 6 */
+/* Algoritma kedua (untuk dadu kedua) = (Money * 5 - Round + 99)mod6 */
+diceRandomizer1(X,Y,Result1,Result2):- Temp1 is mod(2*Y - X+230,6), dice(Temp1,Angka1), Result1 is Angka1, 
+                                    Temp2 is mod(5*Y-X+99,6), dice(Temp2,Angka2),Result2 is Angka2.
+
+/* Algoritma untuk Dadu Player 2 */
+/* Algoritma pertama (untuk dadu pertam) = (Money * 3 - Round + 565)mod 6 */
+/* Algoritma kedua (untuk dadu kedua) = (Money * 7 - Round - 84)mod6 */
+diceRandomizer2(X,Y,Result1,Result2):- Temp1 is mod(3*Y - X+565,6), dice(Temp1,Angka1), Result1 is Angka1,
+                                     Temp2 is mod(7*Y- X -84,6), dice(Temp2,Angka2),Result2 is Angka2.
 
 writeDouble(Dadu1,Dadu2) :- (Dadu1 == Dadu2,write('Dadu 1 : '),write(Dadu1),nl, write('Dadu 2 :'),write(Dadu2),nl,
                             write('Double!'), nl,Sum is Dadu1 + Dadu2,write('Anda berhasil maju sebanyak '),
@@ -29,17 +33,20 @@ writeNormal(Dadu1,Dadu2) :-
                             write('Dadu 1 : '),write(Dadu1),nl,write('Dadu 2 : '),write(Dadu2),nl,
                             (Dadu1 =\= Dadu2, write('Anda berhasil maju sebanyak '),Sum is Dadu1 + Dadu2 ,write(Sum),write(' langkah'),nl).
 /* Memanggil throwDice */
-diceOutput(Round,Money,Dice1,Dice2) :- 
-                                diceRandomizer(Round,Money,Angka1,Angka2),
+diceOutput1(Round,Money,Dice1,Dice2) :- 
+                                diceRandomizer1(Round,Money,Angka1,Angka2),
+                                Dice1 is Angka1, Dice2 is Angka2.
+diceOutput2(Round,Money,Dice1,Dice2) :- 
+                                diceRandomizer2(Round,Money,Angka1,Angka2),
                                 Dice1 is Angka1, Dice2 is Angka2.
 
 
 throwDice1(Dice1,Dice2) :- 
-                player1(_,_,Money1,_),write('Sekarang adalah giliran player 1!'),nl,infoRound(Y),diceOutput(Y,Money1,Dice1,Dice2), NewLoc is Dice1 + Dice2 , updateLoc1(NewLoc),!.
+                player1(_,_,Money1,_),write('Sekarang adalah giliran player 1!'),nl,infoRound(Y),diceOutput1(Y,Money1,Dice1,Dice2),  NewLoc is Dice1 + Dice2 , updateLoc1(NewLoc),!.
 
 
 throwDice2(Dice3, Dice4):-
-                player2(_,_,Money2,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput(Y,Money2,Dice3,Dice4), NewLoc is Dice3 + Dice4, updateLoc2(NewLoc),!.
+                player2(_,_,Money2,_),write('Sekarang adalah giliran player 2!'),nl,infoRound(Y),diceOutput2(Y,Money2,Dice3,Dice4), NewLoc is Dice3 + Dice4, updateLoc2(NewLoc),!.
 
 /*
 diceEqual2(Dice1,Dice2) :-

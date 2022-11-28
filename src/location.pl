@@ -193,7 +193,7 @@ checkPlayer1LocationAfter :- player1(ID1,Loc1,Money1,_), infoRound(X),
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
                                    /* _Card = 'Steal Property', ini belum ditambahin */
                             /*((Loc1 == '1X'; Loc1 == '2X'), ); */
-                            (Loc1 == 'CF', playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
+                            (Loc1 == 'CF', startCoinFlip, playCoinFlip(Money1, X, FinalPrize), NewMoney is Money1+FinalPrize, retract(player1(ID1,Loc1, Money1,List)), asserta(player1(ID1, Loc1, NewMoney, List)));
                             /* (Loc1 == 'GO', ); */
                             (Loc1 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
                             (Loc1 == 'WT', write('Kamu berada pada petak World Tour. Silahkan tunggu turn berikutnya untuk menggunakan mekanisme World Tour'), nl);
@@ -215,14 +215,14 @@ checkPlayer2LocationAfter :- player2(ID2,Loc2,Money2,_), infoRound(X),
                                    _Card = 'Get Out From Jail', addChanceCard(_Card,1)) ;
                                    /* _Card = 'Steal Property', ini belum ditambahin */
                             /*((Loc2 == '1X'; Loc2 == '2X'), ); */
-                            (Loc2 == 'CF', playCoinFlip(Money2, X, FinalPrize), NewMoney is Money2+FinalPrize, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)));
+                            (Loc2 == 'CF', startCoinFlip, playCoinFlip(Money2, X, FinalPrize), NewMoney is Money2+FinalPrize, retract(player2(ID2,Loc2, Money2,List)), asserta(player2(ID2, Loc2, NewMoney, List)));
                             /* (Loc2 == 'GO', ); */
                             (Loc2 == 'JL', write('Keberuntunganmu membawamu masuk penjara.'),nl);
                             (Loc2 == 'WT', write('Kamu berada pada petak World Tour. Silahkan tunggu turn berikutnya untuk menggunakan mekanisme World Tour'), nl);
                             (Loc2 == 'FP', write('Kamu berada di area bebas parkir. Tidak terjadi apa-apa'));
                             buyProperty
                             ),!.
-                            
+
 checkPlayerLocationAfter(X) :- (X == 1, checkPlayer1LocationAfter;
                             X == 2, checkPlayer2LocationAfter).
 

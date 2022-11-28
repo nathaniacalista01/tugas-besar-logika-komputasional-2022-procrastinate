@@ -9,6 +9,7 @@
 :- include('dice.pl').
 :- include('chancecard.pl').
 :- include('worldtour.pl').
+:- incluce('coinflip.pl').
 
 :- dynamic(round/1).
 :- dynamic(win/1).
@@ -31,7 +32,7 @@ introduction :-
 
 help :-
     write('List Command yang dapat digunakan : '), nl,
-    write('         Command                     |       Kegunaan            '), nl,
+    write('         Command                    |       Kegunaan            '), nl,
     write('?- board.                           |   Menampilkan Kondisi Papan dan Posisi pemain'), nl,
     write('?- checkPlayerDetail(<ID>).         |   Menampilkan Kondisi Pemain, ganti <ID> dengan ID pemain '), nl,
     write('?- checkLocationDetail(<Petak>).    |   Menampilkan Keterangan Petak, ganti <Petak> dengan Initial Petak'), nl,

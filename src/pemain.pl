@@ -5,8 +5,8 @@
 blank :- write(' ').
 
 initPlayer :-
-            asserta(player1('A','WT',10000,['Get Out From Jail', 'Angel Card'])),!,
-            asserta(player2('V','WT',10000,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player1('A','G3',10000,['Get Out From Jail', 'Angel Card'])),!,
+            asserta(player2('V','B2',10000,['Get Out From Jail', 'Angel Card'])),!,
             player1(ID1,_,_,_), player2(ID2,_,_,_),
             write('Selamat bermain, pemain '),write(ID1), write('!'),nl,
             printInfo1,nl,!,
@@ -16,14 +16,16 @@ initPlayer :-
 /* Fungsi untuk update lokasi dari player pertama dan kedua */
 updateLoc1(NewLoc) :- 
                 retract(player1(Id,Loc,Money,List1)),
-                tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
+                tile(_,_,Loc,LocNumber), 
+                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ; NewLocNumber is LocNumber + NewLoc),
                 tile(_,_,X,NewLocNumber),
                 asserta(player1(Id,X,Money,List1)),!.
 
 
 updateLoc2(NewLoc) :-
                 retract(player2(Id,Loc,Money,List1)),
-                tile(_,_,Loc,LocNumber),NewLocNumber is LocNumber + NewLoc,
+                tile(_,_,Loc,LocNumber),
+                (LocNumber+NewLoc > 31 -> NewLocNumber is LocNumber + NewLoc - 32 ; NewLocNumber is LocNumber + NewLoc),
                 tile(_,_,X,NewLocNumber),
                 asserta(player2(Id,X,Money,List1)),!.
 
