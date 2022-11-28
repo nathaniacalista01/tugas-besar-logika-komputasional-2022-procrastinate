@@ -96,7 +96,7 @@ locOwnerDetail('F3', 'V', 0).
 locOwnerDetail('G1', 'A', 0).
 locOwnerDetail('G2', '-', '-').
 locOwnerDetail('G3', '-', '-').
-locOwnerDetail('H1', '-', 4).
+locOwnerDetail('H1', '-', '-').
 locOwnerDetail('H2', 'A', 1).
 
 /* Updating loc owner */
@@ -122,6 +122,7 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
                             (Loc == ('1C'); Loc == ('2C'); Loc == ('3C'); Loc == ('CF'); 
                             Loc == ('JL'); Loc == ('1X'); Loc == ('2X');Loc == ('FP'); 
                             Loc == ('GO'); Loc == ('WT')), 
+                            !,
                             write('================================================'), nl,
                             write('          Informasi Lokasi Spesial '), nl, 
                             write('================================================'), nl,
@@ -130,10 +131,10 @@ checkLocationDetail(Loc) :- locName(Loc, A), locDesc(Loc, B),
                             ( (Loc == '1C'; Loc == '2C'; Loc == '3C'), write('Deskripsi Tambahan  : '), write('Feeling Lucky this time?');
                             Loc == 'CF', write('Deskripsi Tambahan  : '), write('WOOOHOO! GAME TIME BUDDYY!');
                             Loc == 'JL', write('Deskripsi Tambahan  : '), write('FBI! OPEN UP! *Sirens sound*');
-                            (Loc == '1X'; Loc == '2X' ), write('Deskripsi Tambahan  : '), write('Pay. Your. Debt. *Gun Click Sounds*');
+                            (Loc == '1X'; Loc == '2X' ),!, write('Deskripsi Tambahan  : '), write('Pay. Your. Debt. *Gun Click Sounds*');
                             Loc == 'FP', write('Deskripsi Tambahan  : '), write('Nothing happened... Now what?');
                             Loc == 'GO', write('Deskripsi Tambahan  : '), write('You get the money right? riightt...?');
-                            Loc == 'WT', write('Deskripsi Tambahan  : '), write('Pintu kemana saja has been spawned.')), nl,!.
+                            Loc == 'WT', write('Deskripsi Tambahan  : '), write('Pintu kemana saja has been spawned.')), nl, !.
 
 
 
@@ -177,7 +178,7 @@ checkLocationDetail(Loc) :-  locOwnerDetail(Loc, C, D),
                                     D = 2, write('Bangunan 2');
                                     D = 3, write('Bangunan 3');
                                     D = 4, write('Bangunan 4')), nl,
-                             write('================================================').
+                             write('================================================'), !.
 
 
 
