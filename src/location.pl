@@ -250,10 +250,10 @@ checkPlayer1LocationBefore(CanMove) :- player1(P1ID,P1Loc, P1Money,_),
                             JailTurn \= 0, JailTurn \= -1, jailMechanism(1, Release), 
                                                                (Release == 1, releasePlayerFromJail(1), CanMove is 1;
                                                                Release == 0, decrementTurnInJail(1), CanMove is 0))) ; 
-                            (P1Loc = 'WT', goWorldTour(1, FinalLoc, MoneyChanges), NewMoney is P1Money + MoneyChanges,
+                            (P1Loc = 'WT', goWorldTour(1, FinalLoc, MoneyChanges),  NewMoney is P1Money + MoneyChanges,
                             retract(player1(P1ID,P1Loc,P1Money,CardList)), asserta(player1(P1ID,FinalLoc, NewMoney,CardList)), 
-                            (FinalLoc = 'WT' -> CanMove is 1 , write('Player '), write(P1ID), write(' tidak berpindah!'), nl; 
-                            CanMove is 0, write('Player '), write(P1ID), write(' telah berpindah ke petak '), write(FinalLoc), nl));
+                            (FinalLoc = 'WT' , write('Player '), write(P1ID), write(' tidak berpindah!'), nl, CanMove is 1; 
+                            FinalLoc \= 'WT', write('Player '), write(P1ID), write(' telah berpindah ke petak '), write(FinalLoc), nl, CanMove is 0));
                             CanMove is 1),!.
 
 checkPlayer2LocationBefore(CanMove) :- player2(P2ID,P2Loc, P2Money,_), 
@@ -267,6 +267,6 @@ checkPlayer2LocationBefore(CanMove) :- player2(P2ID,P2Loc, P2Money,_),
                                                                Release == 0, decrementTurnInJail(2), CanMove is 0))) ; 
                             (P2Loc = 'WT', goWorldTour(2, FinalLoc, MoneyChanges), NewMoney is P2Money + MoneyChanges,
                             retract(player2(P2ID,P2Loc,P2Money,CardList)), asserta(player2(P2ID,FinalLoc, NewMoney,CardList)), 
-                            (FinalLoc = 'WT' -> CanMove is 1 , write('Player '), write(P2ID), write(' tidak berpindah!'), nl; 
-                            CanMove is 0, write('Player '), write(P2ID), write(' telah berpindah ke petak '), write(FinalLoc), nl));
+                            (FinalLoc = 'WT', write('Player '), write(P2ID), write(' tidak berpindah!'), nl, CanMove is 1 ; 
+                            FinalLoc \= 'WT', write('Player '), write(P2ID), write(' telah berpindah ke petak '), write(FinalLoc), nl, CanMove is 0));
                             CanMove is 1),!.
