@@ -80,24 +80,24 @@ locOwnerDetail('A1', '-', '-').
 locOwnerDetail('A2', '-', '-').
 locOwnerDetail('B1', '-', '-').
 locOwnerDetail('B2', '-', '-').
-locOwnerDetail('B3', 'A', 0).
+locOwnerDetail('B3', '-', '-').
 locOwnerDetail('C1', '-', '-').
 locOwnerDetail('C2', '-', '-').
 locOwnerDetail('C3', '-', '-').
-locOwnerDetail('D1', 'V', 2).
-locOwnerDetail('D2', 'A', 3).
+locOwnerDetail('D1', '-', '-').
+locOwnerDetail('D2', '-', '-').
 locOwnerDetail('D3', '-', '-').
 locOwnerDetail('E1', '-', '-').
 locOwnerDetail('E2', '-', '-').
 locOwnerDetail('E3', '-', '-').
 locOwnerDetail('F1', '-', '-').
-locOwnerDetail('F2', 'V', 0).
-locOwnerDetail('F3', 'V', 1).
+locOwnerDetail('F2', '-', '-').
+locOwnerDetail('F3', '-', '-').
 locOwnerDetail('G1', '-', '-').
 locOwnerDetail('G2', '-', '-').
 locOwnerDetail('G3', '-', '-').
 locOwnerDetail('H1', '-', '-').
-locOwnerDetail('H2', 'V', 4).
+locOwnerDetail('H2', '-', '-').
 
 /* Updating loc owner */
 /* Fakta*/

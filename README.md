@@ -1,4 +1,4 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9298671&assignment_repo_type=AssignmentRepo)
+
 
 # Tugas Besar IF2121 - Logika Komputasional
 
@@ -12,8 +12,24 @@
 
 
 ## **Program Description**
+Pada tugas besar kali ini, kelompok kami diminta untuk membuat suatu permainan papan Monopoli dengan menggunakan bahasa pemrograman deklaratif Prolog (GNU Prolog). Dalam spesifikasi tugas, terdapat minimal 5 materi yang harus diaplikasikan dan menjadi bagian dari program kami, yakni:
+
+* Rekurens <br>
+* List <br>
+* cut <br>
+* Fail <br>
+* Loop <br>
+
+Tujuan dari tugas besar ini adalah untuk mengombinasikan berbagai keterampilan dan teknik yang telah dipelajari dalam perkuliahan Logika Komputasional IF2121, pra-praktikum, dan eksplorasi mandiri mengenai Logika Komputasional dan Prolog.
 
 ## **How To Run Program**
+
+1. Git clone program ini <br>
+` $ git clone https://github.com/GAIB20/tugas-besar-logika-komputasional-2022-procrastinate.git `
+2. Pindah ke *directory* dimana file main disimpan <br>
+` $ cd tugas-besar-logika-komputasional-2022-procrastinate/src`
+3. Menjalankan program menggunakan GNU Prolog dengan melakukan consult pada program *main.pl*
+
 
 ## **Team Members**
 **| ?- procrastinate.**
@@ -27,22 +43,27 @@
 
 | Name | NIM | Workload    |
 |------|-----|--------- |
-| Tabitha Permalla | 13521111 | Board |
-| Juan Christopher Santoso | 13521116 | Chance Card, World Tour, Bonus: Additional Chance Card, Bonus: Coin Flip Mini Game|
-| Nicholas Liem | 13521135 | Tax, Jail, Bankrupt Mechanism, Bonus: Buildable Go
-| Nathania Calista Djunaedi | 13521139 | Player, Dice|
-| Brigita Tri Carolina | 13521156 | Location, Property |
+| Tabitha Permalla | 13521111 | Board. Properti, Laporan |
+| Juan Christopher Santoso | 13521116 | Chance Card, World Tour, Bonus: Additional Chance Card, Bonus: Coin Flip Mini Game, Jail, Laporan|
+| Nicholas Liem | 13521135 | Tax, Jail, Bankrupt Mechanism, Bonus: Buildable Go, Laporan |
+| Nathania Calista Djunaedi | 13521139 | Player, Dice, Properti, Lokasi, Bankrupt Mechanism, Laporan|
+| Brigita Tri Carolina | 13521156 | Location, Property, Laporan |
 
 ### Bonus
-* Color set
-* World Cup / Festival
-* Bonus Chance Card
-* Buildable Go
-* Minigame Coin Flip
-* Tambahan lain
+| Bonus |   Progress Status |
+|-------|-------------------|
+|Color set | |
+|World Cup / Festival ||
+| Bonus Chance Card | DONE|
+| Buildable Go | DONE |
+| Minigame Coin Flip | DONE|
+| Kreativitas dan Tambahan lain |DONE |
 
 ## **Folders and Files Description**
-Tulisin aja lah disini isinya apa keterangna apa
+1. Folder *doc* <br>
+Berisikan laporan yang merupakan bagian dokumentasi dari program yang telah dibuat.
+2. Folder *src* <br> 
+Berisikan semua algoritma program yang telah dibuat
 
 
 ## **Extra**

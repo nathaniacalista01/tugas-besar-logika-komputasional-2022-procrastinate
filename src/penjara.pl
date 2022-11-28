@@ -39,8 +39,8 @@ remainTurnP2(-1).
 /* Randomizer untuk dice dalam jail */
 jailDiceRandomizer(Money, Round, JailTurn, Result1, Result2) :- Res1 is mod(Money*21 - Round + 80 + JailTurn*5, 6),
                                                         Res2 is mod(Money*19 - Round + 55 + JailTurn*8, 6), 
-                                                        (Res1 = 0 -> Result1 is 6; Result1 is 3),
-                                                        (Res2 = 0 -> Result2 is 6; Result2 is 3).
+                                                        (Res1 = 0 -> Result1 is 6; Result1 is Res1),
+                                                        (Res2 = 0 -> Result2 is 6; Result2 is Res2).
 
 
 isDouble(Money, Round, JailTurn, Double) :-  Int is round(Money), jailDiceRandomizer(Int, Round, JailTurn, _Res1, _Res2),
